@@ -43,8 +43,27 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Class1.cs" />
+    <Compile Include="DbFactory.cs" />
+    <Compile Include="DbFactorySettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DbInterface\DbInterface.csproj">
+      <Project>{a4c12bfa-ca1c-42aa-8670-25000fa1d80b}</Project>
+      <Name>DbInterface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MySQLLibrary\MySQLLibrary.csproj">
+      <Project>{fe019bea-afea-449e-b8cd-c9fb97ac0dfc}</Project>
+      <Name>MySQLLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SQLiteLibrary\SQLiteLibrary.csproj">
+      <Project>{22d04340-80bf-44cf-931a-a6bcc26e3ee1}</Project>
+      <Name>SQLiteLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SQLLibrary\SQLLibrary.csproj">
+      <Project>{63455fdc-c731-4acc-abdf-a8ed692e97e0}</Project>
+      <Name>SQLLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
