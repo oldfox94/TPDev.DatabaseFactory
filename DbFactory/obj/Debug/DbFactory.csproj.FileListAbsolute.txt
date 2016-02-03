@@ -1,0 +1,13 @@
+C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\DbFactory\bin\Debug\DbFactory.dll
+C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\DbFactory\bin\Debug\DbFactory.pdb
+C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\DbFactory\bin\Debug\DbInterface.dll
+C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\DbFactory\bin\Debug\MySQLLibrary.dll
+C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\DbFactory\bin\Debug\SQLiteLibrary.dll
+C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\DbFactory\bin\Debug\SQLLibrary.dll
+C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\DbFactory\bin\Debug\DbInterface.pdb
+C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\DbFactory\bin\Debug\MySQLLibrary.pdb
+C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\DbFactory\bin\Debug\SQLiteLibrary.pdb
+C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\DbFactory\bin\Debug\SQLLibrary.pdb
+C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\DbFactory\obj\Debug\DbFactory.csprojResolveAssemblyReference.cache
+C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\DbFactory\obj\Debug\DbFactory.dll
+C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\DbFactory\obj\Debug\DbFactory.pdb

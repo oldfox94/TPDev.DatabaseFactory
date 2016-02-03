@@ -1,0 +1,7 @@
+C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\SQLiteLibrary\bin\Debug\SQLiteLibrary.dll
+C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\SQLiteLibrary\bin\Debug\SQLiteLibrary.pdb
+C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\SQLiteLibrary\bin\Debug\DbInterface.dll
+C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\SQLiteLibrary\bin\Debug\DbInterface.pdb
+C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\SQLiteLibrary\obj\Debug\SQLiteLibrary.csprojResolveAssemblyReference.cache
+C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\SQLiteLibrary\obj\Debug\SQLiteLibrary.dll
+C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\SQLiteLibrary\obj\Debug\SQLiteLibrary.pdb

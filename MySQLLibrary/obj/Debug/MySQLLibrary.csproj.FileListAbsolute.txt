@@ -31,3 +31,5 @@ C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\MySQLLibrary\b
 C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\MySQLLibrary\obj\Debug\MySQLLibrary.csprojResolveAssemblyReference.cache
 C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\MySQLLibrary\obj\Debug\MySQLLibrary.dll
 C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\MySQLLibrary\obj\Debug\MySQLLibrary.pdb
+C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\MySQLLibrary\bin\Debug\DbInterface.dll
+C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\MySQLLibrary\bin\Debug\DbInterface.pdb

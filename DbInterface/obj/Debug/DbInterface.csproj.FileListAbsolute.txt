@@ -1,0 +1,5 @@
+C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\DbInterface\bin\Debug\DbInterface.dll
+C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\DbInterface\bin\Debug\DbInterface.pdb
+C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\DbInterface\obj\Debug\DbInterface.csprojResolveAssemblyReference.cache
+C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\DbInterface\obj\Debug\DbInterface.dll
+C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\DbInterface\obj\Debug\DbInterface.pdb
