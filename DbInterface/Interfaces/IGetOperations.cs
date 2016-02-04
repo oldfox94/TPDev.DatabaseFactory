@@ -5,11 +5,6 @@ namespace DbInterface.Interfaces
 {
     public interface IGetOperations
     {
-        bool TableExists(string table);
-        bool ColumnExists(string tableName, string columnName);
-        bool ColumnValueExists(string table, string column, string value);
-
-
         DataSet GetDataSet(List<string> sqlList);
 
         DataTable GetTableSchema(string tableName);

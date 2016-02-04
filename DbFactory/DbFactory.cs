@@ -1,6 +1,9 @@
 ﻿using DbInterface;
 using DbInterface.Interfaces;
 using DbInterface.Models;
+using MySQLLibrary.Operations;
+using SQLiteLibrary.Operations;
+using SQLLibrary.Operations;
 using System;
 
 namespace DbFactory
@@ -10,6 +13,7 @@ namespace DbFactory
         IInsertOperations Insert { get; set; }
         IUpdateOperations Update { get; set; }
         IDeleteOperations Delete { get; set; }
+        ICheckOperations Check { get; set; }
         IGetOperations Get { get; set; }
         IExecuteOperations Execute { get; set; }
 
@@ -37,6 +41,7 @@ namespace DbFactory
             Insert = GetInsertService();
             Update = GetUpdateService();
             Delete = GetDeleteService();
+            Check = GetCheckService();
             Get = GetGetService();
             Execute = GetExecuteService();
         }
@@ -102,6 +107,23 @@ namespace DbFactory
             return null;
         }
 
+        public ICheckOperations GetCheckService()
+        {
+            switch(DbFactorySettings.Type)
+            {
+                case DbType.SQL:
+                    return null;
+
+                case DbType.SQLite:
+                    return null;
+
+                case DbType.MySQL:
+                    return null;
+            }
+
+            return null;
+        }
+
         public IGetOperations GetGetService()
         {
             switch(DbFactorySettings.Type)
@@ -124,13 +146,13 @@ namespace DbFactory
             switch (DbFactorySettings.Type)
             {
                 case DbType.SQL:
-                    return null;
+                    return new SQLExecute();
 
                 case DbType.SQLite:
-                    return null;
+                    return new SQLiteExecute();
 
                 case DbType.MySQL:
-                    return null;
+                    return new MySQLExecute();
             }
 
             return null;
