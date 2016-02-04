@@ -5,3 +5,7 @@ C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\SQLiteLibrary\
 C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\SQLiteLibrary\obj\Debug\SQLiteLibrary.csprojResolveAssemblyReference.cache
 C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\SQLiteLibrary\obj\Debug\SQLiteLibrary.dll
 C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\SQLiteLibrary\obj\Debug\SQLiteLibrary.pdb
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\SQLiteLibrary\bin\Debug\SQLite.Interop.dll
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\SQLiteLibrary\bin\Debug\System.Data.SQLite.dll
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\SQLiteLibrary\bin\Debug\DbLogger.dll
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\SQLiteLibrary\bin\Debug\DbLogger.pdb

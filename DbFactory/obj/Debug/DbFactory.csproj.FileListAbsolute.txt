@@ -11,3 +11,8 @@ C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\DbFactory\bin\
 C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\DbFactory\obj\Debug\DbFactory.csprojResolveAssemblyReference.cache
 C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\DbFactory\obj\Debug\DbFactory.dll
 C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\DbFactory\obj\Debug\DbFactory.pdb
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\DbFactory\bin\Debug\SQLite.Interop.dll
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\DbFactory\bin\Debug\DbLogger.dll
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\DbFactory\bin\Debug\MySql.Data.dll
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\DbFactory\bin\Debug\System.Data.SQLite.dll
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\DbFactory\bin\Debug\DbLogger.pdb

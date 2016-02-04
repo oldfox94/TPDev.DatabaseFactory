@@ -33,3 +33,5 @@ C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\MySQLLibrary\o
 C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\MySQLLibrary\obj\Debug\MySQLLibrary.pdb
 C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\MySQLLibrary\bin\Debug\DbInterface.dll
 C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\MySQLLibrary\bin\Debug\DbInterface.pdb
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\MySQLLibrary\bin\Debug\DbLogger.dll
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\MySQLLibrary\bin\Debug\DbLogger.pdb

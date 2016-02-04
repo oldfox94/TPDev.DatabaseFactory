@@ -5,3 +5,5 @@ C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\SQLLibrary\bin
 C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\SQLLibrary\obj\Debug\SQLLibrary.csprojResolveAssemblyReference.cache
 C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\SQLLibrary\obj\Debug\SQLLibrary.dll
 C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\SQLLibrary\obj\Debug\SQLLibrary.pdb
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\SQLLibrary\bin\Debug\DbLogger.dll
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\SQLLibrary\bin\Debug\DbLogger.pdb
