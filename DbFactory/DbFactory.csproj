@@ -52,6 +52,10 @@
       <Project>{a4c12bfa-ca1c-42aa-8670-25000fa1d80b}</Project>
       <Name>DbInterface</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DbLogger\DbLogger.csproj">
+      <Project>{12cf0444-a2e4-463a-99c3-733847bd61fc}</Project>
+      <Name>DbLogger</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MySQLLibrary\MySQLLibrary.csproj">
       <Project>{fe019bea-afea-449e-b8cd-c9fb97ac0dfc}</Project>
       <Name>MySQLLibrary</Name>

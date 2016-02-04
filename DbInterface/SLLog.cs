@@ -13,6 +13,9 @@ namespace DbInterface
 
         public static void WriteInfo(string function, string message)
         {
+            if (Logger == null)
+                Logger = new DbLogger.DbLogger(Environment.CurrentDirectory, "DbFactory");
+
             var data = new LogData
             {
                 FunctionName = function,
@@ -24,6 +27,9 @@ namespace DbInterface
 
         public static void WriteWarning(string function, string source, string message)
         {
+            if (Logger == null)
+                Logger = new DbLogger.DbLogger(Environment.CurrentDirectory, "DbFactory");
+
             var data = new LogData
             {
                 FunctionName = function,
@@ -36,6 +42,9 @@ namespace DbInterface
 
         public static void WriteError(LogData data)
         {
+            if (Logger == null)
+                Logger = new DbLogger.DbLogger(Environment.CurrentDirectory, "DbFactory");
+
             Logger.WriteError(data);
         }
     }

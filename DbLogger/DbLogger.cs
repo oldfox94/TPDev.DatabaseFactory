@@ -13,7 +13,7 @@ namespace DbLogger
             LogDataList = new List<LogData>();
 
             Settings.LogId = logId;
-            Settings.LogFile = Path.Combine(logPath, logFileName);
+            Settings.LogFile = Path.Combine(logPath, logFileName + ".log");
             if(!Directory.Exists(logPath))
             {
                 Directory.CreateDirectory(logPath);

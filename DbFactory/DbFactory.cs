@@ -1,5 +1,7 @@
-﻿using DbInterface.Interfaces;
+﻿using DbInterface;
+using DbInterface.Interfaces;
 using DbInterface.Models;
+using System;
 
 namespace DbFactory
 {
@@ -37,6 +39,15 @@ namespace DbFactory
             Delete = GetDeleteService();
             Get = GetGetService();
             Execute = GetExecuteService();
+        }
+
+        public void InitLogger(string logFileName, string logPath = null)
+        {
+            if (string.IsNullOrEmpty(logPath))
+                logPath = Environment.CurrentDirectory;
+
+            SLLog.Logger = new DbLogger.DbLogger(logFileName, logPath, DbFactorySettings.Type.ToString());
+            SLLog.WriteInfo("InitLogger", "Logger successfully initialized!");
         }
 
 
