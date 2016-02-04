@@ -8,7 +8,7 @@ namespace DbInterface.Interfaces
         int ExecuteNonQuery(List<string> sqlList);
         int ExecuteNonQuery(string sql);
 
-        string ExecuteScalar(string sql);
+        object ExecuteScalar(string sql);
 
         bool RenewTbl(string tableName, Dictionary<string, string> columns);
         bool RenewTbl(string tableName, List<ColumnData> columns);
