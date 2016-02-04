@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLLibrary", "SQLLibrary\SQ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLiteLibrary", "SQLiteLibrary\SQLiteLibrary.csproj", "{22D04340-80BF-44CF-931A-A6BCC26E3EE1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbLogger", "DbLogger\DbLogger.csproj", "{12CF0444-A2E4-463A-99C3-733847BD61FC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{22D04340-80BF-44CF-931A-A6BCC26E3EE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22D04340-80BF-44CF-931A-A6BCC26E3EE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22D04340-80BF-44CF-931A-A6BCC26E3EE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12CF0444-A2E4-463A-99C3-733847BD61FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12CF0444-A2E4-463A-99C3-733847BD61FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12CF0444-A2E4-463A-99C3-733847BD61FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12CF0444-A2E4-463A-99C3-733847BD61FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

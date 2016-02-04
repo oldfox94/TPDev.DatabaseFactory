@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A4C12BFA-CA1C-42AA-8670-25000FA1D80B}</ProjectGuid>
+    <ProjectGuid>{12CF0444-A2E4-463A-99C3-733847BD61FC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DbInterface</RootNamespace>
-    <AssemblyName>DbInterface</AssemblyName>
+    <RootNamespace>DbLogger</RootNamespace>
+    <AssemblyName>DbLogger</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -43,22 +43,11 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Interfaces\IDeleteOperations.cs" />
-    <Compile Include="Interfaces\IExecuteOperations.cs" />
-    <Compile Include="Interfaces\IGetOperations.cs" />
-    <Compile Include="Interfaces\IInsertOperations.cs" />
-    <Compile Include="Interfaces\IUpdateOperations.cs" />
-    <Compile Include="Models\ColumnData.cs" />
-    <Compile Include="Models\DbConnectionData.cs" />
+    <Compile Include="DbLogger.cs" />
     <Compile Include="Models\Enums.cs" />
-    <Compile Include="SLLog.cs" />
+    <Compile Include="Models\LogData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DbLogger\DbLogger.csproj">
-      <Project>{12cf0444-a2e4-463a-99c3-733847bd61fc}</Project>
-      <Name>DbLogger</Name>
-    </ProjectReference>
+    <Compile Include="Settings.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
