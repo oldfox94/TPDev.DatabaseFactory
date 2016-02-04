@@ -5,8 +5,10 @@ namespace DbInterface.Interfaces
 {
     public interface IExecuteOperations
     {
-        bool ExecuteNonQuery(List<string> sqlList);
-        bool ExecuteNonQuery(string sql);
+        int ExecuteNonQuery(List<string> sqlList);
+        int ExecuteNonQuery(string sql);
+
+        string ExecuteScalar(string sql);
 
         bool RenewTbl(string tableName, Dictionary<string, string> columns);
         bool RenewTbl(string tableName, List<ColumnData> columns);
