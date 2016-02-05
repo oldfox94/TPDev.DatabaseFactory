@@ -6,16 +6,16 @@ using SQLiteLibrary.Operations;
 using SQLLibrary.Operations;
 using System;
 
-namespace DbFactory
+namespace DatabaseFactory
 {
     public class DbFactory
     {
-        IInsertOperations Insert { get; set; }
-        IUpdateOperations Update { get; set; }
-        IDeleteOperations Delete { get; set; }
-        ICheckOperations Check { get; set; }
-        IGetOperations Get { get; set; }
-        IExecuteOperations Execute { get; set; }
+        public IInsertOperations Insert { get; set; }
+        public IUpdateOperations Update { get; set; }
+        public IDeleteOperations Delete { get; set; }
+        public ICheckOperations Check { get; set; }
+        public IGetOperations Get { get; set; }
+        public IExecuteOperations Execute { get; set; }
 
 
         public DbFactory(DbType type, DbConnectionData data)
@@ -64,7 +64,7 @@ namespace DbFactory
                     return null;
 
                 case DbType.SQLite:
-                    return null;
+                    return new SQLiteInsert();
 
                 case DbType.MySQL:
                     return null;
@@ -98,7 +98,7 @@ namespace DbFactory
                     return null;
 
                 case DbType.SQLite:
-                    return null;
+                    return new SQLiteDelete();
 
                 case DbType.MySQL:
                     return null;
@@ -115,7 +115,7 @@ namespace DbFactory
                     return null;
 
                 case DbType.SQLite:
-                    return null;
+                    return new SQLiteCheck();
 
                 case DbType.MySQL:
                     return null;
@@ -132,7 +132,7 @@ namespace DbFactory
                     return null;
 
                 case DbType.SQLite:
-                    return null;
+                    return new SQLiteGet();
 
                 case DbType.MySQL:
                     return null;

@@ -7,8 +7,8 @@
     <ProjectGuid>{2B032223-3DBC-4C29-AC7D-F3D62A623A37}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DbFactory</RootNamespace>
-    <AssemblyName>DbFactory</AssemblyName>
+    <RootNamespace>DatabaseFactory</RootNamespace>
+    <AssemblyName>DatabaseFactory</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

@@ -1,6 +1,6 @@
 ﻿using DbInterface.Models;
 
-namespace DbFactory
+namespace DatabaseFactory
 {
     public class DbFactorySettings
     {
