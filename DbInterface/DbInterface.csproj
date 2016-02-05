@@ -43,6 +43,9 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Helpers\ColumnHelper.cs" />
+    <Compile Include="Helpers\ConvertionHelper.cs" />
+    <Compile Include="Helpers\ScriptHelper.cs" />
     <Compile Include="Interfaces\ICheckOperations.cs" />
     <Compile Include="Interfaces\IDeleteOperations.cs" />
     <Compile Include="Interfaces\IExecuteOperations.cs" />
@@ -50,6 +53,7 @@
     <Compile Include="Interfaces\IInsertOperations.cs" />
     <Compile Include="Interfaces\IUpdateOperations.cs" />
     <Compile Include="Models\ColumnData.cs" />
+    <Compile Include="Models\DbCIC.cs" />
     <Compile Include="Models\DbConnectionData.cs" />
     <Compile Include="Models\Enums.cs" />
     <Compile Include="SLLog.cs" />
