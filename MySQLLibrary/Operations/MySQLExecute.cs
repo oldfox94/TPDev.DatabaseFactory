@@ -27,7 +27,7 @@ namespace MySQLLibrary.Operations
                 SLLog.WriteError(new LogData
                 {
                     Source = ToString(),
-                    FunctionName = "ExecuteNonQuery",
+                    FunctionName = "ExecuteNonQuery Error!",
                     Ex = ex,
                 });
                 return -1;
@@ -38,12 +38,57 @@ namespace MySQLLibrary.Operations
 
         public int ExecuteNonQuery(List<string> sqlList)
         {
-            throw new NotImplementedException();
+            int rowsUpdated = 0;
+            try
+            {
+                Settings.Con.Open();
+
+                foreach (var sql in sqlList)
+                {
+                    var cmd = new MySqlCommand(sql, Settings.Con);
+                    rowsUpdated += cmd.ExecuteNonQuery();
+                }
+
+                Settings.Con.Close();
+            }
+            catch (Exception ex)
+            {
+                SLLog.WriteError(new LogData
+                {
+                    Source = ToString(),
+                    FunctionName = "ExecuteNonQuery Error!",
+                    Ex = ex,
+                });
+                return -1;
+            }
+
+            return rowsUpdated;
         }
 
         public object ExecuteScalar(string sql)
         {
-            throw new NotImplementedException();
+            object value = null;
+            try
+            {
+                Settings.Con.Open();
+
+                var cmd = new MySqlCommand(sql, Settings.Con);
+                value = cmd.ExecuteScalar();
+
+                Settings.Con.Close();
+            }
+            catch (Exception ex)
+            {
+                SLLog.WriteError(new LogData
+                {
+                    Source = ToString(),
+                    FunctionName = "ExecuteNonQuery Error!",
+                    Ex = ex,
+                });
+                return null;
+            }
+
+            return value;
         }
 
         public bool RenewTbl(string tableName, List<ColumnData> columns)

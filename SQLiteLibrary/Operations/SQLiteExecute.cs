@@ -27,7 +27,7 @@ namespace SQLiteLibrary.Operations
                 SLLog.WriteError(new LogData
                 {
                     Source = ToString(),
-                    FunctionName = "ExecuteNonQuery",
+                    FunctionName = "ExecuteNonQuery Error!",
                     Ex = ex,
                 });
                 return -1;
@@ -56,7 +56,7 @@ namespace SQLiteLibrary.Operations
                 SLLog.WriteError(new LogData
                 {
                     Source = ToString(),
-                    FunctionName = "ExecuteNonQuery",
+                    FunctionName = "ExecuteNonQuery Error!",
                     Ex = ex,
                 });
                 return -1;
@@ -82,7 +82,7 @@ namespace SQLiteLibrary.Operations
                 SLLog.WriteError(new LogData
                 {
                     Source = ToString(),
-                    FunctionName = "ExecuteNonQuery",
+                    FunctionName = "ExecuteNonQuery Error!",
                     Ex = ex,
                 });
                 return null;
