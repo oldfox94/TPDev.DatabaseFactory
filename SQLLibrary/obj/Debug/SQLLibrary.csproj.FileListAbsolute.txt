@@ -7,3 +7,12 @@ C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\SQLLibrary\obj
 C:\Users\rh\documents\visual studio 2015\Projects\DatabaseFactory\SQLLibrary\obj\Debug\SQLLibrary.pdb
 C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\SQLLibrary\bin\Debug\DbLogger.dll
 C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\SQLLibrary\bin\Debug\DbLogger.pdb
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\SQLLibrary\bin\Debug\SQLLibrary.dll
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\SQLLibrary\bin\Debug\SQLLibrary.pdb
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\SQLLibrary\bin\Debug\DbInterface.dll
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\SQLLibrary\bin\Debug\DbLogger.dll
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\SQLLibrary\bin\Debug\DbInterface.pdb
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\SQLLibrary\bin\Debug\DbLogger.pdb
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\SQLLibrary\obj\Debug\SQLLibrary.csprojResolveAssemblyReference.cache
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\SQLLibrary\obj\Debug\SQLLibrary.dll
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\SQLLibrary\obj\Debug\SQLLibrary.pdb

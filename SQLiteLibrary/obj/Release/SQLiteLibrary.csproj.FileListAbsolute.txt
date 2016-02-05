@@ -1,0 +1,10 @@
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\SQLiteLibrary\bin\Release\SQLite.Interop.dll
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\SQLiteLibrary\bin\Release\SQLiteLibrary.dll
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\SQLiteLibrary\bin\Release\SQLiteLibrary.pdb
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\SQLiteLibrary\bin\Release\DbInterface.dll
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\SQLiteLibrary\bin\Release\DbLogger.dll
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\SQLiteLibrary\bin\Release\DbInterface.pdb
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\SQLiteLibrary\bin\Release\DbLogger.pdb
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\SQLiteLibrary\obj\Release\SQLiteLibrary.csprojResolveAssemblyReference.cache
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\SQLiteLibrary\obj\Release\SQLiteLibrary.dll
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\SQLiteLibrary\obj\Release\SQLiteLibrary.pdb

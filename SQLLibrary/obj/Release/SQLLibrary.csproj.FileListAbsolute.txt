@@ -1,0 +1,9 @@
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\SQLLibrary\bin\Release\SQLLibrary.dll
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\SQLLibrary\bin\Release\SQLLibrary.pdb
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\SQLLibrary\bin\Release\DbInterface.dll
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\SQLLibrary\bin\Release\DbLogger.dll
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\SQLLibrary\bin\Release\DbInterface.pdb
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\SQLLibrary\bin\Release\DbLogger.pdb
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\SQLLibrary\obj\Release\SQLLibrary.csprojResolveAssemblyReference.cache
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\SQLLibrary\obj\Release\SQLLibrary.dll
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\SQLLibrary\obj\Release\SQLLibrary.pdb

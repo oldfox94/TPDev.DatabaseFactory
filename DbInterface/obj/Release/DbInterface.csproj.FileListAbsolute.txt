@@ -1,0 +1,7 @@
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\DbInterface\bin\Release\DbInterface.dll
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\DbInterface\bin\Release\DbInterface.pdb
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\DbInterface\bin\Release\DbLogger.dll
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\DbInterface\bin\Release\DbLogger.pdb
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\DbInterface\obj\Release\DbInterface.csprojResolveAssemblyReference.cache
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\DbInterface\obj\Release\DbInterface.dll
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\DbInterface\obj\Release\DbInterface.pdb

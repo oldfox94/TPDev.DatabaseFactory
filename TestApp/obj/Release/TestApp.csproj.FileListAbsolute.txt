@@ -1,0 +1,5 @@
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\TestApp\obj\Release\TestApp.csprojResolveAssemblyReference.cache
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\TestApp\obj\Release\MainWindow.g.cs
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\TestApp\obj\Release\App.g.cs
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\TestApp\obj\Release\TestApp_MarkupCompile.cache
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\TestApp\obj\Release\TestApp_MarkupCompile.lref

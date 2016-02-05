@@ -1,0 +1,4 @@
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\DbLogger\bin\Release\DbLogger.dll
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\DbLogger\bin\Release\DbLogger.pdb
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\DbLogger\obj\Release\DbLogger.dll
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\DbLogger\obj\Release\DbLogger.pdb
