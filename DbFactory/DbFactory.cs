@@ -81,7 +81,7 @@ namespace DatabaseFactory
                     return null;
 
                 case DbType.SQLite:
-                    return null;
+                    return new SQLiteUpdate();
 
                 case DbType.MySQL:
                     return null;
