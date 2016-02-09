@@ -27,7 +27,7 @@ namespace TestApp
 
             //SQLite
             connectionData.Path = Environment.CurrentDirectory;
-            connectionData.Name = "D_TestApp";
+            connectionData.Name = "D_TestApp.db";
             m_dbFactory = new DbFactory(DbType.SQLite, connectionData);
 
             //MySQL
@@ -56,6 +56,20 @@ namespace TestApp
             colList.Add(new ColumnData { Name = "Text", Type = DbDEF.TxtNull });
 
             return colList;
+        }
+
+        private void OnCreateSampleTableClick(object sender, RoutedEventArgs e)
+        {
+            CreateTable();
+            RefreshDataTbl();
+        }
+
+        private void RefreshDataTbl()
+        {
+            var tbl = m_dbFactory.Get.GetTable("SELECT * FROM TestTbl", "TestTbl");
+
+            Grid.ItemsSource = null;
+            Grid.ItemsSource = tbl.DefaultView;
         }
     }
 }

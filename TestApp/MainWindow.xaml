@@ -7,6 +7,29 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.ColumnSpan="4" Orientation="Horizontal">
+            <Button Content="Create Sample Table" MaxWidth="120" Click="OnCreateSampleTableClick"/>
+        </StackPanel>
+
+        <StackPanel Grid.ColumnSpan="4" Grid.Row="1" Orientation="Horizontal">
+            
+        </StackPanel>
         
+        <DataGrid Grid.ColumnSpan="4" Grid.Row="2" Name="Grid" AutoGenerateColumns="True">
+            
+        </DataGrid>
     </Grid>
 </Window>
