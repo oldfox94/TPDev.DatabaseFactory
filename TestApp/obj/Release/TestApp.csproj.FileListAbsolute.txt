@@ -3,3 +3,13 @@ D:\Programming\VisualStudio\TPDev.DatabaseFactory\TestApp\obj\Release\MainWindow
 D:\Programming\VisualStudio\TPDev.DatabaseFactory\TestApp\obj\Release\App.g.cs
 D:\Programming\VisualStudio\TPDev.DatabaseFactory\TestApp\obj\Release\TestApp_MarkupCompile.cache
 D:\Programming\VisualStudio\TPDev.DatabaseFactory\TestApp\obj\Release\TestApp_MarkupCompile.lref
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\TestApp\bin\Release\TestApp.exe.config
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\TestApp\bin\Release\TestApp.exe
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\TestApp\bin\Release\TestApp.pdb
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\TestApp\bin\Release\DatabaseFactory.dll
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\TestApp\obj\Release\MainWindow.baml
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\TestApp\obj\Release\TestApp.g.resources
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\TestApp\obj\Release\TestApp.Properties.Resources.resources
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\TestApp\obj\Release\TestApp.csproj.GenerateResource.Cache
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\TestApp\obj\Release\TestApp.exe
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\TestApp\obj\Release\TestApp.pdb
