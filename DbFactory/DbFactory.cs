@@ -51,7 +51,7 @@ namespace DatabaseFactory
             if (string.IsNullOrEmpty(logPath))
                 logPath = Environment.CurrentDirectory;
 
-            SLLog.Logger = new DbLogger.DbLogger(logFileName, logPath, DbFactorySettings.Type.ToString());
+            SLLog.Logger = new DbLogger.DbLogger(logPath, logFileName, DbFactorySettings.Type.ToString());
             SLLog.WriteInfo("InitLogger", "Logger successfully initialized!");
         }
 

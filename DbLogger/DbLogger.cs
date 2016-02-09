@@ -7,10 +7,10 @@ namespace DbLogger
 {
     public class DbLogger
     {
-        private List<LogData> LogDataList { get; set; }
+        private List<LogData> m_LogDataList { get; set; }
         public DbLogger(string logPath, string logFileName, string logId = "NoId")
         {
-            LogDataList = new List<LogData>();
+            m_LogDataList = new List<LogData>();
 
             Settings.LogId = logId;
             Settings.LogFile = Path.Combine(logPath, logFileName + ".log");
@@ -25,6 +25,7 @@ namespace DbLogger
             data.Type = LogType.Info;
             data.ExDate = DateTime.Now;
 
+            m_LogDataList.Add(data);
             LogToFile();
         }
 
@@ -33,6 +34,7 @@ namespace DbLogger
             data.Type = LogType.Warning;
             data.ExDate = DateTime.Now;
 
+            m_LogDataList.Add(data);
             LogToFile();
         }
 
@@ -47,6 +49,7 @@ namespace DbLogger
                 data.Message = data.Ex.Message;
             }
 
+            m_LogDataList.Add(data);
             LogToFile();
         }
 
@@ -54,7 +57,7 @@ namespace DbLogger
         private void LogToFile()
         {
             var file = new StreamWriter(Settings.LogFile);
-            foreach(var logEntry in LogDataList)
+            foreach(var logEntry in m_LogDataList)
             {
                 if (logEntry.IsInLogFile) continue;
 
