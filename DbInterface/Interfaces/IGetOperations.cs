@@ -5,11 +5,11 @@ namespace DbInterface.Interfaces
 {
     public interface IGetOperations
     {
-        DataSet GetDataSet(Dictionary<string, string> tblSqlDict, string dataSetName);
+        DataSet GetDataSet(List<string> tblSqlDict, string dataSetName);
 
         DataTable GetTableSchema(string tableName);
 
-        DataTable GetTable(string sql, string tableName);
+        DataTable GetTable(string sql);
         DataTable GetTable(string tableName, string where = null, string orderBy = null);
 
         DataRow GetRow(string sql);

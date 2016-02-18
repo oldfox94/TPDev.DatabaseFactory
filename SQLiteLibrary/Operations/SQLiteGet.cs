@@ -1,6 +1,7 @@
 ﻿using DbInterface;
 using DbInterface.Helpers;
 using DbInterface.Interfaces;
+using DbInterface.Models;
 using DbLogger.Models;
 using System;
 using System.Collections.Generic;
@@ -16,14 +17,14 @@ namespace SQLiteLibrary.Operations
 
         }
 
-        public DataSet GetDataSet(Dictionary<string, string> tblSqlDict, string dataSetName)
+        public DataSet GetDataSet(List<string> tblSqlDict, string dataSetName)
         {
             var ds = new DataSet(dataSetName);
             try
             {
                 foreach(var item in tblSqlDict)
                 {
-                    var tbl = GetTable(item.Value, item.Key);
+                    var tbl = GetTable(item);
                     ds.Tables.Add(tbl);   
                 }
             }
@@ -44,7 +45,7 @@ namespace SQLiteLibrary.Operations
         {
             try
             {
-                var tbl = GetTable(sql, "tbl");
+                var tbl = GetTable(sql);
                 if (tbl.Rows.Count <= 0) return null;
                 return tbl.Rows[0];
             }
@@ -82,15 +83,22 @@ namespace SQLiteLibrary.Operations
             }
         }
 
-        public DataTable GetTable(string sql, string tableName)
+        public DataTable GetTable(string sql)
         {
-            var dt = new DataTable(tableName);
+            var dt = new DataTable();
             try
             {
                 Settings.Con.Open();
 
                 var cmd = new SQLiteCommand(sql, Settings.Con);
                 var reader = cmd.ExecuteReader();
+
+                var schemaTbl = reader.GetSchemaTable();
+                if (schemaTbl.Rows.Count <= 0) return dt;
+
+                var schemaRow = schemaTbl.Rows[0];
+                dt.TableName = schemaRow[DbCIC.BaseTableName].ToString();
+
                 dt.Load(reader);
 
                 reader.Close();
@@ -118,7 +126,7 @@ namespace SQLiteLibrary.Operations
                 var orderCnd = ConvertionHelper.GetOrderBy(orderBy);
 
                 var sql = string.Format(@"SELECT * FROM {0} {1} {2}", tableName, where, orderBy);
-                dt = GetTable(sql, tableName);
+                dt = GetTable(sql);
             }
             catch(Exception ex)
             {
@@ -170,7 +178,7 @@ namespace SQLiteLibrary.Operations
 
                 var sql = string.Format(@"SELECT {1} FROM {0} {2}", tableName, columnName, whereCnd);
 
-                var tbl = GetTable(sql, tableName);
+                var tbl = GetTable(sql);
                 if (tbl.Rows.Count <= 0) return resultStr;
 
                 resultStr = tbl.Rows[0][columnName].ToString();
@@ -196,7 +204,7 @@ namespace SQLiteLibrary.Operations
                 var whereCnd = ConvertionHelper.GetWhere(where);
 
                 var sql = string.Format(@"SELECT {0} FROM {1} {2} ORDER BY {0} DESC", sortOrderColName, tableName, whereCnd);
-                var tbl = GetTable(sql, tableName);
+                var tbl = GetTable(sql);
 
                 if (tbl.Rows.Count <= 0) return result;
                 result = string.IsNullOrEmpty(tbl.Rows[0][sortOrderColName].ToString()) ? "0" : tbl.Rows[0][sortOrderColName].ToString();

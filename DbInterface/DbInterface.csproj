@@ -46,6 +46,7 @@
     <Compile Include="Helpers\ColumnHelper.cs" />
     <Compile Include="Helpers\ConvertionHelper.cs" />
     <Compile Include="Helpers\ScriptHelper.cs" />
+    <Compile Include="Helpers\TableHelper.cs" />
     <Compile Include="Interfaces\ICheckOperations.cs" />
     <Compile Include="Interfaces\IDeleteOperations.cs" />
     <Compile Include="Interfaces\IExecuteOperations.cs" />
