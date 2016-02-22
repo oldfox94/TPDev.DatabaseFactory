@@ -8,6 +8,7 @@ namespace DbInterface.Interfaces
         bool UpdateDataSet(DataSet dataSet);
 
         bool UpdateTables(List<DataTable> tableList);
+        bool UpdateTable(DataTable table);
         bool UpdateTable(DataTable table, string tableName);
 
         bool UpdateOneValue(string tableName, string column, string value, string where);
