@@ -20,7 +20,27 @@ namespace SQLiteLibrary.Operations
 
         public bool UpdateDataSet(DataSet dataSet)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var result = false;
+                foreach(DataTable tbl in dataSet.Tables)
+                {
+                    result = UpdateTable(tbl);
+                    if (!result) break;
+                }
+
+                return result;
+            }
+            catch(Exception ex)
+            {
+                SLLog.WriteError(new LogData
+                {
+                    Source = ToString(),
+                    FunctionName = "UpdateDataSet Error!",
+                    Ex = ex,
+                });
+                return false;
+            }
         }
 
         public bool UpdateOneValue(string tableName, string column, string value, string where)
@@ -48,10 +68,31 @@ namespace SQLiteLibrary.Operations
             }
         }
 
+        public bool UpdateTable(DataTable table)
+        {
+            try
+            {
+                var tableName = table.TableName;
+                return UpdateTable(table, tableName);
+            }
+            catch(Exception ex)
+            {
+                SLLog.WriteError(new LogData
+                {
+                    Source = ToString(),
+                    FunctionName = "UpdateTable Error!",
+                    Ex = ex,
+                });
+                return false;
+            }
+        }
+
         public bool UpdateTable(DataTable table, string tableName)
         {
             try
             {
+                TableHelper.SetDefaultColumnValues(table);
+
                 Settings.Con.Open();
 
                 var adapter = new SQLiteDataAdapter(string.Format(@"SELECT * FROM {0}", tableName), Settings.Con);
@@ -67,7 +108,7 @@ namespace SQLiteLibrary.Operations
                 SLLog.WriteError(new LogData
                 {
                     Source = ToString(),
-                    FunctionName = "UpdateOneValue Error!",
+                    FunctionName = "UpdateTable Error!",
                     Ex = ex,
                 });
                 return false;
@@ -76,7 +117,26 @@ namespace SQLiteLibrary.Operations
 
         public bool UpdateTables(List<DataTable> tableList)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var result = false;
+                foreach(DataTable tbl in tableList)
+                {
+                    result = UpdateTable(tbl);
+                }
+
+                return result;
+            }
+            catch(Exception ex)
+            {
+                SLLog.WriteError(new LogData
+                {
+                    Source = ToString(),
+                    FunctionName = "UpdateTables Error!",
+                    Ex = ex,
+                });
+                return false;
+            }
         }
     }
 }
