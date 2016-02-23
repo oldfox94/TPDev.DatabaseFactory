@@ -1,4 +1,3 @@
-D:\Programming\VisualStudio\TPDev.DatabaseFactory\TestApp\bin\Release\SQLite.Interop.dll
 D:\Programming\VisualStudio\TPDev.DatabaseFactory\TestApp\bin\Release\TestApp.exe.config
 D:\Programming\VisualStudio\TPDev.DatabaseFactory\TestApp\bin\Release\TestApp.exe
 D:\Programming\VisualStudio\TPDev.DatabaseFactory\TestApp\bin\Release\TestApp.pdb
@@ -27,3 +26,4 @@ D:\Programming\VisualStudio\TPDev.DatabaseFactory\TestApp\obj\Release\TestApp.Pr
 D:\Programming\VisualStudio\TPDev.DatabaseFactory\TestApp\obj\Release\TestApp.csproj.GenerateResource.Cache
 D:\Programming\VisualStudio\TPDev.DatabaseFactory\TestApp\obj\Release\TestApp.exe
 D:\Programming\VisualStudio\TPDev.DatabaseFactory\TestApp\obj\Release\TestApp.pdb
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\TestApp\bin\Release\SQLite.Interop.dll
