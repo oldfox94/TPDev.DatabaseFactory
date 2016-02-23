@@ -1,5 +1,16 @@
 === DatabaseFactory ===
 ++++++ CHANGELOG ++++++
 
+
+
+V1.0.0.4:
+UPD		SQLite should now completed implemented (Not fully tested!!)
+ADD		UpdateTable, UpdateTables & UpdateDataSet
+ADD		RenewTbl
+FIX		SortOrder calculation
+
+
 V1.0.0.3:
-- 
+ADD		Logger now fully implemented
+ADD		Basestructure of SQL & MySQL implemented
+
