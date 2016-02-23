@@ -66,10 +66,37 @@ namespace TestApp
 
         private void RefreshDataTbl()
         {
-            var tbl = m_dbFactory.Get.GetTable("SELECT * FROM TestTbl", "TestTbl");
+            var tbl = m_dbFactory.Get.GetTable("SELECT * FROM TestTbl");
 
             Grid.ItemsSource = null;
             Grid.ItemsSource = tbl.DefaultView;
+        }
+
+        private void UpdateDataSet()
+        {
+            var ds = m_dbFactory.Get.GetDataSet(new List<string> { @"SELECT * FROM TestTbl" }, "TestDs");
+            if (ds == null || ds.Tables.Count <= 0) return;
+
+            var tbl = ds.Tables[0];
+            if (tbl.Rows.Count <= 0)
+            {
+                var dr = tbl.NewRow();
+                dr["Pk"] = Guid.NewGuid().ToString();
+                tbl.Rows.Add(dr);
+            };
+
+            var row = tbl.Rows[0];
+            if (row == null) return;
+
+            row["Name"] = "Updatet with DataSet";
+
+            m_dbFactory.Update.UpdateDataSet(ds);
+        }
+
+        private void OnUpdateWithDataSetClick(object sender, RoutedEventArgs e)
+        {
+            UpdateDataSet();
+            RefreshDataTbl();
         }
     }
 }
