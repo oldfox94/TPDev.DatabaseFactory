@@ -14,12 +14,12 @@ namespace DbInterface.Helpers
 
                 if (dr.RowState == DataRowState.Added)
                 {
-                    dr[DbCIC.InsertOn] = DateTime.Now;
+                    dr[DbCIC.InsertOn] = DateTime.Now.ToString();
                 }
 
                 if(dr.RowState == DataRowState.Modified || dr.RowState == DataRowState.Detached)
                 {
-                    dr[DbCIC.ModifyOn] = DateTime.Now;
+                    dr[DbCIC.ModifyOn] = DateTime.Now.ToString();
                 }
             }
         }

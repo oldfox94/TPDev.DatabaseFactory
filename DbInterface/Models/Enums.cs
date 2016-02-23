@@ -28,6 +28,9 @@
         public const string TxtNotNullPk = "TEXT  NOT NULL PRIMARY KEY";
         public const string TxtUniNotNullPk = "TEXT  UNIQUE NOT NULL PRIMARY KEY";
 
+        public const string IntNull = "INTEGER  NULL";
+        public const string IntNotNull = "INTEGER  NOT NULL";
+
         public const string BoolNull = "BOOLEAN  NULL";
         public const string BoolNotNull = "BOOLEAN  NOT NULL";
     }
