@@ -56,7 +56,7 @@ namespace DbLogger
 
         private void LogToFile()
         {
-            var file = new StreamWriter(Settings.LogFile);
+            var file = new StreamWriter(Settings.LogFile, true);
             foreach(var logEntry in m_LogDataList)
             {
                 if (logEntry.IsInLogFile) continue;
@@ -83,7 +83,7 @@ namespace DbLogger
                             break;
                     }
 
-                    file.WriteLine(line);
+                    file.Write(line);
                     logEntry.IsInLogFile = true;
                 }
                 catch(Exception)
