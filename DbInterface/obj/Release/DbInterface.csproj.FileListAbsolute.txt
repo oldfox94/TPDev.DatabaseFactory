@@ -5,3 +5,12 @@ D:\Programming\VisualStudio\TPDev.DatabaseFactory\DbInterface\bin\Release\DbLogg
 D:\Programming\VisualStudio\TPDev.DatabaseFactory\DbInterface\obj\Release\DbInterface.csprojResolveAssemblyReference.cache
 D:\Programming\VisualStudio\TPDev.DatabaseFactory\DbInterface\obj\Release\DbInterface.dll
 D:\Programming\VisualStudio\TPDev.DatabaseFactory\DbInterface\obj\Release\DbInterface.pdb
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\DbInterface\Binaries\DbInterface.dll
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\DbInterface\Binaries\DbInterface.pdb
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\DbInterface\Binaries\DbLogger.dll
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\DbInterface\Binaries\DbLogger.pdb
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\DbInterface\obj\Release\DbInterface.csprojResolveAssemblyReference.cache
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\DbInterface\obj\Release\DbInterface.dll
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\DbInterface\obj\Release\DbInterface.pdb
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\Binaries\DbInterface.dll
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\Binaries\DbInterface.pdb

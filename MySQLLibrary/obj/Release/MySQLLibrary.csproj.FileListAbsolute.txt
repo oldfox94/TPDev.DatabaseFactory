@@ -30,3 +30,19 @@ D:\Programming\VisualStudio\TPDev.DatabaseFactory\MySQLLibrary\bin\Release\de\Sy
 D:\Programming\VisualStudio\TPDev.DatabaseFactory\MySQLLibrary\obj\Release\MySQLLibrary.csprojResolveAssemblyReference.cache
 D:\Programming\VisualStudio\TPDev.DatabaseFactory\MySQLLibrary\obj\Release\MySQLLibrary.dll
 D:\Programming\VisualStudio\TPDev.DatabaseFactory\MySQLLibrary\obj\Release\MySQLLibrary.pdb
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\MySQLLibrary\Binaries\MySQLLibrary.dll
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\MySQLLibrary\Binaries\MySQLLibrary.pdb
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\MySQLLibrary\Binaries\DbInterface.dll
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\MySQLLibrary\Binaries\DbLogger.dll
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\MySQLLibrary\Binaries\MySql.Data.dll
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\MySQLLibrary\Binaries\MySql.Data.Entity.EF5.dll
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\MySQLLibrary\Binaries\MySql.Data.Entity.EF6.dll
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\MySQLLibrary\Binaries\MySql.Fabric.Plugin.dll
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\MySQLLibrary\Binaries\MySql.Web.dll
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\MySQLLibrary\Binaries\DbInterface.pdb
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\MySQLLibrary\Binaries\DbLogger.pdb
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\MySQLLibrary\obj\Release\MySQLLibrary.csprojResolveAssemblyReference.cache
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\MySQLLibrary\obj\Release\MySQLLibrary.dll
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\MySQLLibrary\obj\Release\MySQLLibrary.pdb
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\Binaries\MySQLLibrary.dll
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\Binaries\MySQLLibrary.pdb

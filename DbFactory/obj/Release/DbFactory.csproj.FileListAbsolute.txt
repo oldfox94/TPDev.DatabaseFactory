@@ -16,3 +16,5 @@ D:\Programming\VisualStudio\TPDev.DatabaseFactory\DbFactory\bin\Release\SQLLibra
 D:\Programming\VisualStudio\TPDev.DatabaseFactory\DbFactory\obj\Release\DbFactory.csprojResolveAssemblyReference.cache
 D:\Programming\VisualStudio\TPDev.DatabaseFactory\DbFactory\obj\Release\DatabaseFactory.dll
 D:\Programming\VisualStudio\TPDev.DatabaseFactory\DbFactory\obj\Release\DatabaseFactory.pdb
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\DbFactory\obj\Release\DatabaseFactory.dll
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\DbFactory\obj\Release\DatabaseFactory.pdb
