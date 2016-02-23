@@ -8,3 +8,6 @@ D:\Programming\VisualStudio\TPDev.DatabaseFactory\SQLiteLibrary\bin\Release\DbLo
 D:\Programming\VisualStudio\TPDev.DatabaseFactory\SQLiteLibrary\obj\Release\SQLiteLibrary.csprojResolveAssemblyReference.cache
 D:\Programming\VisualStudio\TPDev.DatabaseFactory\SQLiteLibrary\obj\Release\SQLiteLibrary.dll
 D:\Programming\VisualStudio\TPDev.DatabaseFactory\SQLiteLibrary\obj\Release\SQLiteLibrary.pdb
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\SQLiteLibrary\obj\Release\SQLiteLibrary.csprojResolveAssemblyReference.cache
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\SQLiteLibrary\obj\Release\SQLiteLibrary.dll
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\SQLiteLibrary\obj\Release\SQLiteLibrary.pdb
