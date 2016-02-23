@@ -1,4 +1,5 @@
 ﻿using DbInterface.Models;
+using System;
 
 namespace DbInterface.Helpers
 {
@@ -61,6 +62,30 @@ namespace DbInterface.Helpers
         {
             if (string.IsNullOrEmpty(strIn)) return string.Empty;
             return strIn.Replace("'", "''");
+        }
+
+        //Get predefined operation strings for SQL
+        public static string WHERE(string ColName, string Value)
+        {
+            return ColName + " = '" + Value + "'";
+        }
+
+        public static string WHERE(string ColName, string whereOperator, string Value)
+        {
+            return ColName + " " + whereOperator + " '" + Value + "'";
+        }
+
+        public static string WHERE(string ColName, string whereOperator, DateTime Value)
+        {
+            string date = Value.ToString("yyyy-MM-dd");
+            var where = "datetime('" + date + "') " + whereOperator;
+            where += string.Format(" datetime(substr({0}, 7, 4) || '-' || substr({0}, 4, 2) || '-' || substr({0}, 1, 2))", ColName);
+            return where;
+        }
+
+        public static string ORDERBY(string colName, string orderBy)
+        {
+            return colName + " " + orderBy;
         }
     }
 }
