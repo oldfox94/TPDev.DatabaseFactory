@@ -32,5 +32,24 @@ namespace DbInterface.Helpers
 
             return data;
         }
+
+        public static string GetColumnString(List<ColumnData> colList, bool ignoreExists = false)
+        {
+            var colRetString = string.Empty;
+
+            foreach (var col in colList)
+            {
+                if (col.existsInDB || ignoreExists)
+                    colRetString += col.Name;
+                else
+                    colRetString += string.Format("'{0}' AS {1}", col.DefaultValue, col.Name);
+
+                colRetString += ", ";
+            }
+
+            colRetString = colRetString.Remove(colRetString.Length - 2, 2);
+
+            return colRetString;
+        }
     }
 }
