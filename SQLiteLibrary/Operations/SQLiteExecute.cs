@@ -13,11 +13,9 @@ namespace SQLiteLibrary.Operations
     public class SQLiteExecute : IExecuteOperations
     {
         SQLiteGet m_Get { get; set; }
-        SQLiteInsert m_Insert { get; set; }
         public SQLiteExecute()
         {
             m_Get = new SQLiteGet();
-            m_Insert = new SQLiteInsert();
         }
 
         public int ExecuteNonQuery(string sql)
