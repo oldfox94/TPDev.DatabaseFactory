@@ -203,7 +203,7 @@ namespace SQLiteLibrary.Operations
             {
                 var whereCnd = ConvertionHelper.GetWhere(where);
 
-                var sql = string.Format(@"SELECT {0} FROM {1} {2} ORDER BY {0} DESC", sortOrderColName, tableName, whereCnd);
+                var sql = string.Format(@"SELECT {0} FROM {1} {2} ORDER BY CAST({0} AS INTEGER) DESC", sortOrderColName, tableName, whereCnd);
                 var tbl = GetTable(sql);
 
                 if (tbl.Rows.Count <= 0) return result;
