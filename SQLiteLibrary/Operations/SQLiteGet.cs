@@ -123,9 +123,9 @@ namespace SQLiteLibrary.Operations
             try
             {
                 var whereCond = ConvertionHelper.GetWhere(where);
-                var orderCnd = ConvertionHelper.GetOrderBy(orderBy);
+                var orderCond = ConvertionHelper.GetOrderBy(orderBy);
 
-                var sql = string.Format(@"SELECT * FROM {0} {1} {2}", tableName, where, orderBy);
+                var sql = string.Format(@"SELECT * FROM {0} {1} {2}", tableName, whereCond, orderCond);
                 dt = GetTable(sql);
             }
             catch(Exception ex)

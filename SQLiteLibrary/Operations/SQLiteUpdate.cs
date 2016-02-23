@@ -49,7 +49,7 @@ namespace SQLiteLibrary.Operations
             {
                 var whereCnd = ConvertionHelper.GetWhere(where);
 
-                var sql = string.Format(@"UPDATE {0} SET {1} = '{2}', {3} = '{4}' WHERE {5}",
+                var sql = string.Format(@"UPDATE {0} SET {1} = '{2}', {3} = '{4}' {5}",
                             tableName, column, ConvertionHelper.CleanStringForSQL(value), DbCIC.ModifyOn, DateTime.Now.ToString(), whereCnd);
                 var result = m_Execute.ExecuteNonQuery(sql);
 
