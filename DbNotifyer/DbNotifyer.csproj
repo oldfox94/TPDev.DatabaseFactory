@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A4C12BFA-CA1C-42AA-8670-25000FA1D80B}</ProjectGuid>
+    <ProjectGuid>{3A20F5A5-82C2-4607-A6A8-1A717BEAB322}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DbInterface</RootNamespace>
-    <AssemblyName>DbInterface</AssemblyName>
+    <RootNamespace>DbNotifyer</RootNamespace>
+    <AssemblyName>DbNotifyer</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Hardcodet.Wpf.TaskbarNotification">
+      <HintPath>..\..\DLLs\NotifyIcon\Hardcodet.Wpf.TaskbarNotification.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,29 +46,8 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Helpers\ColumnHelper.cs" />
-    <Compile Include="Helpers\ConvertionHelper.cs" />
-    <Compile Include="Helpers\ScriptHelper.cs" />
-    <Compile Include="Helpers\TableHelper.cs" />
-    <Compile Include="Interfaces\ICheckOperations.cs" />
-    <Compile Include="Interfaces\IDeleteOperations.cs" />
-    <Compile Include="Interfaces\IExecuteOperations.cs" />
-    <Compile Include="Interfaces\IGetOperations.cs" />
-    <Compile Include="Interfaces\IInsertOperations.cs" />
-    <Compile Include="Interfaces\IUpdateOperations.cs" />
-    <Compile Include="Models\ColumnData.cs" />
-    <Compile Include="Models\DbCIC.cs" />
-    <Compile Include="Models\DbConnectionData.cs" />
-    <Compile Include="Models\Enums.cs" />
-    <Compile Include="SLLog.cs" />
+    <Compile Include="DbNotifyer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SLNotify.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DbLogger\DbLogger.csproj">
-      <Project>{12cf0444-a2e4-463a-99c3-733847bd61fc}</Project>
-      <Name>DbLogger</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
