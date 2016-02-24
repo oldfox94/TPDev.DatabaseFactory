@@ -35,6 +35,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,6 +49,14 @@
     </Compile>
     <Compile Include="DbNotifyer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Database.ico" />
+    <Resource Include="Images\DatabaseAdd.ico" />
+    <Resource Include="Images\DatabaseAlert.ico" />
+    <Resource Include="Images\DatabaseCheck.ico" />
+    <Resource Include="Images\DatabaseDelete.ico" />
+    <Resource Include="Images\DatabaseDown.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
