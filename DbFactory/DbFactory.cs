@@ -1,6 +1,7 @@
 ﻿using DbInterface;
 using DbInterface.Interfaces;
 using DbInterface.Models;
+using DbNotifyer.Models;
 using MySQLLibrary.Operations;
 using SQLiteLibrary.Operations;
 using SQLLibrary.Operations;
@@ -55,6 +56,10 @@ namespace DatabaseFactory
             SLLog.WriteInfo("InitLogger", "Logger successfully initialized!");
         }
 
+        public void InitNotifyIcon(NotifyData notifyData)
+        {
+            SLNotify.NotifyIcon = new DbNotifyer.DbNotifyer(notifyData);
+        }
 
         public IInsertOperations GetInsertService()
         {
