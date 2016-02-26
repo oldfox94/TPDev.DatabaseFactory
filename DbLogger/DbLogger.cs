@@ -1,6 +1,8 @@
-﻿using DbLogger.Models;
+﻿using DbLogger.Events;
+using DbLogger.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 
 namespace DbLogger
@@ -18,15 +20,27 @@ namespace DbLogger
             {
                 Directory.CreateDirectory(logPath);
             }
+
+            SLLogEvents.ShowLogFile += OnShowLogFile;
         }
 
-        public void WriteInfo(LogData data)
+        private void OnShowLogFile(SLLogEventArgs args)
+        {
+            if (!File.Exists(Settings.LogFile)) return;
+            Process.Start(Settings.LogFile);
+        }
+
+        public void WriteInfo(LogData data, bool onlyToolTipp = false)
         {
             data.Type = LogType.Info;
             data.ExDate = DateTime.Now;
 
-            m_LogDataList.Add(data);
-            LogToFile();
+            CreateBallonTipp(data);
+            if (!onlyToolTipp)
+            {
+                m_LogDataList.Add(data);
+                LogToFile();
+            }
         }
 
         public void WriteWarnng(LogData data)
@@ -35,6 +49,8 @@ namespace DbLogger
             data.ExDate = DateTime.Now;
 
             m_LogDataList.Add(data);
+            CreateBallonTipp(data);
+
             LogToFile();
         }
 
@@ -50,7 +66,16 @@ namespace DbLogger
             }
 
             m_LogDataList.Add(data);
+            CreateBallonTipp(data);
+
             LogToFile();
+        }
+
+        private void CreateBallonTipp(LogData data)
+        {
+            var title = string.Empty;
+
+            SLLogEvents.FireShowBallonTipp(new SLLogEventArgs { Type = data.Type, Titel = "DatabaseFactory " + data.Type.ToString() + "!", LogMessage = data.Message });
         }
 
 
