@@ -7,7 +7,7 @@ namespace DbInterface
     {
         public static DbLogger.DbLogger Logger { get; set; }
 
-        public static void WriteInfo(string function, string message)
+        public static void WriteInfo(string function, string message, bool onlyBallonTipp = false)
         {
             if (Logger == null)
                 Logger = new DbLogger.DbLogger(Environment.CurrentDirectory, "DbFactory");
@@ -18,7 +18,7 @@ namespace DbInterface
                 Message = message,
             };
 
-            Logger.WriteInfo(data);
+            Logger.WriteInfo(data, onlyBallonTipp);
         }
 
         public static void WriteWarning(string function, string source, string message)
