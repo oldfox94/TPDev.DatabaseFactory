@@ -103,6 +103,8 @@ namespace SQLiteLibrary.Operations
 
                 reader.Close();
                 Settings.Con.Close();
+
+                SLLog.WriteInfo("GetTable", "Getting Table successfully!", true);
             }
             catch(Exception ex)
             {
@@ -155,6 +157,8 @@ namespace SQLiteLibrary.Operations
 
                 reader.Close();
                 Settings.Con.Close();
+
+                SLLog.WriteInfo("GetTableSchema", "Getting Schema Table successfully!", true);
             }
             catch(Exception ex)
             {
@@ -208,6 +212,8 @@ namespace SQLiteLibrary.Operations
 
                 if (tbl.Rows.Count <= 0) return result;
                 result = string.IsNullOrEmpty(tbl.Rows[0][sortOrderColName].ToString()) ? "0" : tbl.Rows[0][sortOrderColName].ToString();
+
+                SLLog.WriteInfo("GetLastSortOrder", "Getting last sort order successfully! => " + result, true);
             }
             catch (Exception ex)
             {
@@ -229,6 +235,8 @@ namespace SQLiteLibrary.Operations
             {
                 var result = GetLastSortOrder(tableName, sortOrderColName, where);
                 lstSortOrder = Convert.ToString(Convert.ToInt32(result) + 1);
+
+                SLLog.WriteInfo("GetNextSortOrder", "Getting next sort order successfully! => " + lstSortOrder, true);
             }
             catch(Exception ex)
             {
