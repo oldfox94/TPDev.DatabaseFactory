@@ -28,6 +28,11 @@
         public const string TxtNotNullPk = "TEXT  NOT NULL PRIMARY KEY";
         public const string TxtUniNotNullPk = "TEXT  UNIQUE NOT NULL PRIMARY KEY";
 
+        public static string VarchrNull(int digits = 1){ return string.Format("VARCHAR({0})  NULL", digits); }
+        public static string VarchrNotNull(int digits = 1) { return string.Format("VARCHAR({0})  NOT NULL", digits); }
+        public static string VarchrNotNullPk(int digits = 1) { return string.Format("VARCHAR({0})  NOT NULL PRIMARY KEY", digits); }
+        public static string VarchrUniNotNullPk(int digits = 1) { return string.Format("VARCHAR({0})  UNIQUE NOT NULL PRIMARY KEY", digits); }
+
         public const string IntNull = "INTEGER  NULL";
         public const string IntNotNull = "INTEGER  NOT NULL";
 

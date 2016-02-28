@@ -9,13 +9,13 @@ namespace DbInterface.Helpers
         public static List<ColumnData> SetDefaultColumns(List<ColumnData> columns)
         {
             if (columns.Find(i => i.Name == DbCIC.DsStatus) == null)
-                columns.Add(new ColumnData { Name = DbCIC.DsStatus, Type = DbDEF.TxtNull, DefaultValue = "1" });
+                columns.Add(new ColumnData { Name = DbCIC.DsStatus, Type = DbDEF.VarchrNull(3), DefaultValue = "1" });
 
             if (columns.Find(i => i.Name == DbCIC.InsertOn) == null)
-                columns.Add(new ColumnData { Name = DbCIC.InsertOn, Type = DbDEF.TxtNull, DefaultValue = "01.01.1900" });
+                columns.Add(new ColumnData { Name = DbCIC.InsertOn, Type = DbDEF.VarchrNull(20), DefaultValue = "01.01.1900" });
 
             if (columns.Find(i => i.Name == DbCIC.ModifyOn) == null)
-                columns.Add(new ColumnData { Name = DbCIC.ModifyOn, Type = DbDEF.TxtNull });
+                columns.Add(new ColumnData { Name = DbCIC.ModifyOn, Type = DbDEF.VarchrNull(20) });
 
             return columns;
         }

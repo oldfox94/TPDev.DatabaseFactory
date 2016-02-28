@@ -72,7 +72,7 @@ namespace DatabaseFactory
                     return new SQLiteInsert();
 
                 case DbType.MySQL:
-                    return null;
+                    return new MySQLInsert();
             }
 
             return null;
@@ -89,7 +89,7 @@ namespace DatabaseFactory
                     return new SQLiteUpdate();
 
                 case DbType.MySQL:
-                    return null;
+                    return new MySQLUpdate();
             }
 
             return null;
@@ -106,7 +106,7 @@ namespace DatabaseFactory
                     return new SQLiteDelete();
 
                 case DbType.MySQL:
-                    return null;
+                    return new MySQLDelete();
             }
 
             return null;
@@ -123,7 +123,7 @@ namespace DatabaseFactory
                     return new SQLiteCheck();
 
                 case DbType.MySQL:
-                    return null;
+                    return new MySQLCheck();
             }
 
             return null;
@@ -140,7 +140,7 @@ namespace DatabaseFactory
                     return new SQLiteGet();
 
                 case DbType.MySQL:
-                    return null;
+                    return new MySQLGet();
             }
 
             return null;

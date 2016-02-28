@@ -22,7 +22,39 @@ namespace DbInterface.Helpers
                         sql += colSettings.Type;
                         if (!string.IsNullOrEmpty(colSettings.DefaultValue))
                         {
-                            sql += string.Format(@"DEFAULT '{0}'", colSettings.DefaultValue);
+                            sql += string.Format(@" DEFAULT '{0}'", colSettings.DefaultValue);
+                        }
+                        break;
+                    }
+                }
+
+                if (count != columns.Count)
+                    sql += ", ";
+                else
+                    sql += ")";
+            }
+
+            return sql;
+        }
+
+        public static string GetMySQLCreateTableSql(string tableName, List<ColumnData> columns)
+        {
+            var sql = string.Format(@"CREATE TABLE {0} (", tableName);
+
+            int count = 0;
+            foreach(var col in columns)
+            {
+                count++;
+
+                sql += string.Format(@"{0} ", col.Name);
+                foreach(var colSettings in columns)
+                {
+                    if(colSettings.Name == col.Name)
+                    {
+                        sql += colSettings.Type;
+                        if(!string.IsNullOrEmpty(colSettings.DefaultValue))
+                        {
+                            sql += string.Format(@" DEFAULT '{0}'", colSettings.DefaultValue);
                         }
                         break;
                     }
