@@ -2,6 +2,9 @@
 {
     public class NotifyData
     {
-        public string Titel { get; set; }
+        public string Title { get; set; }
+
+        public bool NotifyOnInfo { get; set; }
+        public bool NotifyOnError { get; set; }
     }
 }
