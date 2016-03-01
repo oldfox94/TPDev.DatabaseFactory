@@ -93,7 +93,6 @@ namespace SQLiteLibrary.Operations
             {
                 TableHelper.SetDefaultColumnValues(table);
 
-                //Settings.Con.Open();
                 var con = CONNECTION.OpenCon();
 
                 var adapter = new SQLiteDataAdapter(string.Format(@"SELECT * FROM {0}", tableName), con);
@@ -103,8 +102,18 @@ namespace SQLiteLibrary.Operations
                 cmd.Dispose();
                 adapter.Dispose();
                 CONNECTION.CloseCon(con);
-                //Settings.Con.Close();
+
                 return true;
+            }
+            catch (DBConcurrencyException cex)
+            {
+                SLLog.WriteError(new LogData
+                {
+                    Source = ToString(),
+                    FunctionName = "UpdateTable DBConcurrencyError!",
+                    Ex = cex,
+                });
+                return false;
             }
             catch(Exception ex)
             {

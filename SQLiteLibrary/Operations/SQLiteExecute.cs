@@ -22,7 +22,6 @@ namespace SQLiteLibrary.Operations
             int rowsUpdated = 0;
             try
             {
-                //Settings.Con.Open();
                 var con = CONNECTION.OpenCon();
 
                 SQLiteCommand cmd = new SQLiteCommand(sql, con);
@@ -30,7 +29,6 @@ namespace SQLiteLibrary.Operations
 
                 cmd.Dispose();
                 CONNECTION.CloseCon(con);
-                //Settings.Con.Close();
             }
             catch(Exception ex)
             {
@@ -51,7 +49,6 @@ namespace SQLiteLibrary.Operations
             int rowsUpdated = 0;
             try
             {
-                //Settings.Con.Open();
                 var con = CONNECTION.OpenCon();
 
                 foreach(var sql in sqlList)
@@ -63,7 +60,6 @@ namespace SQLiteLibrary.Operations
                 }
 
                 CONNECTION.CloseCon(con);
-                //Settings.Con.Close();
             }
             catch(Exception ex)
             {
@@ -84,7 +80,6 @@ namespace SQLiteLibrary.Operations
             object value = null;
             try
             {
-                //Settings.Con.Open();
                 var con = CONNECTION.OpenCon();
 
                 var cmd = new SQLiteCommand(sql, con);
@@ -92,7 +87,6 @@ namespace SQLiteLibrary.Operations
 
                 cmd.Dispose();
                 CONNECTION.CloseCon(con);
-                //Settings.Con.Close();
             }
             catch(Exception ex)
             {
@@ -113,7 +107,6 @@ namespace SQLiteLibrary.Operations
             var dt = new DataTable();
             try
             {
-                //Settings.Con.Open();
                 var con = CONNECTION.OpenCon();
 
                 var cmd = new SQLiteCommand(sql, con);
@@ -131,7 +124,6 @@ namespace SQLiteLibrary.Operations
 
                 cmd.Dispose();
                 CONNECTION.CloseCon(con);
-                //Settings.Con.Close();
             }
             catch(Exception ex)
             {
@@ -152,7 +144,6 @@ namespace SQLiteLibrary.Operations
             var dt = new DataTable();
             try
             {
-                //Settings.Con.Open();
                 var con = CONNECTION.OpenCon();
 
                 var cmd = new SQLiteCommand(sql, con);
@@ -164,7 +155,6 @@ namespace SQLiteLibrary.Operations
 
                 cmd.Dispose();
                 CONNECTION.CloseCon(con);
-                //Settings.Con.Close();
             }
             catch (Exception ex)
             {
