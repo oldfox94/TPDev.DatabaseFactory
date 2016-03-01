@@ -12,9 +12,10 @@ namespace MySQLLibrary.Operations
 {
     public class MySQLGet : IGetOperations
     {
+        MySQLExecute m_Execute { get; set; }
         public MySQLGet()
         {
-
+            m_Execute = new MySQLExecute();
         }
 
         public DataSet GetDataSet(List<string> tblSqlDict, string dataSetName)
@@ -88,21 +89,7 @@ namespace MySQLLibrary.Operations
             var dt = new DataTable();
             try
             {
-                Settings.Con.Open();
-
-                var cmd = new MySqlCommand(sql, Settings.Con);
-                var reader = cmd.ExecuteReader();
-
-                var schemaTbl = reader.GetSchemaTable();
-                if (schemaTbl.Rows.Count <= 0) return dt;
-
-                var schemaRow = schemaTbl.Rows[0];
-                dt.TableName = schemaRow[DbCIC.BaseTableName].ToString();
-
-                dt.Load(reader);
-
-                reader.Close();
-                Settings.Con.Close();
+                dt = m_Execute.ExecuteReadTable(sql);
 
                 SLLog.WriteInfo("GetTable", "Getting Table successfully!", true);
             }
@@ -148,15 +135,8 @@ namespace MySQLLibrary.Operations
             DataTable schemaTbl = new DataTable();
             try
             {
-                Settings.Con.Open();
-
-                var cmd = new MySqlCommand("SELECT * FROM {0}", Settings.Con);
-
-                var reader = cmd.ExecuteReader();
-                schemaTbl = reader.GetSchemaTable();
-
-                reader.Close();
-                Settings.Con.Close();
+                var sql = string.Format("SELECT * FROM {0}", tableName);
+                schemaTbl = m_Execute.ExecuteReadTableSchema(sql);
 
                 SLLog.WriteInfo("GetTableSchema", "Getting Schema Table successfully!", true);
             }
