@@ -22,12 +22,13 @@ namespace MySQLLibrary.Operations
             int rowsUpdated = 0;
             try
             {
-                Settings.Con.Open();
+                var con = CONNECTION.OpenCon();
 
-                MySqlCommand cmd = new MySqlCommand(sql, Settings.Con);
+                MySqlCommand cmd = new MySqlCommand(sql, con);
                 rowsUpdated = cmd.ExecuteNonQuery();
 
-                Settings.Con.Close();
+                cmd.Dispose();
+                CONNECTION.CloseCon(con);
             }
             catch (Exception ex)
             {
@@ -48,15 +49,17 @@ namespace MySQLLibrary.Operations
             int rowsUpdated = 0;
             try
             {
-                Settings.Con.Open();
+                var con = CONNECTION.OpenCon();
 
                 foreach (var sql in sqlList)
                 {
-                    var cmd = new MySqlCommand(sql, Settings.Con);
+                    var cmd = new MySqlCommand(sql, con);
                     rowsUpdated += cmd.ExecuteNonQuery();
+
+                    cmd.Dispose();
                 }
 
-                Settings.Con.Close();
+                CONNECTION.CloseCon(con);
             }
             catch (Exception ex)
             {
@@ -77,12 +80,13 @@ namespace MySQLLibrary.Operations
             object value = null;
             try
             {
-                Settings.Con.Open();
+                var con = CONNECTION.OpenCon();
 
-                var cmd = new MySqlCommand(sql, Settings.Con);
+                var cmd = new MySqlCommand(sql, con);
                 value = cmd.ExecuteScalar();
 
-                Settings.Con.Close();
+                cmd.Dispose();
+                CONNECTION.CloseCon(con);
             }
             catch (Exception ex)
             {
@@ -103,9 +107,9 @@ namespace MySQLLibrary.Operations
             var dt = new DataTable();
             try
             {
-                Settings.Con.Open();
+                var con = CONNECTION.OpenCon();
 
-                var cmd = new MySqlCommand(sql, Settings.Con);
+                var cmd = new MySqlCommand(sql, con);
                 var reader = cmd.ExecuteReader();
 
                 var schemaTbl = reader.GetSchemaTable();
@@ -117,7 +121,9 @@ namespace MySQLLibrary.Operations
                 dt.Load(reader);
 
                 reader.Close();
-                Settings.Con.Close();
+
+                cmd.Dispose();
+                CONNECTION.CloseCon(con);
             }
             catch (Exception ex)
             {
@@ -138,15 +144,17 @@ namespace MySQLLibrary.Operations
             var dt = new DataTable();
             try
             {
-                Settings.Con.Open();
+                var con = CONNECTION.OpenCon();
 
-                var cmd = new MySqlCommand(sql, Settings.Con);
+                var cmd = new MySqlCommand(sql, con);
 
                 var reader = cmd.ExecuteReader();
                 dt = reader.GetSchemaTable();
 
                 reader.Close();
-                Settings.Con.Close();
+
+                cmd.Dispose();
+                CONNECTION.CloseCon(con);
             }
             catch (Exception ex)
             {

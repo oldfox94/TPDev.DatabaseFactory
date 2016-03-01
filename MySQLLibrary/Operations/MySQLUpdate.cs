@@ -93,14 +93,16 @@ namespace MySQLLibrary.Operations
             {
                 TableHelper.SetDefaultColumnValues(table);
 
-                Settings.Con.Open();
+                var con = CONNECTION.OpenCon();
 
-                var adapter = new MySqlDataAdapter(string.Format(@"SELECT * FROM {0}", tableName), Settings.Con);
+                var adapter = new MySqlDataAdapter(string.Format(@"SELECT * FROM {0}", tableName), con);
                 var cmd = new MySqlCommandBuilder(adapter);
 
                 adapter.Update(table);
 
-                Settings.Con.Close();
+                cmd.Dispose();
+                adapter.Dispose();
+                CONNECTION.CloseCon(con);
 
                 return true;
             }

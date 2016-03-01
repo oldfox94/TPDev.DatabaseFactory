@@ -1,5 +1,6 @@
 ﻿using DbInterface.Models;
 using MySql.Data.MySqlClient;
+using System;
 
 namespace MySQLLibrary
 {
@@ -17,8 +18,21 @@ namespace MySQLLibrary
                 Settings.ConnectionString = string.Format(@"Data Source={1}\{0};Initial Catalog={2};User Id={3};Password = {4};",
                                                 conData.Instance, conData.ServerName, conData.Name, conData.User, conData.Password);
             }
+        }
 
-            Settings.Con = new MySqlConnection(Settings.ConnectionString);
+        public static MySqlConnection OpenCon()
+        {
+            var con = new MySqlConnection(Settings.ConnectionString);
+            con.Open();
+            return con;
+        }
+
+        public static void CloseCon(MySqlConnection con)
+        {
+            con.Close();
+            con.Dispose();
+
+            GC.Collect();
         }
     }
 }

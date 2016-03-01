@@ -8,6 +8,6 @@ namespace MySQLLibrary
         public static DbType Type = DbType.MySQL;
 
         public static string ConnectionString { get; set; }
-        public static MySqlConnection Con { get; set; }
+        //public static MySqlConnection Con { get; set; }
     }
 }
