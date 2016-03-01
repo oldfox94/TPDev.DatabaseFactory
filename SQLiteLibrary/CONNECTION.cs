@@ -1,4 +1,5 @@
 ﻿using DbInterface.Models;
+using System;
 using System.Data.SQLite;
 using System.IO;
 
@@ -33,6 +34,8 @@ namespace SQLiteLibrary
         {
             con.Close();
             con.Dispose();
+
+            GC.Collect();
         }
     }
 }

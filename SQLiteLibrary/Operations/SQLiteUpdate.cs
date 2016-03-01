@@ -100,6 +100,8 @@ namespace SQLiteLibrary.Operations
                 var cmd = new SQLiteCommandBuilder(adapter);
                 adapter.Update(table);
 
+                cmd.Dispose();
+                adapter.Dispose();
                 CONNECTION.CloseCon(con);
                 //Settings.Con.Close();
                 return true;

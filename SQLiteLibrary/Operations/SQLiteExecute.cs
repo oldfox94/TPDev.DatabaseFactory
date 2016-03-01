@@ -28,6 +28,7 @@ namespace SQLiteLibrary.Operations
                 SQLiteCommand cmd = new SQLiteCommand(sql, con);
                 rowsUpdated = cmd.ExecuteNonQuery();
 
+                cmd.Dispose();
                 CONNECTION.CloseCon(con);
                 //Settings.Con.Close();
             }
@@ -57,6 +58,8 @@ namespace SQLiteLibrary.Operations
                 {
                     var cmd = new SQLiteCommand(sql, con);
                     rowsUpdated += cmd.ExecuteNonQuery();
+
+                    cmd.Dispose();
                 }
 
                 CONNECTION.CloseCon(con);
@@ -87,6 +90,7 @@ namespace SQLiteLibrary.Operations
                 var cmd = new SQLiteCommand(sql, con);
                 value = cmd.ExecuteScalar();
 
+                cmd.Dispose();
                 CONNECTION.CloseCon(con);
                 //Settings.Con.Close();
             }
@@ -124,6 +128,8 @@ namespace SQLiteLibrary.Operations
                 dt.Load(reader);
 
                 reader.Close();
+
+                cmd.Dispose();
                 CONNECTION.CloseCon(con);
                 //Settings.Con.Close();
             }
@@ -155,6 +161,8 @@ namespace SQLiteLibrary.Operations
                 dt = reader.GetSchemaTable();
 
                 reader.Close();
+
+                cmd.Dispose();
                 CONNECTION.CloseCon(con);
                 //Settings.Con.Close();
             }
