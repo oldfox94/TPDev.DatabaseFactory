@@ -12,10 +12,9 @@ namespace SQLiteLibrary.Operations
 {
     public class SQLiteExecute : IExecuteOperations
     {
-        SQLiteGet m_Get { get; set; }
         public SQLiteExecute()
         {
-            m_Get = new SQLiteGet();
+
         }
 
         public int ExecuteNonQuery(string sql)
@@ -23,12 +22,14 @@ namespace SQLiteLibrary.Operations
             int rowsUpdated = 0;
             try
             {
-                Settings.Con.Open();
+                //Settings.Con.Open();
+                var con = CONNECTION.OpenCon();
 
-                SQLiteCommand cmd = new SQLiteCommand(sql, Settings.Con);
+                SQLiteCommand cmd = new SQLiteCommand(sql, con);
                 rowsUpdated = cmd.ExecuteNonQuery();
 
-                Settings.Con.Close();
+                CONNECTION.CloseCon(con);
+                //Settings.Con.Close();
             }
             catch(Exception ex)
             {
@@ -49,15 +50,17 @@ namespace SQLiteLibrary.Operations
             int rowsUpdated = 0;
             try
             {
-                Settings.Con.Open();
+                //Settings.Con.Open();
+                var con = CONNECTION.OpenCon();
 
                 foreach(var sql in sqlList)
                 {
-                    var cmd = new SQLiteCommand(sql, Settings.Con);
+                    var cmd = new SQLiteCommand(sql, con);
                     rowsUpdated += cmd.ExecuteNonQuery();
                 }
 
-                Settings.Con.Close();
+                CONNECTION.CloseCon(con);
+                //Settings.Con.Close();
             }
             catch(Exception ex)
             {
@@ -78,12 +81,14 @@ namespace SQLiteLibrary.Operations
             object value = null;
             try
             {
-                Settings.Con.Open();
+                //Settings.Con.Open();
+                var con = CONNECTION.OpenCon();
 
-                var cmd = new SQLiteCommand(sql, Settings.Con);
+                var cmd = new SQLiteCommand(sql, con);
                 value = cmd.ExecuteScalar();
 
-                Settings.Con.Close();
+                CONNECTION.CloseCon(con);
+                //Settings.Con.Close();
             }
             catch(Exception ex)
             {
@@ -97,6 +102,74 @@ namespace SQLiteLibrary.Operations
             }
 
             return value;
+        }
+
+        public DataTable ExecuteReadTable(string sql)
+        {
+            var dt = new DataTable();
+            try
+            {
+                //Settings.Con.Open();
+                var con = CONNECTION.OpenCon();
+
+                var cmd = new SQLiteCommand(sql, con);
+                var reader = cmd.ExecuteReader();
+
+                var schemaTbl = reader.GetSchemaTable();
+                if (schemaTbl.Rows.Count <= 0) return dt;
+
+                var schemaRow = schemaTbl.Rows[0];
+                dt.TableName = schemaRow[DbCIC.BaseTableName].ToString();
+
+                dt.Load(reader);
+
+                reader.Close();
+                CONNECTION.CloseCon(con);
+                //Settings.Con.Close();
+            }
+            catch(Exception ex)
+            {
+                SLLog.WriteError(new LogData
+                {
+                    Source = ToString(),
+                    FunctionName = "ExecuteReadTable Error!",
+                    Ex = ex,
+                });
+                return null;
+            }
+
+            return dt;
+        }
+
+        public DataTable ExecuteReadTableSchema(string sql)
+        {
+            var dt = new DataTable();
+            try
+            {
+                //Settings.Con.Open();
+                var con = CONNECTION.OpenCon();
+
+                var cmd = new SQLiteCommand(sql, con);
+
+                var reader = cmd.ExecuteReader();
+                dt = reader.GetSchemaTable();
+
+                reader.Close();
+                CONNECTION.CloseCon(con);
+                //Settings.Con.Close();
+            }
+            catch (Exception ex)
+            {
+                SLLog.WriteError(new LogData
+                {
+                    Source = ToString(),
+                    FunctionName = "ExecuteReadTable Error!",
+                    Ex = ex,
+                });
+                return null;
+            }
+
+            return dt;
         }
 
         public bool RenewTbl(string tableName, List<ColumnData> columns)
@@ -113,7 +186,7 @@ namespace SQLiteLibrary.Operations
                 //Standart Felder erstellen
                 ColumnHelper.SetDefaultColumns(columns);
 
-                var oldTblSchema = m_Get.GetTableSchema(tableName);
+                var oldTblSchema = ExecuteReadTableSchema(string.Format("SELECT * FROM {0}", tableName));
                 foreach (DataRow row in oldTblSchema.Rows)
                 {
                     var oldCol = columns.Find(i => i.Name == row["ColumnName"].ToString());

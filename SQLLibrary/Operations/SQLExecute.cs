@@ -5,11 +5,17 @@ using DbInterface.Models;
 using DbInterface;
 using System.Data.SqlClient;
 using DbLogger.Models;
+using System.Data;
 
 namespace SQLLibrary.Operations
 {
     public class SQLExecute : IExecuteOperations
     {
+        public SQLExecute()
+        {
+
+        }
+
         public int ExecuteNonQuery(string sql)
         {
             int rowsUpdated = 0;
@@ -89,6 +95,70 @@ namespace SQLLibrary.Operations
             }
 
             return value;
+        }
+
+        public DataTable ExecuteReadTable(string sql)
+        {
+            var dt = new DataTable();
+            try
+            {
+                Settings.Con.Open();
+
+                var cmd = new SqlCommand(sql, Settings.Con);
+                var reader = cmd.ExecuteReader();
+
+                var schemaTbl = reader.GetSchemaTable();
+                if (schemaTbl.Rows.Count <= 0) return dt;
+
+                var schemaRow = schemaTbl.Rows[0];
+                dt.TableName = schemaRow[DbCIC.BaseTableName].ToString();
+
+                dt.Load(reader);
+
+                reader.Close();
+                Settings.Con.Close();
+            }
+            catch (Exception ex)
+            {
+                SLLog.WriteError(new LogData
+                {
+                    Source = ToString(),
+                    FunctionName = "ExecuteReadTable Error!",
+                    Ex = ex,
+                });
+                return null;
+            }
+
+            return dt;
+        }
+
+        public DataTable ExecuteReadTableSchema(string sql)
+        {
+            var dt = new DataTable();
+            try
+            {
+                Settings.Con.Open();
+
+                var cmd = new SqlCommand(sql, Settings.Con);
+
+                var reader = cmd.ExecuteReader();
+                dt = reader.GetSchemaTable();
+
+                reader.Close();
+                Settings.Con.Close();
+            }
+            catch (Exception ex)
+            {
+                SLLog.WriteError(new LogData
+                {
+                    Source = ToString(),
+                    FunctionName = "ExecuteReadTable Error!",
+                    Ex = ex,
+                });
+                return null;
+            }
+
+            return dt;
         }
 
         public bool RenewTbl(string tableName, List<ColumnData> columns)

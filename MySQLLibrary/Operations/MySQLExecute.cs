@@ -12,10 +12,9 @@ namespace MySQLLibrary.Operations
 {
     public class MySQLExecute : IExecuteOperations
     {
-        MySQLGet m_Get { get; set; }
         public MySQLExecute()
         {
-            m_Get = new MySQLGet();
+
         }
 
         public int ExecuteNonQuery(string sql)
@@ -99,6 +98,70 @@ namespace MySQLLibrary.Operations
             return value;
         }
 
+        public DataTable ExecuteReadTable(string sql)
+        {
+            var dt = new DataTable();
+            try
+            {
+                Settings.Con.Open();
+
+                var cmd = new MySqlCommand(sql, Settings.Con);
+                var reader = cmd.ExecuteReader();
+
+                var schemaTbl = reader.GetSchemaTable();
+                if (schemaTbl.Rows.Count <= 0) return dt;
+
+                var schemaRow = schemaTbl.Rows[0];
+                dt.TableName = schemaRow[DbCIC.BaseTableName].ToString();
+
+                dt.Load(reader);
+
+                reader.Close();
+                Settings.Con.Close();
+            }
+            catch (Exception ex)
+            {
+                SLLog.WriteError(new LogData
+                {
+                    Source = ToString(),
+                    FunctionName = "ExecuteReadTable Error!",
+                    Ex = ex,
+                });
+                return null;
+            }
+
+            return dt;
+        }
+
+        public DataTable ExecuteReadTableSchema(string sql)
+        {
+            var dt = new DataTable();
+            try
+            {
+                Settings.Con.Open();
+
+                var cmd = new MySqlCommand(sql, Settings.Con);
+
+                var reader = cmd.ExecuteReader();
+                dt = reader.GetSchemaTable();
+
+                reader.Close();
+                Settings.Con.Close();
+            }
+            catch (Exception ex)
+            {
+                SLLog.WriteError(new LogData
+                {
+                    Source = ToString(),
+                    FunctionName = "ExecuteReadTable Error!",
+                    Ex = ex,
+                });
+                return null;
+            }
+
+            return dt;
+        }
+
         public bool RenewTbl(string tableName, List<ColumnData> columns)
         {
             try
@@ -113,7 +176,7 @@ namespace MySQLLibrary.Operations
                 //Standart Felder erstellen
                 ColumnHelper.SetDefaultColumns(columns);
 
-                var oldTblSchema = m_Get.GetTableSchema(tableName);
+                var oldTblSchema = ExecuteReadTableSchema(string.Format("SELECT * FROM {0}", tableName));
                 foreach (DataRow row in oldTblSchema.Rows)
                 {
                     var oldCol = columns.Find(i => i.Name == row["ColumnName"].ToString());
