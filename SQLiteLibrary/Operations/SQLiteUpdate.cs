@@ -93,14 +93,15 @@ namespace SQLiteLibrary.Operations
             {
                 TableHelper.SetDefaultColumnValues(table);
 
-                Settings.Con.Open();
+                //Settings.Con.Open();
+                var con = CONNECTION.OpenCon();
 
-                var adapter = new SQLiteDataAdapter(string.Format(@"SELECT * FROM {0}", tableName), Settings.Con);
+                var adapter = new SQLiteDataAdapter(string.Format(@"SELECT * FROM {0}", tableName), con);
                 var cmd = new SQLiteCommandBuilder(adapter);
                 adapter.Update(table);
 
-                Settings.Con.Close();
-
+                CONNECTION.CloseCon(con);
+                //Settings.Con.Close();
                 return true;
             }
             catch(Exception ex)

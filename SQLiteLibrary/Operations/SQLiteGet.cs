@@ -1,20 +1,19 @@
 ﻿using DbInterface;
 using DbInterface.Helpers;
 using DbInterface.Interfaces;
-using DbInterface.Models;
 using DbLogger.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.SQLite;
 
 namespace SQLiteLibrary.Operations
 {
     public class SQLiteGet : IGetOperations
     {
+        SQLiteExecute m_Execute { get; set; }
         public SQLiteGet()
         {
-
+            m_Execute = new SQLiteExecute();
         }
 
         public DataSet GetDataSet(List<string> tblSqlDict, string dataSetName)
@@ -88,21 +87,7 @@ namespace SQLiteLibrary.Operations
             var dt = new DataTable();
             try
             {
-                Settings.Con.Open();
-
-                var cmd = new SQLiteCommand(sql, Settings.Con);
-                var reader = cmd.ExecuteReader();
-
-                var schemaTbl = reader.GetSchemaTable();
-                if (schemaTbl.Rows.Count <= 0) return dt;
-
-                var schemaRow = schemaTbl.Rows[0];
-                dt.TableName = schemaRow[DbCIC.BaseTableName].ToString();
-
-                dt.Load(reader);
-
-                reader.Close();
-                Settings.Con.Close();
+                dt = m_Execute.ExecuteReadTable(sql);
 
                 SLLog.WriteInfo("GetTable", "Getting Table successfully!", true);
             }
@@ -148,15 +133,8 @@ namespace SQLiteLibrary.Operations
             DataTable schemaTbl = new DataTable();
             try
             {
-                Settings.Con.Open();
-
-                var cmd = new SQLiteCommand("SELECT * FROM {0}", Settings.Con);
-
-                var reader = cmd.ExecuteReader();
-                schemaTbl = reader.GetSchemaTable();
-
-                reader.Close();
-                Settings.Con.Close();
+                var sql = string.Format("SELECT * FROM {0}", tableName);
+                schemaTbl = m_Execute.ExecuteReadTableSchema(sql);
 
                 SLLog.WriteInfo("GetTableSchema", "Getting Schema Table successfully!", true);
             }
