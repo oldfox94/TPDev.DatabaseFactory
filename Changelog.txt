@@ -1,6 +1,12 @@
 === DatabaseFactory ===
 ++++++ CHANGELOG ++++++
 
+V1.0.0.5:
+UPD		MySQL should now completed implemented (Not fully tested!!)
+FIX		Default values (DsStatus, InsertOn and ModifyOn) not filled by Update
+FIX		Async Operations failed
+ADD		DbNotifyer added. Now you can be notifed when an Error occurred (maybe for debugging?)
+ADD		After an operation a garbage collector is running
 
 
 V1.0.0.4:
