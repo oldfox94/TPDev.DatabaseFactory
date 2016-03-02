@@ -3,7 +3,6 @@ using DbLogger.Models;
 using DbNotifyer.Models;
 using DbNotifyer.Properties;
 using Hardcodet.Wpf.TaskbarNotification;
-using System;
 
 namespace DbNotifyer
 {

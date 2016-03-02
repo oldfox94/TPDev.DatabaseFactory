@@ -31,7 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Hardcodet.Wpf.TaskbarNotification">
-      <HintPath>..\..\..\DLL\Wpf NotifyIcon\Hardcodet.Wpf.TaskbarNotification.dll</HintPath>
+      <HintPath>..\_External\Hardcodet.Wpf.TaskbarNotification.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
