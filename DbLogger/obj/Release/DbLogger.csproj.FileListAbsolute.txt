@@ -1,0 +1,14 @@
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\DbLogger\bin\Release\DbLogger.dll
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\DbLogger\bin\Release\DbLogger.pdb
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\DbLogger\obj\Release\DbLogger.dll
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\DbLogger\obj\Release\DbLogger.pdb
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\DbLogger\Binaries\DbLogger.dll
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\DbLogger\Binaries\DbLogger.pdb
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\DbLogger\obj\Release\DbLogger.csprojResolveAssemblyReference.cache
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\DbLogger\obj\Release\DbLogger.dll
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\DbLogger\obj\Release\DbLogger.pdb
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\Binaries\DbLogger.dll
+C:\Users\rh\Documents\Visual Studio 2015\Projects\DatabaseFactory\Binaries\DbLogger.pdb
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\Binaries\DbLogger.dll
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\Binaries\DbLogger.pdb
+D:\Programming\VisualStudio\TPDev.DatabaseFactory\DbLogger\obj\Release\DbLogger.csprojResolveAssemblyReference.cache
