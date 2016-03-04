@@ -1,8 +1,12 @@
 ﻿using DatabaseFactory;
+using DbInterface.Helpers;
 using DbInterface.Models;
+using DbNotifyer.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Windows;
+using DbType = DbInterface.Models.DbType;
 
 namespace TestApp
 {
@@ -23,7 +27,7 @@ namespace TestApp
             connectionData.Name = "";
             connectionData.User = "";
             connectionData.Password = "";
-            //m_dbFactory = new DbFactory.DbFactory(DbType.SQL, connectionData);
+            //m_dbFactory = new DbFactory(DbType.SQL, connectionData);
 
             //SQLite
             connectionData.Path = Environment.CurrentDirectory;
@@ -36,9 +40,10 @@ namespace TestApp
             connectionData.Name = "";
             connectionData.User = "";
             connectionData.Password = "";
-            //m_dbFactory = new DbFactory.DbFactory(DbType.MySQL, connectionData);
+            //m_dbFactory = new DbFactory(DbType.MySQL, connectionData);
 
             m_dbFactory.InitLogger("DbFactoryLog");
+            m_dbFactory.InitNotifyIcon(new NotifyData { Title = "TestApp", NotifyOnError = true, NotifyOnInfo = true });
         }
 
         private void CreateTable()
@@ -51,7 +56,7 @@ namespace TestApp
         {
             var colList = new List<ColumnData>();
 
-            colList.Add(new ColumnData { Name = "Pk", Type = DbDEF.TxtUniNotNullPk});
+            colList.Add(new ColumnData { Name = "Pk", Type = DbDEF.VarchrUniNotNullPk(50) });
             colList.Add(new ColumnData { Name = "Name", Type = DbDEF.TxtNull });
             colList.Add(new ColumnData { Name = "Text", Type = DbDEF.TxtNull });
 
@@ -66,7 +71,7 @@ namespace TestApp
 
         private void RefreshDataTbl()
         {
-            var tbl = m_dbFactory.Get.GetTable("SELECT * FROM TestTbl");
+            var tbl = GetTable();
 
             Grid.ItemsSource = null;
             Grid.ItemsSource = tbl.DefaultView;
@@ -93,9 +98,50 @@ namespace TestApp
             m_dbFactory.Update.UpdateDataSet(ds);
         }
 
+        private void UpdateDataTable()
+        {
+            var tbl = m_dbFactory.Get.GetTable(@"SELECT * FROM TestTbl");
+            if (tbl.Rows.Count <= 0) return;
+
+            var dr = tbl.NewRow();
+            dr["Pk"] = Guid.NewGuid().ToString();
+            dr["Name"] = "Created with Update DataTable";
+            dr["Text"] = "Create always a new row";
+
+            tbl.Rows.Add(dr);
+            m_dbFactory.Update.UpdateTable(tbl);
+        }
+
+        private DataTable GetTable()
+        {
+            return m_dbFactory.Get.GetTable("TestTbl", null);
+        }
+
         private void OnUpdateWithDataSetClick(object sender, RoutedEventArgs e)
         {
             UpdateDataSet();
+            RefreshDataTbl();
+        }
+
+        private void OnUpdateWithDataTableClick(object sender, RoutedEventArgs e)
+        {
+            UpdateDataTable();
+            RefreshDataTbl();
+        }
+
+        private void UpdateOneValue()
+        {
+            m_dbFactory.Update.UpdateOneValue("TestTbl", "Name", "Update by OneValue", ConvertionHelper.WHERE("Name", "Updatet with DataSet"));
+        }
+
+        private void OnUpdateOneValueClick(object sender, RoutedEventArgs e)
+        {
+            UpdateOneValue();
+            RefreshDataTbl();
+        }
+
+        private void OnGetTableClick(object sender, RoutedEventArgs e)
+        {
             RefreshDataTbl();
         }
     }

@@ -22,7 +22,10 @@
 
         <StackPanel Grid.ColumnSpan="4" Orientation="Horizontal">
             <Button Content="Create Sample Table" MaxWidth="120" Click="OnCreateSampleTableClick"/>
+            <Button Content="Get Table" MaxWidth="120" Click="OnGetTableClick"/>
             <Button Content="Update with DataSet" MaxHeight="120" Click="OnUpdateWithDataSetClick"/>
+            <Button Content="Update with DataTable" MaxHeight="120" Click="OnUpdateWithDataTableClick"/>
+            <Button Content="Update one value" MaxHeight="120" Click="OnUpdateOneValueClick"/>
         </StackPanel>
 
         <StackPanel Grid.ColumnSpan="4" Grid.Row="1" Orientation="Horizontal">
