@@ -23,16 +23,16 @@ namespace TestApp
             var connectionData = new DbConnectionData();
 
             //SQL
-            connectionData.ServerName = "";
+            connectionData.ServerName = "localhost";
             connectionData.Name = "";
             connectionData.User = "";
             connectionData.Password = "";
-            //m_dbFactory = new DbFactory(DbType.SQL, connectionData);
+            m_dbFactory = new DbFactory(DbType.SQL, connectionData);
 
             //SQLite
             connectionData.Path = Environment.CurrentDirectory;
             connectionData.Name = "D_TestApp.db";
-            m_dbFactory = new DbFactory(DbType.SQLite, connectionData);
+            //m_dbFactory = new DbFactory(DbType.SQLite, connectionData);
 
             //MySQL
             connectionData.ServerName = "";
@@ -56,8 +56,8 @@ namespace TestApp
         {
             var colList = new List<ColumnData>();
 
-            colList.Add(new ColumnData { Name = "Pk", Type = DbDEF.VarchrUniNotNullPk(50) });
-            colList.Add(new ColumnData { Name = "Name", Type = DbDEF.TxtNull });
+            colList.Add(new ColumnData { Name = "Pk", Type = DbDEF.VarchrNotNullPk(50) });
+            colList.Add(new ColumnData { Name = "Name", Type = DbDEF.VarchrNull(100) });
             colList.Add(new ColumnData { Name = "Text", Type = DbDEF.TxtNull });
 
             return colList;
