@@ -1,6 +1,7 @@
 ﻿using DbInterface;
 using DbInterface.Helpers;
 using DbInterface.Interfaces;
+using DbInterface.Models;
 using DbLogger.Models;
 using System;
 using System.Collections.Generic;
@@ -176,6 +177,25 @@ namespace SQLLibrary.Operations
             }
 
             return resultStr;
+        }
+
+        public string GetTableNameFromColumn(string columnName)
+        {
+            try
+            {
+
+                return m_Execute.ExecuteReadTableName(columnName);
+            }
+            catch(Exception ex)
+            {
+                SLLog.WriteError(new LogData
+                {
+                    Source = ToString(),
+                    FunctionName = "GetTableNameFromColumn Error!",
+                    Ex = ex,
+                });
+                return string.Empty;
+            }
         }
 
         public string GetLastSortOrder(string tableName, string sortOrderColName, string where = null)

@@ -112,13 +112,19 @@ namespace SQLLibrary.Operations
                 var cmd = new SqlCommand(sql, con);
                 var reader = cmd.ExecuteReader();
 
+                dt.Load(reader);
+
+
+                //GetTableName
                 var schemaTbl = reader.GetSchemaTable();
                 if (schemaTbl.Rows.Count <= 0) return dt;
-
                 var schemaRow = schemaTbl.Rows[0];
-                dt.TableName = schemaRow[DbCIC.BaseTableName].ToString();
+                var tableName = schemaRow[DbCIC.BaseTableName].ToString();
 
-                dt.Load(reader);
+                if (string.IsNullOrEmpty(tableName))
+                    tableName = ExecuteReadTableName(dt.Columns[0].ColumnName);
+
+                dt.TableName = tableName;
 
                 reader.Close();
 
@@ -168,6 +174,29 @@ namespace SQLLibrary.Operations
             }
 
             return dt;
+        }
+
+        public string ExecuteReadTableName(string columnName)
+        {
+            try
+            {
+                var sql = string.Format(@"SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE column_name = '{0}'", columnName);
+                var resultTbl = ExecuteReadTable(sql);
+                if (resultTbl == null || resultTbl.Rows.Count <= 0) return string.Empty;
+
+                var dr = resultTbl.Rows[0];
+                return dr[DbCIC.TableName].ToString();
+            }
+            catch(Exception ex)
+            {
+                SLLog.WriteError(new LogData
+                {
+                    Source = ToString(),
+                    FunctionName = "ExecuteReadTableName Error!",
+                    Ex = ex,
+                });
+                return null;
+            }
         }
 
         public bool RenewTbl(string tableName, List<ColumnData> columns)

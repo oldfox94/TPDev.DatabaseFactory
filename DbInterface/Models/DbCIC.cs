@@ -7,5 +7,6 @@
         public static string ModifyOn = "ModifyOn";
 
         public static string BaseTableName = "BaseTableName";
+        public static string TableName = "TABLE_NAME";
     }
 }
