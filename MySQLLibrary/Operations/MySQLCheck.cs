@@ -2,6 +2,7 @@
 using DbInterface.Interfaces;
 using DbLogger.Models;
 using System;
+using System.Data;
 
 namespace MySQLLibrary.Operations
 {
@@ -17,8 +18,21 @@ namespace MySQLLibrary.Operations
         {
             try
             {
+                var result = false;
 
-                return true;
+                var sql = string.Format("SELECT * FROM {0} WHERE ColumnName = '{1}'", tableName, columnName);
+                var tblSchema = m_Execute.ExecuteReadTableSchema(sql);
+
+                foreach (DataRow dr in tblSchema.Rows)
+                {
+                    if (dr["ColumnName"].ToString() == columnName)
+                    {
+                        result = true;
+                        break;
+                    }
+                }
+
+                return result;
             }
             catch (Exception ex)
             {
