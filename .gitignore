@@ -181,3 +181,10 @@ SQLiteLibrary/bin/Release/SQLiteLibrary.pdb
 SQLiteLibrary/bin/Release/DbInterface.dll
 TestApp/obj/Debug/MainWindow.g.i.cs
 TestApp/obj/Debug/TestApp.csproj.FileListAbsolute.txt
+DbFactory/obj/Debug/DbFactory.csproj.FileListAbsolute.txt
+DbInterface/obj/Debug/DbInterface.csproj.FileListAbsolute.txt
+DbNotifyer/obj/Debug/DbNotifyer.Properties.Resources.resources
+DbNotifyer/obj/Debug/DbNotifyer.csproj.FileListAbsolute.txt
+MySQLLibrary/obj/Debug/MySQLLibrary.csproj.FileListAbsolute.txt
+SQLLibrary/obj/Debug/SQLLibrary.csproj.FileListAbsolute.txt
+SQLiteLibrary/obj/Debug/SQLiteLibrary.csproj.FileListAbsolute.txt
