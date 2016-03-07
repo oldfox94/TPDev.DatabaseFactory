@@ -66,7 +66,22 @@ namespace MySQLLibrary.Operations
 
         public bool DeleteDatabase(string databaseName)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var result = m_Execute.ExecuteNonQuery(string.Format(@"DROP DATABASE {0}", databaseName));
+                if (result == -1) return false;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                SLLog.WriteError(new LogData
+                {
+                    Source = ToString(),
+                    FunctionName = "DeleteDatabase Error!",
+                    Ex = ex,
+                });
+                return false;
+            }
         }
 
         public bool DeleteRows(string tableName, string where)
@@ -93,7 +108,22 @@ namespace MySQLLibrary.Operations
 
         public bool DeleteTable(string tableName)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var result = m_Execute.ExecuteNonQuery(string.Format(@"DROP TABLE {0}", tableName));
+                if (result == -1) return false;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                SLLog.WriteError(new LogData
+                {
+                    Source = ToString(),
+                    FunctionName = "DeleteTable Error!",
+                    Ex = ex,
+                });
+                return false;
+            }
         }
     }
 }
