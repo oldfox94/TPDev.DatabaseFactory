@@ -66,7 +66,7 @@ namespace DatabaseFactory
             switch (DbFactorySettings.Type)
             {
                 case DbType.SQL:
-                    return null;
+                    return new SQLInsert();
 
                 case DbType.SQLite:
                     return new SQLiteInsert();
@@ -83,7 +83,7 @@ namespace DatabaseFactory
             switch (DbFactorySettings.Type)
             {
                 case DbType.SQL:
-                    return null;
+                    return new SQLUpdate();
 
                 case DbType.SQLite:
                     return new SQLiteUpdate();
@@ -100,7 +100,7 @@ namespace DatabaseFactory
             switch (DbFactorySettings.Type)
             {
                 case DbType.SQL:
-                    return null;
+                    return new SQLDelete();
 
                 case DbType.SQLite:
                     return new SQLiteDelete();
@@ -117,7 +117,7 @@ namespace DatabaseFactory
             switch(DbFactorySettings.Type)
             {
                 case DbType.SQL:
-                    return null;
+                    return new SQLCheck();
 
                 case DbType.SQLite:
                     return new SQLiteCheck();
@@ -134,7 +134,7 @@ namespace DatabaseFactory
             switch(DbFactorySettings.Type)
             {
                 case DbType.SQL:
-                    return null;
+                    return new SQLGet();
 
                 case DbType.SQLite:
                     return new SQLiteGet();
