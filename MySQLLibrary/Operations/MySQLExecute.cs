@@ -113,12 +113,17 @@ namespace MySQLLibrary.Operations
                 var reader = cmd.ExecuteReader();
 
                 var schemaTbl = reader.GetSchemaTable();
-                if (schemaTbl.Rows.Count <= 0) return dt;
-
-                var schemaRow = schemaTbl.Rows[0];
-                dt.TableName = schemaRow[DbCIC.BaseTableName].ToString();
-
                 dt.Load(reader);
+
+
+                if (schemaTbl.Rows.Count <= 0) return dt;
+                var schemaRow = schemaTbl.Rows[0];
+                var tableName = schemaRow[DbCIC.BaseTableName].ToString();
+
+                if (string.IsNullOrEmpty(tableName))
+                    tableName = ExecuteReadTableName(dt.Columns[0].ColumnName);
+
+                dt.TableName = tableName;
 
                 reader.Close();
 
@@ -168,6 +173,39 @@ namespace MySQLLibrary.Operations
             }
 
             return dt;
+        }
+
+        public string ExecuteReadTableName(string columnName)
+        {
+            try
+            {
+                var dt = new DataTable();
+                var sql = string.Format(@"SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE column_name = '{0}'", columnName);
+
+                var con = CONNECTION.OpenCon();
+
+                var cmd = new MySqlCommand(sql, con);
+                var reader = cmd.ExecuteReader();
+
+                dt.Load(reader);
+
+                cmd.Dispose();
+                CONNECTION.CloseCon(con);
+
+                if (dt == null || dt.Rows.Count <= 0) return string.Empty;
+                var dr = dt.Rows[0];
+                return dr[DbCIC.TableName].ToString();
+            }
+            catch(Exception ex)
+            {
+                SLLog.WriteError(new LogData
+                {
+                    Source = ToString(),
+                    FunctionName = "ExecuteReadTableName Error!",
+                    Ex = ex,
+                });
+                return string.Empty;
+            }
         }
 
         public bool RenewTbl(string tableName, List<ColumnData> columns)

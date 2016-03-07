@@ -112,11 +112,11 @@ namespace SQLLibrary.Operations
                 var cmd = new SqlCommand(sql, con);
                 var reader = cmd.ExecuteReader();
 
+                var schemaTbl = reader.GetSchemaTable();
                 dt.Load(reader);
 
 
                 //GetTableName
-                var schemaTbl = reader.GetSchemaTable();
                 if (schemaTbl.Rows.Count <= 0) return dt;
                 var schemaRow = schemaTbl.Rows[0];
                 var tableName = schemaRow[DbCIC.BaseTableName].ToString();
@@ -180,11 +180,21 @@ namespace SQLLibrary.Operations
         {
             try
             {
+                var dt = new DataTable();
                 var sql = string.Format(@"SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE column_name = '{0}'", columnName);
-                var resultTbl = ExecuteReadTable(sql);
-                if (resultTbl == null || resultTbl.Rows.Count <= 0) return string.Empty;
 
-                var dr = resultTbl.Rows[0];
+                var con = CONNECTION.OpenCon();
+
+                var cmd = new SqlCommand(sql, con);
+                var reader = cmd.ExecuteReader();
+
+                dt.Load(reader);
+
+                cmd.Dispose();
+                CONNECTION.CloseCon(con);
+
+                if (dt == null || dt.Rows.Count <= 0) return string.Empty;
+                var dr = dt.Rows[0];
                 return dr[DbCIC.TableName].ToString();
             }
             catch(Exception ex)
