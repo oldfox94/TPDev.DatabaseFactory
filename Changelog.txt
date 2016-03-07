@@ -5,6 +5,7 @@ V1.0.0.6:
 UPD		SQLite and MySQL: DeleteTable, DeleteDatabase and ColumnExists Methods implemented
 FIX		SQL can now run in an Async or Multithreaded App
 UPD		SQL should now completed implemented (Not fully tested!!)
+FIX		SQL, MySQL & SQLite: Fixed bug by GetTable when TableName coulden't found
 
 
 V1.0.0.5:
