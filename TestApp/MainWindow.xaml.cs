@@ -27,12 +27,12 @@ namespace TestApp
             connectionData.Name = "";
             connectionData.User = "";
             connectionData.Password = "";
-            m_dbFactory = new DbFactory(DbType.SQL, connectionData);
+            //m_dbFactory = new DbFactory(DbType.SQL, connectionData);
 
             //SQLite
             connectionData.Path = Environment.CurrentDirectory;
             connectionData.Name = "D_TestApp.db";
-            //m_dbFactory = new DbFactory(DbType.SQLite, connectionData);
+            m_dbFactory = new DbFactory(DbType.SQLite, connectionData);
 
             //MySQL
             connectionData.ServerName = "";
