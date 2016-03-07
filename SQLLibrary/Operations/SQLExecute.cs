@@ -6,6 +6,7 @@ using DbInterface;
 using System.Data.SqlClient;
 using DbLogger.Models;
 using System.Data;
+using DbInterface.Helpers;
 
 namespace SQLLibrary.Operations
 {
@@ -21,12 +22,13 @@ namespace SQLLibrary.Operations
             int rowsUpdated = 0;
             try
             {
-                Settings.Con.Open();
+                var con = CONNECTION.OpenCon();
 
-                SqlCommand cmd = new SqlCommand(sql, Settings.Con);
+                SqlCommand cmd = new SqlCommand(sql, con);
                 rowsUpdated = cmd.ExecuteNonQuery();
 
-                Settings.Con.Close();
+                cmd.Dispose();
+                CONNECTION.CloseCon(con);
             }
             catch (Exception ex)
             {
@@ -47,15 +49,17 @@ namespace SQLLibrary.Operations
             int rowsUpdated = 0;
             try
             {
-                Settings.Con.Open();
+                var con = CONNECTION.OpenCon();
 
                 foreach (var sql in sqlList)
                 {
-                    var cmd = new SqlCommand(sql, Settings.Con);
+                    var cmd = new SqlCommand(sql, con);
                     rowsUpdated += cmd.ExecuteNonQuery();
+
+                    cmd.Dispose();
                 }
 
-                Settings.Con.Close();
+                CONNECTION.CloseCon(con);
             }
             catch (Exception ex)
             {
@@ -76,12 +80,13 @@ namespace SQLLibrary.Operations
             object value = null;
             try
             {
-                Settings.Con.Open();
+                var con = CONNECTION.OpenCon();
 
-                var cmd = new SqlCommand(sql, Settings.Con);
+                var cmd = new SqlCommand(sql, con);
                 value = cmd.ExecuteScalar();
 
-                Settings.Con.Close();
+                cmd.Dispose();
+                CONNECTION.CloseCon(con);
             }
             catch (Exception ex)
             {
@@ -102,9 +107,9 @@ namespace SQLLibrary.Operations
             var dt = new DataTable();
             try
             {
-                Settings.Con.Open();
+                var con = CONNECTION.OpenCon();
 
-                var cmd = new SqlCommand(sql, Settings.Con);
+                var cmd = new SqlCommand(sql, con);
                 var reader = cmd.ExecuteReader();
 
                 var schemaTbl = reader.GetSchemaTable();
@@ -116,7 +121,9 @@ namespace SQLLibrary.Operations
                 dt.Load(reader);
 
                 reader.Close();
-                Settings.Con.Close();
+
+                cmd.Dispose();
+                CONNECTION.CloseCon(con);
             }
             catch (Exception ex)
             {
@@ -137,15 +144,17 @@ namespace SQLLibrary.Operations
             var dt = new DataTable();
             try
             {
-                Settings.Con.Open();
+                var con = CONNECTION.OpenCon();
 
-                var cmd = new SqlCommand(sql, Settings.Con);
+                var cmd = new SqlCommand(sql, con);
 
                 var reader = cmd.ExecuteReader();
                 dt = reader.GetSchemaTable();
 
                 reader.Close();
-                Settings.Con.Close();
+
+                cmd.Dispose();
+                CONNECTION.CloseCon(con);
             }
             catch (Exception ex)
             {
@@ -163,12 +172,86 @@ namespace SQLLibrary.Operations
 
         public bool RenewTbl(string tableName, List<ColumnData> columns)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var result = true;
+
+                var scriptList = new List<string>();
+                var oldColumns = new List<ColumnData>();
+                var timeStamp = DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() + DateTime.Now.Second + "_" +
+                                DateTime.Now.Day.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Year.ToString();
+
+                //Standart Felder erstellen
+                ColumnHelper.SetDefaultColumns(columns);
+
+                var oldTblSchema = ExecuteReadTableSchema(string.Format("SELECT * FROM {0}", tableName));
+                foreach (DataRow row in oldTblSchema.Rows)
+                {
+                    var oldCol = columns.Find(i => i.Name == row["ColumnName"].ToString());
+                    if (oldCol == null) continue;
+                    oldCol.existsInDB = true;
+
+                    oldColumns.Add(oldCol);
+                }
+
+                scriptList.Add(string.Format("ALTER TABLE {0} RENAME TO {0}_OLD{1}", tableName, timeStamp));
+
+                scriptList.Add(ScriptHelper.GetCreateTableSql(tableName, columns));
+
+                var insertSQL = string.Format("INSERT INTO {0} ({1}) ", tableName, ColumnHelper.GetColumnString(columns, true));
+                insertSQL += string.Format("SELECT {2} FROM {0}_OLD{1}", tableName, timeStamp, ColumnHelper.GetColumnString(columns));
+                scriptList.Add(insertSQL);
+
+
+                var exResult = ExecuteNonQuery(scriptList);
+                if (exResult == -1)
+                    result = false;
+
+                return result;
+            }
+            catch(Exception ex)
+            {
+                SLLog.WriteError(new LogData
+                {
+                    Source = ToString(),
+                    FunctionName = "RenewTbl Error!",
+                    Ex = ex,
+                });
+                return false;
+            }
         }
 
         public bool RenewTbl(string tableName, Dictionary<string, string> columns)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var colList = new List<ColumnData>();
+
+                foreach (var col in columns)
+                {
+                    var colData = new ColumnData
+                    {
+                        Name = col.Key,
+                        Type = col.Value,
+                    };
+                    if (col.Value == DbDEF.TxtNotNull)
+                        colData.DefaultValue = "default";
+
+                    colList.Add(colData);
+                }
+
+                return RenewTbl(tableName, colList);
+            }
+            catch (Exception ex)
+            {
+                SLLog.WriteError(new LogData
+                {
+                    Source = ToString(),
+                    FunctionName = "RenewTbl Error!",
+                    Ex = ex,
+                });
+                return false;
+            }
         }
     }
 }

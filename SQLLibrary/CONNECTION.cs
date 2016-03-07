@@ -1,4 +1,5 @@
 ﻿using DbInterface.Models;
+using System;
 using System.Data.SqlClient;
 
 namespace SQLLibrary
@@ -17,8 +18,21 @@ namespace SQLLibrary
                 Settings.ConnectionString = string.Format(@"Data Source={1}\{0};Initial Catalog={2};User Id={3};Password = {4};", 
                                                 conData.Instance, conData.ServerName);
             }
+        }
 
-            Settings.Con = new SqlConnection(Settings.ConnectionString);
+        public static SqlConnection OpenCon()
+        {
+            var con = new SqlConnection(Settings.ConnectionString);
+            con.Open();
+            return con;
+        }
+
+        public static void CloseCon(SqlConnection con)
+        {
+            con.Close();
+            con.Dispose();
+
+            GC.Collect();
         }
     }
 }
