@@ -1,6 +1,12 @@
 === DatabaseFactory ===
 ++++++ CHANGELOG ++++++
 
+V1.0.0.6:
+UPD		SQLite and MySQL: DeleteTable, DeleteDatabase and ColumnExists Methods implemented
+FIX		SQL can now run in an Async or Multithreaded App
+UPD		SQL should now completed implemented (Not fully tested!!)
+
+
 V1.0.0.5:
 UPD		MySQL should now completed implemented (Not fully tested!!)
 FIX		Default values (DsStatus, InsertOn and ModifyOn) not filled by Update
@@ -10,7 +16,6 @@ ADD		After an operation a garbage collector is running
 UPD		Require dlls are now placed in _External folder of the Solution
 UPD		SQLite and MySQL can now run in an Async or Multithreaded App
 FIX		Many other small bug fixes and improvments
-
 
 
 V1.0.0.4:
