@@ -19,8 +19,6 @@ namespace SQLiteLibrary
             {
                 Settings.ConnectionString = string.Format("Data Source={0}", Path.Combine(conData.Path, conData.Name));
             }
-
-            //Settings.Con = new SQLiteConnection(Settings.ConnectionString);
         }
 
         public static SQLiteConnection OpenCon()

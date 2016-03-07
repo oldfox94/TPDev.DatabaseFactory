@@ -179,3 +179,4 @@ SQLiteLibrary/bin/Release/SQLite.Interop.dll
 SQLiteLibrary/bin/Release/SQLiteLibrary.dll
 SQLiteLibrary/bin/Release/SQLiteLibrary.pdb
 SQLiteLibrary/bin/Release/DbInterface.dll
+TestApp/obj/Debug/MainWindow.g.i.cs
