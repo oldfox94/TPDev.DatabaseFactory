@@ -7,7 +7,7 @@ FIX		Default values (DsStatus, InsertOn and ModifyOn) not filled by Update
 FIX		Async Operations failed
 ADD		DbNotifyer added. Now you can be notifed when an Error occurred (maybe for debugging?)
 ADD		After an operation a garbage collector is running
-UPD		Require dlls are now placed in _External folder of the Soulution
+UPD		Require dlls are now placed in _External folder of the Solution
 UPD		SQLite and MySQL can now run in an Async or Multithreaded App
 FIX		Many other small bug fixes and improvments
 
