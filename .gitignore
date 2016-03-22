@@ -190,3 +190,17 @@ SQLLibrary/obj/Debug/SQLLibrary.csproj.FileListAbsolute.txt
 SQLiteLibrary/obj/Debug/SQLiteLibrary.csproj.FileListAbsolute.txt
 TestApp/obj/Release/TestApp_MarkupCompile.i.lref
 DbLogger/obj/Release/DbLogger.csproj.FileListAbsolute.txt
+DbFactory/obj/Release/DatabaseFactory.dll
+DbFactory/obj/Release/DatabaseFactory.pdb
+DbInterface/obj/Release/DbInterface.dll
+DbInterface/obj/Release/DbInterface.pdb
+DbLogger/obj/Release/DbLogger.dll
+DbLogger/obj/Release/DbLogger.pdb
+DbNotifyer/obj/Release/DbNotifyer.dll
+DbNotifyer/obj/Release/DbNotifyer.pdb
+MySQLLibrary/obj/Release/MySQLLibrary.dll
+MySQLLibrary/obj/Release/MySQLLibrary.pdb
+SQLLibrary/obj/Release/SQLLibrary.dll
+SQLLibrary/obj/Release/SQLLibrary.pdb
+SQLiteLibrary/obj/Release/SQLiteLibrary.dll
+SQLiteLibrary/obj/Release/SQLiteLibrary.pdb
