@@ -5,6 +5,7 @@
         SQL,
         SQLite,
         MySQL,
+        Oracle,
     }
 
     public static class DbORDER
@@ -26,11 +27,19 @@
         public const string TxtNull = "TEXT  NULL";
         public const string TxtNotNull = "TEXT  NOT NULL";
         public const string TxtNotNullPk = "TEXT  NOT NULL PRIMARY KEY";
+        public const string TxtUniNotNull = "TEXT  UNIQUE NOT NULL";
         public const string TxtUniNotNullPk = "TEXT  UNIQUE NOT NULL PRIMARY KEY";
+
+        public const string VarchrNullMax = "VARCHAR(MAX)  NULL";
+        public const string VarchrNotNullMax = "VARCHAR(MAX)  NOT NULL";
+        public const string VarchrNotNullPkMax = "VARCHAR(MAX)  NOT NULL PRIMARY KEY";
+        public const string VarchrUniNotNullMax = "VARCHAR(MAX)  UNIQUE NOT NULL";
+        public const string VarchrUniNotNullPkMax = "VARCHAR(MAX)  UNIQUE NOT NULL PRIMARY KEY";
 
         public static string VarchrNull(int digits = 1){ return string.Format("VARCHAR({0})  NULL", digits); }
         public static string VarchrNotNull(int digits = 1) { return string.Format("VARCHAR({0})  NOT NULL", digits); }
         public static string VarchrNotNullPk(int digits = 1) { return string.Format("VARCHAR({0})  NOT NULL PRIMARY KEY", digits); }
+        public static string VarchrUniNotNUll(int digits = 1) { return string.Format("VARCHAR({0})  UNIQUE NOT NULL", digits); }
         public static string VarchrUniNotNullPk(int digits = 1) { return string.Format("VARCHAR({0})  UNIQUE NOT NULL PRIMARY KEY", digits); }
 
         public const string IntNull = "INTEGER  NULL";
