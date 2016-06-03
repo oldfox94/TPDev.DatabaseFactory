@@ -69,7 +69,7 @@ namespace SQLLibrary.Operations
         {
             try
             {
-                var result = m_Execute.ExecuteScalar(string.Format(@"SELECT name FROM sqlite_master WHERE type='table' AND name='{0}'", table));
+                var result = m_Execute.ExecuteScalar(string.Format(@"SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME='{0}'", table));
                 if (result == null) return false;
 
                 return result.ToString() == table;
