@@ -1,12 +1,12 @@
-﻿using DbInterface.Interfaces;
+﻿using DbInterface;
+using DbInterface.Helpers;
+using DbInterface.Interfaces;
+using DbInterface.Models;
+using DbLogger.Models;
 using System;
 using System.Collections.Generic;
-using DbInterface.Models;
-using DbInterface;
-using System.Data.SqlClient;
-using DbLogger.Models;
 using System.Data;
-using DbInterface.Helpers;
+using System.Data.SqlClient;
 
 namespace SQLLibrary.Operations
 {
@@ -93,7 +93,7 @@ namespace SQLLibrary.Operations
                 SLLog.WriteError(new LogData
                 {
                     Source = ToString(),
-                    FunctionName = "ExecuteNonQuery Error!",
+                    FunctionName = "ExecuteScalar Error!",
                     Ex = ex,
                 });
                 return null;
@@ -167,7 +167,7 @@ namespace SQLLibrary.Operations
                 SLLog.WriteError(new LogData
                 {
                     Source = ToString(),
-                    FunctionName = "ExecuteReadTable Error!",
+                    FunctionName = "ExecuteReadTableSchema Error!",
                     Ex = ex,
                 });
                 return null;

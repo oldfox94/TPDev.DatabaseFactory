@@ -1,11 +1,11 @@
-﻿using DbInterface.Interfaces;
+﻿using DbInterface;
+using DbInterface.Helpers;
+using DbInterface.Interfaces;
+using DbInterface.Models;
+using DbLogger.Models;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
-using DbInterface.Models;
-using MySql.Data.MySqlClient;
-using DbLogger.Models;
-using DbInterface;
-using DbInterface.Helpers;
 using System.Data;
 
 namespace MySQLLibrary.Operations
@@ -93,7 +93,7 @@ namespace MySQLLibrary.Operations
                 SLLog.WriteError(new LogData
                 {
                     Source = ToString(),
-                    FunctionName = "ExecuteNonQuery Error!",
+                    FunctionName = "ExecuteScalar Error!",
                     Ex = ex,
                 });
                 return null;
@@ -166,7 +166,7 @@ namespace MySQLLibrary.Operations
                 SLLog.WriteError(new LogData
                 {
                     Source = ToString(),
-                    FunctionName = "ExecuteReadTable Error!",
+                    FunctionName = "ExecuteReadTableSchema Error!",
                     Ex = ex,
                 });
                 return null;
