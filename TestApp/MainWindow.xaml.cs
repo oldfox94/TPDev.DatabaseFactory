@@ -27,12 +27,13 @@ namespace TestApp
             connectionData.Name = "";
             connectionData.User = "";
             connectionData.Password = "";
-            //m_dbFactory = new DbFactory(DbType.SQL, connectionData);
+            connectionData.Instance = ""; //Leave empty for default Instance
+            //m_dbFactory = new DbFactory(DbType.SQL, connectionData); //Uncomment for SQL
 
             //SQLite
             connectionData.Path = Environment.CurrentDirectory;
             connectionData.Name = "D_TestApp.db";
-            m_dbFactory = new DbFactory(DbType.SQLite, connectionData);
+            //m_dbFactory = new DbFactory(DbType.SQLite, connectionData); //Uncomment for SQLite
 
             //MySQL
             connectionData.ServerName = "";
@@ -40,10 +41,20 @@ namespace TestApp
             connectionData.Name = "";
             connectionData.User = "";
             connectionData.Password = "";
-            //m_dbFactory = new DbFactory(DbType.MySQL, connectionData);
+            //m_dbFactory = new DbFactory(DbType.MySQL, connectionData); //Uncomment for MySQL
 
+            //Oracle
+            connectionData.ServerName = "";
+            connectionData.Port = "";
+            connectionData.Name = "";
+            connectionData.User = "";
+            connectionData.Password = "";
+            m_dbFactory = new DbFactory(DbType.Oracle, connectionData); //Uncomment for Oracle
+
+            #region Init Logger
             m_dbFactory.InitLogger("DbFactoryLog");
             m_dbFactory.InitNotifyIcon(new NotifyData { Title = "TestApp", NotifyOnError = true, NotifyOnInfo = true });
+            #endregion
         }
 
         private void CreateTable()

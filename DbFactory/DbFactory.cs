@@ -3,6 +3,7 @@ using DbInterface.Interfaces;
 using DbInterface.Models;
 using DbNotifyer.Models;
 using MySQLLibrary.Operations;
+using OracleLibrary.Operations;
 using SQLiteLibrary.Operations;
 using SQLLibrary.Operations;
 using System;
@@ -34,6 +35,10 @@ namespace DatabaseFactory
 
                 case DbType.MySQL:
                     new MySQLLibrary.CONNECTION(data);
+                    break;
+
+                case DbType.Oracle:
+                    new OracleLibrary.CONNECTION(data);
                     break;
             }
 
@@ -124,6 +129,9 @@ namespace DatabaseFactory
 
                 case DbType.MySQL:
                     return new MySQLCheck();
+
+                case DbType.Oracle:
+                    return new OraCheck();
             }
 
             return null;
@@ -158,6 +166,9 @@ namespace DatabaseFactory
 
                 case DbType.MySQL:
                     return new MySQLExecute();
+
+                case DbType.Oracle:
+                    return new OraExecute();
             }
 
             return null;

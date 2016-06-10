@@ -1,6 +1,6 @@
 ﻿using DbInterface.Models;
+using Oracle.DataAccess.Client;
 using System;
-using System.Data.OracleClient;
 
 namespace OracleLibrary
 {
@@ -8,6 +8,7 @@ namespace OracleLibrary
     {
         public CONNECTION(DbConnectionData conData)
         {
+            //Data Source=OraDb;User Id=scott;Password=tiger; lt. Oracle Doku
             if (string.IsNullOrEmpty(conData.Instance))
             {
                 Settings.ConnectionString = string.Format(@"Data Source={0};Initial Catalog={1};User Id={2};Password = {3};",

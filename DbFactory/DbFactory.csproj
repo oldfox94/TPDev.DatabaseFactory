@@ -64,6 +64,10 @@
       <Project>{fe019bea-afea-449e-b8cd-c9fb97ac0dfc}</Project>
       <Name>MySQLLibrary</Name>
     </ProjectReference>
+    <ProjectReference Include="..\OracleLibrary\OracleLibrary.csproj">
+      <Project>{65530322-3341-4b41-935e-3770033fd574}</Project>
+      <Name>OracleLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SQLiteLibrary\SQLiteLibrary.csproj">
       <Project>{22d04340-80bf-44cf-931a-a6bcc26e3ee1}</Project>
       <Name>SQLiteLibrary</Name>
