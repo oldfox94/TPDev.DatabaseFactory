@@ -2,11 +2,12 @@
 ++++++ CHANGELOG ++++++
 
 V1.0.0.7:
+ADD		Oracle Implemented (Not fully tested!!)
 FIX		SQL TableExists function throws exception
 FIX		MySQL GetLastSortOrder throws exception
 ADD		New DbDef(initions) Varchr(MAX) in all variations
 ADD		New DbDef(initions) Varchr and Text UNIQUE NOT NULL
-ADD		Oracle Implemented
+ADD		New function Execute.ExecuteReadTableName(string columnName); Returns the TableName
 
 
 V1.0.0.6:
