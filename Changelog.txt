@@ -1,6 +1,14 @@
 === DatabaseFactory ===
 ++++++ CHANGELOG ++++++
 
+V1.0.0.7:
+FIX		SQL TableExists function throws exception
+FIX		MySQL GetLastSortOrder throws exception
+ADD		New DbDef(initions) Varchr(MAX) in all variations
+ADD		New DbDef(initions) Varchr and Text UNIQUE NOT NULL
+ADD		Oracle Implemented
+
+
 V1.0.0.6:
 UPD		SQLite and MySQL: DeleteTable, DeleteDatabase and ColumnExists Methods implemented
 FIX		SQL can now run in an Async or Multithreaded App
