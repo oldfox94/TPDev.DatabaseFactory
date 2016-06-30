@@ -15,6 +15,7 @@ namespace DbInterface.Interfaces
         DataRow GetRow(string sql);
         DataRow GetRow(string tableName, string where = null, string orderBy = null);
 
+        string GetTableNameFromColumn(string columnName);
         string GetValueFromColumn(string tableName, string columnName, string where);
 
         string GetLastSortOrder(string tableName, string sortOrderColName, string where = null);

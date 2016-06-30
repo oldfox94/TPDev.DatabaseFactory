@@ -178,6 +178,24 @@ namespace SQLiteLibrary.Operations
             return resultStr;
         }
 
+        public string GetTableNameFromColumn(string columnName)
+        {
+            try
+            {
+                return m_Execute.ExecuteReadTableName(columnName);
+            }
+            catch (Exception ex)
+            {
+                SLLog.WriteError(new LogData
+                {
+                    Source = ToString(),
+                    FunctionName = "GetTableNameFromColumn Error!",
+                    Ex = ex,
+                });
+                return string.Empty;
+            }
+        }
+
         public string GetLastSortOrder(string tableName, string sortOrderColName, string where = null)
         {
             var result = "0";
