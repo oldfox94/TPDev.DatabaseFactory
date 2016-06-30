@@ -1,7 +1,6 @@
 ﻿using DbInterface;
 using DbInterface.Helpers;
 using DbInterface.Interfaces;
-using DbInterface.Models;
 using DbLogger.Models;
 using System;
 using System.Collections.Generic;
@@ -183,7 +182,6 @@ namespace SQLLibrary.Operations
         {
             try
             {
-
                 return m_Execute.ExecuteReadTableName(columnName);
             }
             catch(Exception ex)
