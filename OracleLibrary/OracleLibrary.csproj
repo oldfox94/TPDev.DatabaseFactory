@@ -49,7 +49,11 @@
   <ItemGroup>
     <Compile Include="CONNECTION.cs" />
     <Compile Include="Operations\OraCheck.cs" />
+    <Compile Include="Operations\OraDelete.cs" />
     <Compile Include="Operations\OraExecute.cs" />
+    <Compile Include="Operations\OraGet.cs" />
+    <Compile Include="Operations\OraInsert.cs" />
+    <Compile Include="Operations\OraUpdate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
   </ItemGroup>

@@ -78,6 +78,9 @@ namespace DatabaseFactory
 
                 case DbType.MySQL:
                     return new MySQLInsert();
+
+                case DbType.Oracle:
+                    return new OraInsert();
             }
 
             return null;
@@ -95,6 +98,9 @@ namespace DatabaseFactory
 
                 case DbType.MySQL:
                     return new MySQLUpdate();
+
+                case DbType.Oracle:
+                    return new OraUpdate();
             }
 
             return null;
@@ -112,6 +118,9 @@ namespace DatabaseFactory
 
                 case DbType.MySQL:
                     return new MySQLDelete();
+
+                case DbType.Oracle:
+                    return new OraDelete();
             }
 
             return null;
@@ -149,6 +158,9 @@ namespace DatabaseFactory
 
                 case DbType.MySQL:
                     return new MySQLGet();
+
+                case DbType.Oracle:
+                    return new OraGet();
             }
 
             return null;
