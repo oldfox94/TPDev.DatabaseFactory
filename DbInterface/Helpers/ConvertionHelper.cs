@@ -1,5 +1,6 @@
 ﻿using DbInterface.Models;
 using System;
+using System.Collections.Generic;
 
 namespace DbInterface.Helpers
 {
@@ -81,6 +82,34 @@ namespace DbInterface.Helpers
             var where = "datetime('" + date + "') " + whereOperator;
             where += string.Format(" datetime(substr({0}, 7, 4) || '-' || substr({0}, 4, 2) || '-' || substr({0}, 1, 2))", ColName);
             return where;
+        }
+
+        public static string WHERE(string ColName, DateTime minValue, DateTime maxValue)
+        {
+            string minDate = minValue.ToString("yyyy-MM-dd");
+            string maxDate = maxValue.ToString("yyyy-MM-dd");
+            string colDate = string.Format(" datetime(substr({0}, 7, 4) || '-' || substr({0}, 4, 2) || '-' || substr({0}, 1, 2))", ColName);
+
+            var where = string.Format("datetime('{0}') AND datetime('{1}')", minDate, maxDate);
+            where = string.Format(@"{0} BETWEEN {1}", colDate, where);
+            return where;
+        }
+
+        public static string IsInList(string ColName, List<string> valueList)
+        {
+            var result = string.Empty;
+            foreach(var item in valueList)
+            {
+                result += string.Format(@"'{0}',", item);
+            }
+
+            if(valueList.Count > 0)
+            {
+                result = result.Remove(result.Length - 1, 1);
+                result = string.Format(@" {0} IN({1}) ", ColName, result);
+            }
+
+            return result;
         }
 
         public static string ORDERBY(string colName, string orderBy)

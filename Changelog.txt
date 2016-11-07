@@ -9,6 +9,7 @@ ADD		New DbDef(initions) Varchr(MAX) in all variations
 ADD		New DbDef(initions) Varchr and Text UNIQUE NOT NULL
 ADD		New function Execute.ExecuteReadTableName(string columnName); Returns the Tablename
 ADD		New function Get.GetTableNameFromColumn(string columnName); Returns the Tablename
+ADD		New Convertion: Function "IsInList" returns "myColumn IN('item1', 'item2', 'item3')"
 
 
 V1.0.0.6:
