@@ -1,6 +1,12 @@
 === DatabaseFactory ===
 ++++++ CHANGELOG ++++++
 
+V1.0.0.8:
+ADD		Check Database Exists for SQL, MySQL, SQLite and Oracle (Not fully tested!!)
+ADD		Create Database for SQL, MySQL (Not fully tested!!)
+FIX		Check Table Exists for MySQL
+
+
 V1.0.0.7:
 ADD		Oracle Implemented (Not fully tested!!)
 FIX		SQL TableExists function throws exception
