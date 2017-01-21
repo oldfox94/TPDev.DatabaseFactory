@@ -134,5 +134,23 @@ namespace OracleLibrary.Operations
                 return false;
             }
         }
+
+        public bool CreateDatabase(string databaseName)
+        {
+            try
+            {
+                return false;
+            }
+            catch (Exception ex)
+            {
+                SLLog.WriteError(new LogData
+                {
+                    Source = ToString(),
+                    FunctionName = "CreateDatabase Error!",
+                    Ex = ex,
+                });
+                return false;
+            }
+        }
     }
 }

@@ -69,7 +69,7 @@ namespace MySQLLibrary.Operations
         {
             try
             {
-                var result = m_Execute.ExecuteScalar(string.Format(@"SELECT name FROM sqlite_master WHERE type='table' AND name='{0}'", table));
+                var result = m_Execute.ExecuteScalar(string.Format(@"SHOW TABLES LIKE '{0}'", table));
                 if (result == null) return false;
 
                 return result.ToString() == table;
@@ -80,6 +80,27 @@ namespace MySQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "TableExists Error!",
+                    Ex = ex,
+                });
+                return false;
+            }
+        }
+
+        public bool DatabaseExists(string databaseName)
+        {
+            try
+            {
+                var result = m_Execute.ExecuteScalar(string.Format(@"SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '{0}'", databaseName));
+                if (result == null) return false;
+
+                return result.ToString() == databaseName;
+            }
+            catch (Exception ex)
+            {
+                SLLog.WriteError(new LogData
+                {
+                    Source = ToString(),
+                    FunctionName = "DatabaseExists Error!",
                     Ex = ex,
                 });
                 return false;

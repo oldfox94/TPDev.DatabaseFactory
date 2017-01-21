@@ -85,5 +85,26 @@ namespace SQLLibrary.Operations
                 return false;
             }
         }
+
+        public bool DatabaseExists(string databaseName)
+        {
+            try
+            {
+                var result = m_Execute.ExecuteScalar(string.Format(@"SELECT name FROM master.dbo.sysdatabases WHERE name = '{0}'", databaseName));
+                if (result == null) return false;
+
+                return result.ToString() == databaseName;
+            }
+            catch(Exception ex)
+            {
+                SLLog.WriteError(new LogData
+                {
+                    Source = ToString(),
+                    FunctionName = "DatabaseExists Error!",
+                    Ex = ex,
+                });
+                return false;
+            }
+        }
     }
 }

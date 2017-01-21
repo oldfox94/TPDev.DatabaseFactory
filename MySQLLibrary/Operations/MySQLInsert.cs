@@ -69,6 +69,26 @@ namespace MySQLLibrary.Operations
             }
         }
 
+        public bool CreateDatabase(string databaseName)
+        {
+            try
+            {
+                var result = m_Execute.ExecuteNonQuery(string.Format(@"CREATE DATABASE {0};", databaseName));
+                if (result == -1) return false;
+                return true;
+            }
+            catch(Exception ex)
+            {
+                SLLog.WriteError(new LogData
+                {
+                    Source = ToString(),
+                    FunctionName = "CreateDatabase Error!",
+                    Ex = ex,
+                });
+                return false;
+            }
+        }
+
         public bool InsertRow(string tableName, DataRow row)
         {
             try

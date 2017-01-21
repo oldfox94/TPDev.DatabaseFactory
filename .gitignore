@@ -282,3 +282,6 @@ SQLiteLibrary/obj/Debug/SQLiteLibrary.pdb
 TestApp/obj/Debug/TestApp.exe
 TestApp/obj/Debug/TestApp.pdb
 TestApp/obj/Debug/TestApp_MarkupCompile.lref
+TestApp/obj/
+OracleLibrary/obj/
+DbFactory/obj/

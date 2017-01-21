@@ -1,11 +1,11 @@
-﻿using DbInterface.Interfaces;
+﻿using DbInterface;
+using DbInterface.Helpers;
+using DbInterface.Interfaces;
+using DbInterface.Models;
+using DbLogger.Models;
 using System;
 using System.Collections.Generic;
-using DbInterface.Models;
 using System.Data;
-using DbLogger.Models;
-using DbInterface;
-using DbInterface.Helpers;
 
 namespace SQLiteLibrary.Operations
 {
@@ -63,6 +63,24 @@ namespace SQLiteLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "CreateTable Error!",
+                    Ex = ex,
+                });
+                return false;
+            }
+        }
+
+        public bool CreateDatabase(string databaseName)
+        {
+            try
+            {
+                return true;
+            }
+            catch (Exception ex)
+            {
+                SLLog.WriteError(new LogData
+                {
+                    Source = ToString(),
+                    FunctionName = "CreateDatabase Error!",
                     Ex = ex,
                 });
                 return false;

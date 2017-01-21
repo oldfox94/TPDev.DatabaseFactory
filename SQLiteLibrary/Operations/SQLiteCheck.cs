@@ -3,6 +3,7 @@ using DbInterface.Interfaces;
 using DbLogger.Models;
 using System;
 using System.Data;
+using System.IO;
 
 namespace SQLiteLibrary.Operations
 {
@@ -80,6 +81,24 @@ namespace SQLiteLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "TableExists Error!",
+                    Ex = ex,
+                });
+                return false;
+            }
+        }
+
+        public bool DatabaseExists(string databaseName)
+        {
+            try
+            {
+                return File.Exists(databaseName);
+            }
+            catch (Exception ex)
+            {
+                SLLog.WriteError(new LogData
+                {
+                    Source = ToString(),
+                    FunctionName = "DatabaseExists Error!",
                     Ex = ex,
                 });
                 return false;
