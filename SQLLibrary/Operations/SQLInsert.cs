@@ -71,11 +71,14 @@ namespace SQLLibrary.Operations
 
         public bool CreateDatabase(string databaseName)
         {
+            var result = false;
             try
             {
-                var result = m_Execute.ExecuteNonQuery(string.Format(@"CREATE DATABASE {0};", databaseName));
-                if (result == -1) return false;
-                return true;
+                new CONNECTION(new DbConnectionData { Name = "master", ServerName = Settings.ConnectionData.ServerName, Instance = Settings.ConnectionData.Instance,
+                                                      User = Settings.ConnectionData.User, Password = Settings.ConnectionData.Password}, false);
+
+                m_Execute.ExecuteNonQuery(string.Format(@"CREATE DATABASE {0};", databaseName));
+                result = true;
             }
             catch(Exception ex)
             {
@@ -85,8 +88,11 @@ namespace SQLLibrary.Operations
                     FunctionName = "CreateDatabase Error!",
                     Ex = ex,
                 });
-                return false;
+                result = false;
             }
+
+            new CONNECTION(Settings.ConnectionData);
+            return result;
         }
 
         public bool InsertRow(string tableName, DataRow row)

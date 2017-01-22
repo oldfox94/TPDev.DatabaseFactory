@@ -1,5 +1,6 @@
 ﻿using DbInterface;
 using DbInterface.Interfaces;
+using DbInterface.Models;
 using DbLogger.Models;
 using System;
 using System.Data;
@@ -88,12 +89,17 @@ namespace SQLLibrary.Operations
 
         public bool DatabaseExists(string databaseName)
         {
+            var result = false;
             try
             {
-                var result = m_Execute.ExecuteScalar(string.Format(@"SELECT name FROM master.dbo.sysdatabases WHERE name = '{0}'", databaseName));
-                if (result == null) return false;
+                new CONNECTION(new DbConnectionData { Name = "master", ServerName = Settings.ConnectionData.ServerName, Instance = Settings.ConnectionData.Instance,
+                                                      User = Settings.ConnectionData.User, Password = Settings.ConnectionData.Password }, false);
 
-                return result.ToString() == databaseName;
+                var exResult = m_Execute.ExecuteScalar(string.Format(@"SELECT name FROM master.dbo.sysdatabases WHERE name = '{0}'", databaseName));
+                if (exResult == null)
+                    result = false;
+                else
+                    result = exResult.ToString() == databaseName;
             }
             catch(Exception ex)
             {
@@ -103,8 +109,11 @@ namespace SQLLibrary.Operations
                     FunctionName = "DatabaseExists Error!",
                     Ex = ex,
                 });
-                return false;
+                result = false;
             }
+
+            new CONNECTION(Settings.ConnectionData);
+            return result;
         }
     }
 }
