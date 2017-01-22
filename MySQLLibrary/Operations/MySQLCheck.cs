@@ -88,12 +88,14 @@ namespace MySQLLibrary.Operations
 
         public bool DatabaseExists(string databaseName)
         {
+            var result = false;
             try
             {
-                var result = m_Execute.ExecuteScalar(string.Format(@"SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '{0}'", databaseName));
-                if (result == null) return false;
-
-                return result.ToString() == databaseName;
+                var exResult = m_Execute.ExecuteScalar(string.Format(@"SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '{0}'", databaseName));
+                if (exResult == null)
+                    result = false;
+                else
+                    result = exResult.ToString() == databaseName;
             }
             catch (Exception ex)
             {
@@ -103,8 +105,11 @@ namespace MySQLLibrary.Operations
                     FunctionName = "DatabaseExists Error!",
                     Ex = ex,
                 });
-                return false;
+                result = false;
             }
+
+            //new CONNECTION(Settings.ConnectionData);
+            return result;
         }
     }
 }

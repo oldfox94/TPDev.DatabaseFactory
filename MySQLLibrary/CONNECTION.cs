@@ -6,9 +6,13 @@ namespace MySQLLibrary
 {
     public class CONNECTION
     {
-        public CONNECTION(DbConnectionData conData)
+        public CONNECTION(DbConnectionData conData, bool overwriteConData = true)
         {
-            if(string.IsNullOrEmpty(conData.Instance))
+            if (overwriteConData)
+                Settings.ConnectionData = new DbConnectionData { Instance = conData.Instance, Name = conData.Name, Password = conData.Password, Path = conData.Path,
+                                                                 Port = conData.Port, ServerName = conData.ServerName, User = conData.User };
+
+            if (string.IsNullOrEmpty(conData.Instance))
             {
                 Settings.ConnectionString = string.Format(@"Data Source={0};Initial Catalog={1};User Id={2};Password = {3};",
                                                 conData.ServerName, conData.Name, conData.User, conData.Password);
