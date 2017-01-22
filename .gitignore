@@ -285,3 +285,5 @@ TestApp/obj/Debug/TestApp_MarkupCompile.lref
 TestApp/obj/
 OracleLibrary/obj/
 DbFactory/obj/
+DbNotifyer/obj/
+MySQLLibrary/bin/Debug/
