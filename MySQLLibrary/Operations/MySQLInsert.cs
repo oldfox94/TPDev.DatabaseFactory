@@ -74,7 +74,6 @@ namespace MySQLLibrary.Operations
             try
             {
                 var result = m_Execute.ExecuteNonQuery(string.Format(@"CREATE DATABASE {0};", databaseName));
-                if (result == -1) return false;
                 return true;
             }
             catch(Exception ex)
