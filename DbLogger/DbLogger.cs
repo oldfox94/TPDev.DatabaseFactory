@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Windows.Threading;
 
 namespace DbLogger
 {
@@ -14,6 +15,7 @@ namespace DbLogger
         {
             m_LogDataList = new List<LogData>();
 
+            Settings.mainThreadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
             Settings.LogId = logId;
             Settings.LogFile = Path.Combine(logPath, logFileName + ".log");
             if(!Directory.Exists(logPath))
@@ -78,8 +80,23 @@ namespace DbLogger
             SLLogEvents.FireShowBallonTipp(new SLLogEventArgs { Type = data.Type, Titel = "DatabaseFactory " + data.Type.ToString() + "!", LogMessage = data.Message });
         }
 
-
         private void LogToFile()
+        {
+            if(Settings.IsMainThread)
+            {
+                WriteToFile();
+            }
+            else
+            {
+                var disp = Dispatcher.CurrentDispatcher;
+                disp.Invoke(new Action(() =>
+                {
+                    WriteToFile();
+                }));
+            }
+        }
+
+        private void WriteToFile()
         {
             var file = new StreamWriter(Settings.LogFile, true);
             foreach(var logEntry in m_LogDataList)
