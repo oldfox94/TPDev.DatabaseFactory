@@ -5,6 +5,7 @@ V1.0.0.8:
 ADD		Check Database Exists for SQL, MySQL, SQLite and Oracle (MySQL and Oracle not fully tested!!)
 ADD		Create Database for SQL, MySQL (MySQL not fully tested!!)
 FIX		Check Table Exists for MySQL
+UPD		Logger can now write log messages from other Threads
 
 
 V1.0.0.7:
