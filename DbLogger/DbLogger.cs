@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Windows.Threading;
+using System.Threading;
 
 namespace DbLogger
 {
@@ -82,23 +82,11 @@ namespace DbLogger
 
         private void LogToFile()
         {
-            if(Settings.IsMainThread)
-            {
-                WriteToFile();
-            }
-            else
-            {
-                var disp = Dispatcher.CurrentDispatcher;
-                disp.Invoke(new Action(() =>
-                {
-                    WriteToFile();
-                }));
-            }
+            WriteToFile();
         }
 
         private void WriteToFile()
         {
-            var file = new StreamWriter(Settings.LogFile, true);
             foreach(var logEntry in m_LogDataList)
             {
                 if (logEntry.IsInLogFile) continue;
@@ -125,7 +113,7 @@ namespace DbLogger
                             break;
                     }
 
-                    file.Write(line);
+                    WriteAsync(Settings.LogFile, line);
                     logEntry.IsInLogFile = true;
                 }
                 catch(Exception)
@@ -134,8 +122,13 @@ namespace DbLogger
                     logEntry.IsInLogFile = false;
                 }
             }
+        }
 
-            file.Close();
+        private ReaderWriterLock locker = new ReaderWriterLock();
+        private void WriteAsync(string path, string line)
+        {
+            locker.AcquireWriterLock(int.MaxValue);
+            File.AppendAllLines(path, new[] { line });
         }
     }
 }
