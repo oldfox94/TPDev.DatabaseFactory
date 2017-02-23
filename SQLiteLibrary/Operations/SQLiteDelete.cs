@@ -49,7 +49,7 @@ namespace SQLiteLibrary.Operations
             try
             {
                 var result = m_Execute.ExecuteNonQuery(string.Format(@"DELETE FROM {0}", tableName));
-                if (result == -1) return false;
+                if (result == -2) return false;
                 return true;
             }
             catch(Exception ex)
@@ -69,7 +69,7 @@ namespace SQLiteLibrary.Operations
             try
             {
                 var result = m_Execute.ExecuteNonQuery(string.Format(@"DROP DATABASE {0}", databaseName));
-                if (result == -1) return false;
+                if (result == -2) return false;
                 return true;
             }
             catch (Exception ex)
@@ -91,7 +91,7 @@ namespace SQLiteLibrary.Operations
                 var whereCnd = ConvertionHelper.GetWhere(where);
 
                 var result = m_Execute.ExecuteNonQuery(string.Format(@"DELETE FROM {0} {1}", tableName, whereCnd));
-                if (result == -1) return false;
+                if (result == -2) return false;
                 return true;
             }
             catch (Exception ex)
@@ -111,7 +111,7 @@ namespace SQLiteLibrary.Operations
             try
             {
                 var result = m_Execute.ExecuteNonQuery(string.Format(@"DROP TABLE {0}", tableName));
-                if (result == -1) return false;
+                if (result == -2) return false;
                 return true;
             }
             catch (Exception ex)

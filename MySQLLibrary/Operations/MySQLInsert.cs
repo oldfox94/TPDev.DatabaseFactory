@@ -54,7 +54,7 @@ namespace MySQLLibrary.Operations
                 var sql = ScriptHelper.GetMySQLCreateTableSql(tableName, columns);
                 var result = m_Execute.ExecuteNonQuery(sql);
 
-                if (result == -1) return false;
+                if (result == -2) return false;
                 return true;
             }
             catch (Exception ex)
@@ -74,8 +74,8 @@ namespace MySQLLibrary.Operations
             var result = false;
             try
             {
-                m_Execute.ExecuteNonQuery(string.Format(@"CREATE DATABASE {0};", databaseName));
-                result = true;
+                var cmdResult = m_Execute.ExecuteNonQuery(string.Format(@"CREATE DATABASE {0};", databaseName));
+                result = cmdResult != -2;
             }
             catch(Exception ex)
             {
@@ -143,7 +143,7 @@ namespace MySQLLibrary.Operations
                 var sql = ScriptHelper.GetInsertSqlScript(tableName, data);
                 var result = m_Execute.ExecuteNonQuery(sql);
 
-                if (result == -1) return false;
+                if (result == -2) return false;
                 return true;
             }
             catch (Exception ex)

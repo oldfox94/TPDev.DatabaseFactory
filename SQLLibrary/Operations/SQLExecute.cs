@@ -38,7 +38,7 @@ namespace SQLLibrary.Operations
                     FunctionName = "ExecuteNonQuery Error!",
                     Ex = ex,
                 });
-                return -1;
+                return -2;
             }
 
             return rowsUpdated;
@@ -54,8 +54,10 @@ namespace SQLLibrary.Operations
                 foreach (var sql in sqlList)
                 {
                     var cmd = new SqlCommand(sql, con);
-                    rowsUpdated += cmd.ExecuteNonQuery();
+                    var cmdResult = cmd.ExecuteNonQuery();
+                    if (cmdResult == -2) return -2;
 
+                    rowsUpdated += cmdResult;
                     cmd.Dispose();
                 }
 
@@ -69,9 +71,10 @@ namespace SQLLibrary.Operations
                     FunctionName = "ExecuteNonQuery Error!",
                     Ex = ex,
                 });
-                return -1;
+                return -2;
             }
 
+            rowsUpdated = rowsUpdated == -2 ? 0 : rowsUpdated;
             return rowsUpdated;
         }
 
@@ -233,7 +236,7 @@ namespace SQLLibrary.Operations
                     oldColumns.Add(oldCol);
                 }
 
-                scriptList.Add(string.Format("ALTER TABLE {0} RENAME TO {0}_OLD{1}", tableName, timeStamp));
+                scriptList.Add(string.Format("EXEC sp_rename {0}, {0}_OLD{1}", tableName, timeStamp));
 
                 scriptList.Add(ScriptHelper.GetCreateTableSql(tableName, columns));
 
@@ -243,7 +246,7 @@ namespace SQLLibrary.Operations
 
 
                 var exResult = ExecuteNonQuery(scriptList);
-                if (exResult == -1)
+                if (exResult == -2)
                     result = false;
 
                 return result;

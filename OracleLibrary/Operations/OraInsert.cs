@@ -68,7 +68,7 @@ namespace OracleLibrary.Operations
                 var sql = ScriptHelper.GetInsertSqlScript(tableName, data);
                 var result = m_Execute.ExecuteNonQuery(sql);
 
-                if (result == -1) return false;
+                if (result == -2) return false;
                 return true;
             }
             catch (Exception ex)
@@ -92,7 +92,7 @@ namespace OracleLibrary.Operations
                 var sql = ScriptHelper.GetCreateTableSql(tableName, columns);
                 var result = m_Execute.ExecuteNonQuery(sql);
 
-                if (result == -1) return false;
+                if (result == -2) return false;
                 return true;
             }
             catch (Exception ex)

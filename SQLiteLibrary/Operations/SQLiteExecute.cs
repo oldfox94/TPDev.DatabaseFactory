@@ -38,7 +38,7 @@ namespace SQLiteLibrary.Operations
                     FunctionName = "ExecuteNonQuery Error!",
                     Ex = ex,
                 });
-                return -1;
+                return -2;
             }
 
             return rowsUpdated;
@@ -54,8 +54,10 @@ namespace SQLiteLibrary.Operations
                 foreach(var sql in sqlList)
                 {
                     var cmd = new SQLiteCommand(sql, con);
-                    rowsUpdated += cmd.ExecuteNonQuery();
+                    var cmdResult = cmd.ExecuteNonQuery();
+                    if (cmdResult == -2) return -2;
 
+                    rowsUpdated += cmdResult;
                     cmd.Dispose();
                 }
 
@@ -69,9 +71,10 @@ namespace SQLiteLibrary.Operations
                     FunctionName = "ExecuteNonQuery Error!",
                     Ex = ex,
                 });
-                return -1;
+                return -2;
             }
 
+            rowsUpdated = rowsUpdated == -2 ? 0 : rowsUpdated;
             return rowsUpdated;
         }
 
@@ -242,7 +245,7 @@ namespace SQLiteLibrary.Operations
 
 
                 var exResult = ExecuteNonQuery(scriptList);
-                if (exResult == -1)
+                if (exResult == -2)
                     result = false;
 
                 return result;

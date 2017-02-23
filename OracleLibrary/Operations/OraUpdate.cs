@@ -136,7 +136,7 @@ namespace OracleLibrary.Operations
                             tableName, column, ConvertionHelper.CleanStringForSQL(value), DbCIC.ModifyOn, DateTime.Now.ToString(), whereCnd);
                 var result = m_Execute.ExecuteNonQuery(sql);
 
-                if (result == -1) return false;
+                if (result == -2) return false;
                 return true;
             }
             catch (Exception ex)
