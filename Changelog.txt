@@ -5,6 +5,8 @@ V1.0.0.8:
 ADD		Check Database Exists for SQL, MySQL, SQLite and Oracle (MySQL and Oracle not fully tested!!)
 ADD		Create Database for SQL, MySQL (MySQL not fully tested!!)
 FIX		Check Table Exists for MySQL
+FIX		Fixed varius bugs by Execute Methodes -> 
+		When no rows beeen updated (eg. Table rename) the return value was false
 UPD		Logger can now write log messages from other Threads
 
 
