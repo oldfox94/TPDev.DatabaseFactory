@@ -9,8 +9,8 @@ copy MySQLLibrary\bin\Release\MySql.Fabric.Plugin.dll DbFactory\bin\Release
 
 
 echo Building Project ...
-"C:\Program Files (x86)\MSBuild\14.0\Bin\msbuild.exe" DbInterface\DbInterface.csproj /p:Configuration=Release;OutputPath=..\Binaries /t:Rebuild
-"C:\Program Files (x86)\MSBuild\14.0\Bin\msbuild.exe" DbFactory\DbFactory.csproj /p:Configuration=Release;OutputPath=..\Binaries /t:Rebuild
+"C:\Program Files (x86)\MSBuild\14.0\Bin\msbuild.exe" DbInterface\DbInterface.csproj /p:Configuration=Debug;OutputPath=..\Binaries /t:Rebuild
+"C:\Program Files (x86)\MSBuild\14.0\Bin\msbuild.exe" DbFactory\DbFactory.csproj /p:Configuration=Debug;OutputPath=..\Binaries /t:Rebuild
 
 
 echo Cleanup Release folder ...
