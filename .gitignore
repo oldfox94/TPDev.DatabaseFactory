@@ -287,3 +287,6 @@ OracleLibrary/obj/
 DbFactory/obj/
 DbNotifyer/obj/
 MySQLLibrary/bin/Debug/
+SQLLibrary/obj/Debug/
+MySQLLibrary/obj/Debug/
+SQLiteLibrary/obj/Debug/build.force

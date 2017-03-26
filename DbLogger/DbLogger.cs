@@ -110,6 +110,7 @@ namespace DbLogger
                             line = string.Format(@"[Error]{1} => {2}: {0}Function: {3} {0}Source: {4} {0}Message: {5} {0}StackTrace: {6}{0}{0}",
                                     Environment.NewLine, Settings.LogId, logEntry.ExDate.ToString(), logEntry.FunctionName, logEntry.Source, logEntry.Message, 
                                     logEntry.StackTrace);
+                            WriteEventLog(line);
                             break;
                     }
 
@@ -129,6 +130,15 @@ namespace DbLogger
         {
             locker.AcquireWriterLock(int.MaxValue);
             File.AppendAllLines(path, new[] { line });
+        }
+
+        private void WriteEventLog(string message)
+        {
+            using (EventLog eventLog = new EventLog("TPDev.DatabaseFactory"))
+            {
+                eventLog.Source = "TPDev.DatabaseFactory";
+                eventLog.WriteEntry(message, EventLogEntryType.Error);
+            }
         }
     }
 }
