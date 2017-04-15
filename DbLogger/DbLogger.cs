@@ -99,17 +99,23 @@ namespace DbLogger
                         case LogType.Info:
                             line = string.Format(@"[Info]{1} => {2}: {0}Function: {3} {0}Message: {4}{0}{0}",
                                     Environment.NewLine, Settings.LogId, logEntry.ExDate.ToString(), logEntry.FunctionName, logEntry.Message);
+
+                            WriteConsoleLog(line);
                             break;
 
                         case LogType.Warning:
                             line = string.Format(@"[Warning]{1} => {2}: {0}Function: {3} {0}Source: {4} {0}Message: {5}{0}{0}",
                                     Environment.NewLine, Settings.LogId, logEntry.ExDate.ToString(), logEntry.FunctionName, logEntry.Source, logEntry.Message);
+
+                            WriteConsoleLog(line);
                             break;
 
                         case LogType.Error:
                             line = string.Format(@"[Error]{1} => {2}: {0}Function: {3} {0}Source: {4} {0}Message: {5} {0}StackTrace: {6}{0}{0}",
                                     Environment.NewLine, Settings.LogId, logEntry.ExDate.ToString(), logEntry.FunctionName, logEntry.Source, logEntry.Message, 
                                     logEntry.StackTrace);
+
+                            WriteConsoleLog(line);
                             WriteEventLog(line);
                             break;
                     }
@@ -139,6 +145,11 @@ namespace DbLogger
                 eventLog.Source = "TPDev.DatabaseFactory";
                 eventLog.WriteEntry(message, EventLogEntryType.Error);
             }
+        }
+
+        private void WriteConsoleLog(string message)
+        {
+            Console.WriteLine(message);
         }
     }
 }
