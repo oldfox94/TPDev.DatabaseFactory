@@ -26,7 +26,7 @@ namespace SQLLibrary.Operations
                 foreach (DataTable tbl in dataSet.Tables)
                 {
                     result = UpdateTable(tbl);
-                    if (!result) break;
+                    if (!result) return result;
                 }
 
                 return result;
@@ -135,6 +135,7 @@ namespace SQLLibrary.Operations
                 foreach (DataTable tbl in tableList)
                 {
                     result = UpdateTable(tbl);
+                    if (!result) return result;
                 }
 
                 return result;
