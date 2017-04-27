@@ -11,11 +11,11 @@ namespace DbLogger
     public class DbLogger
     {
         private List<LogData> m_LogDataList { get; set; }
-        public DbLogger(string logPath, string logFileName, string logId = "NoId")
+        public DbLogger(string logPath, string logFileName, string logId = "NoId", bool onlyConsoleOutput = false)
         {
             m_LogDataList = new List<LogData>();
 
-            Settings.mainThreadId = System.Threading.Thread.CurrentThread.ManagedThreadId;
+            Settings.mainThreadId = Thread.CurrentThread.ManagedThreadId;
             Settings.LogId = logId;
             Settings.LogFile = Path.Combine(logPath, logFileName + ".log");
             if(!Directory.Exists(logPath))
@@ -75,8 +75,9 @@ namespace DbLogger
 
         private void CreateBallonTipp(LogData data)
         {
-            var title = string.Empty;
+            if (Settings.OnlyConsoleOutput) return;
 
+            var title = string.Empty;
             SLLogEvents.FireShowBallonTipp(new SLLogEventArgs { Type = data.Type, Titel = "DatabaseFactory " + data.Type.ToString() + "!", LogMessage = data.Message });
         }
 
@@ -134,12 +135,16 @@ namespace DbLogger
         private ReaderWriterLock locker = new ReaderWriterLock();
         private void WriteAsync(string path, string line)
         {
+            if (Settings.OnlyConsoleOutput) return;
+
             locker.AcquireWriterLock(int.MaxValue);
             File.AppendAllLines(path, new[] { line });
         }
 
         private void WriteEventLog(string message)
         {
+            if (Settings.OnlyConsoleOutput) return;
+
             using (EventLog eventLog = new EventLog("TPDev.DatabaseFactory"))
             {
                 eventLog.Source = "TPDev.DatabaseFactory";

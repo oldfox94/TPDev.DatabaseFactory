@@ -52,12 +52,13 @@ namespace DatabaseFactory
             Execute = GetExecuteService();
         }
 
-        public void InitLogger(string logFileName, string logPath = null)
+        public void InitLogger(string logFileName, string logPath = null, string logId = "", bool onlyConsoleOutput = false)
         {
             if (string.IsNullOrEmpty(logPath))
                 logPath = Environment.CurrentDirectory;
 
-            SLLog.Logger = new DbLogger.DbLogger(logPath, logFileName, DbFactorySettings.Type.ToString());
+            if (string.IsNullOrEmpty(logId)) logId = DbFactorySettings.Type.ToString();
+            SLLog.Logger = new DbLogger.DbLogger(logPath, logFileName, logId, onlyConsoleOutput);
             SLLog.WriteInfo("InitLogger", "Logger successfully initialized!");
         }
 

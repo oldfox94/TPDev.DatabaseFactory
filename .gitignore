@@ -290,3 +290,10 @@ MySQLLibrary/bin/Debug/
 SQLLibrary/obj/Debug/
 MySQLLibrary/obj/Debug/
 SQLiteLibrary/obj/Debug/build.force
+Binaries/
+TestApp/bin/Debug/
+OracleLibrary/bin/Release/
+DbFactory/bin/Debug/
+DbFactory/bin/Release/
+TestApp/bin/Release/
+DbInterface/obj/Debug/

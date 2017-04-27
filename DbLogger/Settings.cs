@@ -4,6 +4,7 @@
     {
         public static string LogFile { get; set; }
         public static string LogId { get; set; }
+        public static bool OnlyConsoleOutput { get; set; }
 
         // Do this when you start your application
         public static int mainThreadId;
