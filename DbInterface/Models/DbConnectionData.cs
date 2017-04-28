@@ -12,5 +12,8 @@
 
         public string User { get; set; }
         public string Password { get; set; }
+
+        //Addentional Settings
+        public bool ThrowExceptions { get; set; }
     }
 }

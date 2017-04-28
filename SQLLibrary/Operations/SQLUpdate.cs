@@ -39,6 +39,7 @@ namespace SQLLibrary.Operations
                     FunctionName = "UpdateDataSet Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("UpdateDataSet Error!", ex);
                 return false;
             }
         }
@@ -64,6 +65,7 @@ namespace SQLLibrary.Operations
                     FunctionName = "UpdateOneValue Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("UpdateOneValue Error!", ex);
                 return false;
             }
         }
@@ -83,6 +85,7 @@ namespace SQLLibrary.Operations
                     FunctionName = "UpdateTable Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("UpdateTable Error!", ex);
                 return false;
             }
         }
@@ -113,6 +116,7 @@ namespace SQLLibrary.Operations
                     FunctionName = "UpdateTable DBConcurrencyError!",
                     Ex = cex,
                 });
+                if (Settings.ThrowExceptions) throw new DBConcurrencyException("UpdateTable Error!", cex);
                 return false;
             }
             catch (Exception ex)
@@ -123,6 +127,7 @@ namespace SQLLibrary.Operations
                     FunctionName = "UpdateTable Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("UpdateTable Error!", ex);
                 return false;
             }
         }
@@ -148,6 +153,7 @@ namespace SQLLibrary.Operations
                     FunctionName = "UpdateTables Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("UpdateTables Error!", ex);
                 return false;
             }
         }

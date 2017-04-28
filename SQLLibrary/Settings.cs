@@ -7,5 +7,8 @@ namespace SQLLibrary
         public static DbType Type = DbType.SQL;
         public static DbConnectionData ConnectionData { get; set; }
         public static string ConnectionString { get; set; }
+
+        //Addentional Settings
+        public static bool ThrowExceptions { get; set; }
     }
 }

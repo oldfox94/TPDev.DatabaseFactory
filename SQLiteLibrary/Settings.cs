@@ -1,5 +1,4 @@
 ﻿using DbInterface.Models;
-using System.Data.SQLite;
 
 namespace SQLiteLibrary
 {
@@ -8,5 +7,8 @@ namespace SQLiteLibrary
         public static DbType Type = DbType.SQLite;
 
         public static string ConnectionString { get; set; }
+
+        //Addentional Settings
+        public static bool ThrowExceptions { get; set; }
     }
 }
