@@ -78,20 +78,56 @@ namespace DbInterface.Helpers
 
         public static string WHERE(string ColName, string whereOperator, DateTime Value)
         {
+            return WHERE(DbType.SQL, ColName, whereOperator, Value);
+        }
+        public static string WHERE(DbType dbType, string ColName, string whereOperator, DateTime Value)
+        {
             string date = Value.ToString("yyyy-MM-dd");
-            var where = "datetime('" + date + "') " + whereOperator;
-            where += string.Format(" datetime(substr({0}, 7, 4) || '-' || substr({0}, 4, 2) || '-' || substr({0}, 1, 2))", ColName);
+
+            var where = string.Empty;
+            switch(dbType)
+            {
+                case DbType.SQLite:
+                    where = "datetime('" + date + "') " + whereOperator;
+                    where += string.Format(" datetime(substr({0}, 7, 4) || '-' || substr({0}, 4, 2) || '-' || substr({0}, 1, 2))", ColName);
+                    break;
+
+                default:
+                    where = "CAST('" + date + "' AS DATETIME) " + whereOperator;
+                    where += string.Format(" CAST(substring({0}, 7, 4) + '-' + substring({0}, 4, 2) + '-' + substring({0}, 1, 2) AS DATETIME)", ColName);
+                    break;
+            }
             return where;
         }
 
         public static string WHERE(string ColName, DateTime minValue, DateTime maxValue)
         {
+            return WHERE(DbType.SQL, ColName, minValue, maxValue);
+        }
+        public static string WHERE(DbType dbType, string ColName, DateTime minValue, DateTime maxValue)
+        {
             string minDate = minValue.ToString("yyyy-MM-dd");
             string maxDate = maxValue.ToString("yyyy-MM-dd");
-            string colDate = string.Format(" datetime(substr({0}, 7, 4) || '-' || substr({0}, 4, 2) || '-' || substr({0}, 1, 2))", ColName);
 
-            var where = string.Format("datetime('{0}') AND datetime('{1}')", minDate, maxDate);
-            where = string.Format(@"{0} BETWEEN {1}", colDate, where);
+            string colDate = string.Empty;
+            var where = string.Empty;
+            switch (dbType)
+            {
+                case DbType.SQLite:
+                    colDate = string.Format(" datetime(substr({0}, 7, 4) || '-' || substr({0}, 4, 2) || '-' || substr({0}, 1, 2))", ColName);
+
+                    where = string.Format("datetime('{0}') AND datetime('{1}')", minDate, maxDate);
+                    where = string.Format(@"{0} BETWEEN {1}", colDate, where);
+                    break;
+
+                default:
+                    colDate = string.Format(" CAST(substring({0}, 7, 4) + '-' + substring({0}, 4, 2) + '-' + substring({0}, 1, 2) AS DATETIME)", ColName);
+
+                    where = string.Format("CAST('{0}' AS DATETIME) AND CAST('{1}' AS DATETIME)", minDate, maxDate);
+                    where = string.Format(@"{0} BETWEEN {1}", colDate, where);
+                    break;
+            }
+
             return where;
         }
 
