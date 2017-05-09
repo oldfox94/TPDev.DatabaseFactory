@@ -4,6 +4,8 @@
 V1.0.0.8:
 ADD		Check Database Exists for SQL, MySQL, SQLite and Oracle (MySQL and Oracle not fully tested!!)
 ADD		Create Database for SQL, MySQL (MySQL not fully tested!!)
+ADD		New Logger Setting -> OnlyWriteInConsole (No File output)
+ADD		New Setting 'ThrowExceptions' -> You can now Catch Exceptions in your Application
 FIX		Check Table Exists for MySQL
 FIX		Fixed varius bugs by Execute Methodes -> 
 		When no rows beeen updated (eg. Table rename) the return value was false
