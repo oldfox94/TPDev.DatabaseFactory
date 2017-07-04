@@ -297,3 +297,4 @@ DbFactory/bin/Debug/
 DbFactory/bin/Release/
 TestApp/bin/Release/
 DbInterface/obj/Debug/
+.vs/DatabaseFactory/v15/.suo
