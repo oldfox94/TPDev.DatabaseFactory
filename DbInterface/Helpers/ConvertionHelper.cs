@@ -153,16 +153,9 @@ namespace DbInterface.Helpers
             return colName + " " + orderBy;
         }
 
-        public static string ORDERBYDATETIME(DbType type, string colName, string orderBy)
+        public static string ORDERBYDATETIME(string colName, string orderBy)
         {
-            switch(type)
-            {
-                case DbType.SQLite:
-                    return string.Format(" datetime(substr({0}, 7, 4) || '-' || substr({0}, 4, 2) || '-' || substr({0}, 1, 2)) {1}", colName, orderBy);
-
-                default:
-                    return string.Format(" CAST(substring({0}, 7, 4) + '-' + substring({0}, 4, 2) + '-' + substring({0}, 1, 2) AS DATETIME) {1}", colName, orderBy);
-            }
+            return string.Format(" substr({0}, 7, 4) || substr({0}, 4, 2) || substr({0}, 1, 2) || substr({0}, 12, 2) || substr({0}, 15, 2) || substr({0}, 18, 2) {1}", colName, orderBy);
         }
     }
 }
