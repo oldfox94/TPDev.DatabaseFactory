@@ -298,3 +298,4 @@ DbFactory/bin/Release/
 TestApp/bin/Release/
 DbInterface/obj/Debug/
 .vs/DatabaseFactory/v15/.suo
+.vs/DatabaseFactory/v15/sqlite3/storage.ide
