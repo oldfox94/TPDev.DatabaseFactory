@@ -11,12 +11,14 @@ namespace DbLogger
     public class DbLogger
     {
         private List<LogData> m_LogDataList { get; set; }
-        public DbLogger(string logPath, string logFileName, string logId = "NoId", bool onlyConsoleOutput = false)
+        public DbLogger(string logPath, string logFileName, string logId = "NoId", int debugLevel = DebugLevelConstants.Medium, bool onlyConsoleOutput = false)
         {
             m_LogDataList = new List<LogData>();
 
             Settings.mainThreadId = Thread.CurrentThread.ManagedThreadId;
             Settings.LogId = logId;
+            Settings.DebugLevel = debugLevel;
+
             Settings.LogFile = Path.Combine(logPath, logFileName + ".log");
             if(!Directory.Exists(logPath))
             {
@@ -32,8 +34,10 @@ namespace DbLogger
             Process.Start(Settings.LogFile);
         }
 
-        public void WriteInfo(LogData data, bool onlyToolTipp = false)
+        public void WriteInfo(LogData data, bool onlyToolTipp = false, int debugLevel = DebugLevelConstants.Unknow)
         {
+            if (Settings.DebugLevel < debugLevel && Settings.DebugLevel < DebugLevelConstants.High) return;
+
             data.Type = LogType.Info;
             data.ExDate = DateTime.Now;
 
@@ -45,8 +49,10 @@ namespace DbLogger
             }
         }
 
-        public void WriteWarnng(LogData data)
+        public void WriteWarnng(LogData data, int debugLevel = DebugLevelConstants.Unknow)
         {
+            if (Settings.DebugLevel < debugLevel && Settings.DebugLevel < DebugLevelConstants.Medium) return;
+
             data.Type = LogType.Warning;
             data.ExDate = DateTime.Now;
 
@@ -56,8 +62,10 @@ namespace DbLogger
             LogToFile();
         }
 
-        public void WriteError(LogData data)
+        public void WriteError(LogData data, int debugLevel = DebugLevelConstants.Unknow)
         {
+            if (Settings.DebugLevel < debugLevel && Settings.DebugLevel < DebugLevelConstants.Low) return;
+
             data.Type = LogType.Error;
             data.ExDate = DateTime.Now;
 

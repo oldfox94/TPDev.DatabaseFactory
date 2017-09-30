@@ -1,6 +1,7 @@
 ﻿using DbInterface;
 using DbInterface.Interfaces;
 using DbInterface.Models;
+using DbLogger.Models;
 using DbNotifyer.Models;
 using MySQLLibrary.Operations;
 using OracleLibrary.Operations;
@@ -52,13 +53,13 @@ namespace DatabaseFactory
             Execute = GetExecuteService();
         }
 
-        public void InitLogger(string logFileName, string logPath = null, string logId = "", bool onlyConsoleOutput = false)
+        public void InitLogger(string logFileName, string logPath = null, string logId = "", int debugLevel = DebugLevelConstants.Medium, bool onlyConsoleOutput = false)
         {
             if (string.IsNullOrEmpty(logPath))
                 logPath = Environment.CurrentDirectory;
 
             if (string.IsNullOrEmpty(logId)) logId = DbFactorySettings.Type.ToString();
-            SLLog.Logger = new DbLogger.DbLogger(logPath, logFileName, logId, onlyConsoleOutput);
+            SLLog.Logger = new DbLogger.DbLogger(logPath, logFileName, logId, debugLevel, onlyConsoleOutput);
             SLLog.WriteInfo("InitLogger", "Logger successfully initialized!");
         }
 
