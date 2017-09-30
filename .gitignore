@@ -299,3 +299,8 @@ TestApp/bin/Release/
 DbInterface/obj/Debug/
 .vs/DatabaseFactory/v15/.suo
 .vs/DatabaseFactory/v15/sqlite3/storage.ide
+DbInterface/obj/Release/DbInterface.csproj.CopyComplete
+MySQLLibrary/obj/Release/
+SQLiteLibrary/obj/Debug/
+SQLLibrary/obj/Release/
+SQLiteLibrary/obj/Release/
