@@ -36,7 +36,8 @@ namespace DbLogger
 
         public void WriteInfo(LogData data, bool onlyToolTipp = false, int debugLevel = DebugLevelConstants.Unknow)
         {
-            if (Settings.DebugLevel < debugLevel && Settings.DebugLevel < DebugLevelConstants.High) return;
+            if (Settings.DebugLevel < debugLevel && debugLevel != DebugLevelConstants.Unknow) return;
+            if (Settings.DebugLevel < DebugLevelConstants.High) return;
 
             data.Type = LogType.Info;
             data.ExDate = DateTime.Now;
@@ -51,7 +52,8 @@ namespace DbLogger
 
         public void WriteWarnng(LogData data, int debugLevel = DebugLevelConstants.Unknow)
         {
-            if (Settings.DebugLevel < debugLevel && Settings.DebugLevel < DebugLevelConstants.Medium) return;
+            if (Settings.DebugLevel < debugLevel && debugLevel != DebugLevelConstants.Unknow) return;
+            if (Settings.DebugLevel < DebugLevelConstants.Medium) return;
 
             data.Type = LogType.Warning;
             data.ExDate = DateTime.Now;
@@ -64,7 +66,8 @@ namespace DbLogger
 
         public void WriteError(LogData data, int debugLevel = DebugLevelConstants.Unknow)
         {
-            if (Settings.DebugLevel < debugLevel && Settings.DebugLevel < DebugLevelConstants.Low) return;
+            if (Settings.DebugLevel < debugLevel && debugLevel != DebugLevelConstants.Unknow) return;
+            if (Settings.DebugLevel < DebugLevelConstants.Low) return;
 
             data.Type = LogType.Error;
             data.ExDate = DateTime.Now;
