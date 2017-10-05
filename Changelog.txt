@@ -3,6 +3,7 @@
 
 V1.0.0.9:
 ADD		Added ORDERBYDATETIME
+ADD		DebugLevelConstants by Logging
 
 
 V1.0.0.8:
