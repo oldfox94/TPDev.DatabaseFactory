@@ -34,13 +34,15 @@ namespace DbLogger
             Process.Start(Settings.LogFile);
         }
 
-        public void WriteInfo(LogData data, bool onlyToolTipp = false, int debugLevel = DebugLevelConstants.Unknow)
+        public LogData WriteInfo(LogData data, bool onlyToolTipp = false, int debugLevel = DebugLevelConstants.Unknow, bool onlyReturnLogData = false)
         {
-            if (Settings.DebugLevel < debugLevel && debugLevel != DebugLevelConstants.Unknow) return;
-            if (Settings.DebugLevel < DebugLevelConstants.High) return;
+            if (Settings.DebugLevel < debugLevel && debugLevel != DebugLevelConstants.Unknow) return data;
+            if (Settings.DebugLevel < DebugLevelConstants.High) return data;
 
             data.Type = LogType.Info;
             data.ExDate = DateTime.Now;
+
+            if (onlyReturnLogData) return data;
 
             CreateBallonTipp(data);
             if (!onlyToolTipp)
@@ -48,26 +50,30 @@ namespace DbLogger
                 m_LogDataList.Add(data);
                 LogToFile();
             }
+            return data;
         }
 
-        public void WriteWarnng(LogData data, int debugLevel = DebugLevelConstants.Unknow)
+        public LogData WriteWarnng(LogData data, int debugLevel = DebugLevelConstants.Unknow, bool onlyReturnLogData = false)
         {
-            if (Settings.DebugLevel < debugLevel && debugLevel != DebugLevelConstants.Unknow) return;
-            if (Settings.DebugLevel < DebugLevelConstants.Medium) return;
+            if (Settings.DebugLevel < debugLevel && debugLevel != DebugLevelConstants.Unknow) return data;
+            if (Settings.DebugLevel < DebugLevelConstants.Medium) return data;
 
             data.Type = LogType.Warning;
             data.ExDate = DateTime.Now;
+
+            if (onlyReturnLogData) return data;
 
             m_LogDataList.Add(data);
             CreateBallonTipp(data);
 
             LogToFile();
+            return data;
         }
 
-        public void WriteError(LogData data, int debugLevel = DebugLevelConstants.Unknow)
+        public LogData WriteError(LogData data, int debugLevel = DebugLevelConstants.Unknow, bool onlyReturnLogData = false)
         {
-            if (Settings.DebugLevel < debugLevel && debugLevel != DebugLevelConstants.Unknow) return;
-            if (Settings.DebugLevel < DebugLevelConstants.Low) return;
+            if (Settings.DebugLevel < debugLevel && debugLevel != DebugLevelConstants.Unknow) return data;
+            if (Settings.DebugLevel < DebugLevelConstants.Low) return data;
 
             data.Type = LogType.Error;
             data.ExDate = DateTime.Now;
@@ -78,10 +84,13 @@ namespace DbLogger
                 data.Message = data.Ex.Message;
             }
 
+            if (onlyReturnLogData) return data;
+
             m_LogDataList.Add(data);
             CreateBallonTipp(data);
 
             LogToFile();
+            return data;
         }
 
         private void CreateBallonTipp(LogData data)
@@ -97,6 +106,26 @@ namespace DbLogger
             WriteToFile();
         }
 
+        public string GetLogText(LogData logEntry)
+        {
+            switch (logEntry.Type)
+            {
+                case LogType.Info:
+                    return string.Format(@"[Info]{1} => {2}: {0}Function: {3} {0}Message: {4}{0}{0}",
+                            Environment.NewLine, Settings.LogId, logEntry.ExDate.ToString(), logEntry.FunctionName, logEntry.Message);
+
+                case LogType.Warning:
+                    return string.Format(@"[Warning]{1} => {2}: {0}Function: {3} {0}Source: {4} {0}Message: {5}{0}{0}",
+                            Environment.NewLine, Settings.LogId, logEntry.ExDate.ToString(), logEntry.FunctionName, logEntry.Source, logEntry.Message);
+
+                case LogType.Error:
+                    return string.Format(@"[Error]{1} => {2}: {0}Function: {3} {0}Source: {4} {0}Message: {5} {0}StackTrace: {6}{0}{0}",
+                            Environment.NewLine, Settings.LogId, logEntry.ExDate.ToString(), logEntry.FunctionName, logEntry.Source, logEntry.Message,
+                            logEntry.StackTrace);
+            }
+            return string.Empty;
+        }
+
         private void WriteToFile()
         {
             foreach(var logEntry in m_LogDataList)
@@ -109,24 +138,14 @@ namespace DbLogger
                     switch(logEntry.Type)
                     {
                         case LogType.Info:
-                            line = string.Format(@"[Info]{1} => {2}: {0}Function: {3} {0}Message: {4}{0}{0}",
-                                    Environment.NewLine, Settings.LogId, logEntry.ExDate.ToString(), logEntry.FunctionName, logEntry.Message);
-
-                            WriteConsoleLog(line);
-                            break;
-
                         case LogType.Warning:
-                            line = string.Format(@"[Warning]{1} => {2}: {0}Function: {3} {0}Source: {4} {0}Message: {5}{0}{0}",
-                                    Environment.NewLine, Settings.LogId, logEntry.ExDate.ToString(), logEntry.FunctionName, logEntry.Source, logEntry.Message);
-
+                            line = GetLogText(logEntry);
                             WriteConsoleLog(line);
                             break;
 
                         case LogType.Error:
-                            line = string.Format(@"[Error]{1} => {2}: {0}Function: {3} {0}Source: {4} {0}Message: {5} {0}StackTrace: {6}{0}{0}",
-                                    Environment.NewLine, Settings.LogId, logEntry.ExDate.ToString(), logEntry.FunctionName, logEntry.Source, logEntry.Message, 
-                                    logEntry.StackTrace);
-
+                            line = GetLogText(logEntry);
+                            
                             WriteConsoleLog(line);
                             WriteEventLog(line);
                             break;

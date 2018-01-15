@@ -7,7 +7,7 @@ namespace DbInterface
     {
         public static DbLogger.DbLogger Logger { get; set; }
 
-        public static void WriteInfo(string function, string message, bool onlyBallonTipp = false, int debugLevel = DebugLevelConstants.Unknow, string logId = "", int initialDebugLevel = DebugLevelConstants.Medium, bool onlyConsoleOutput = false)
+        public static LogData WriteInfo(string function, string message, bool onlyBallonTipp = false, int debugLevel = DebugLevelConstants.Unknow, string logId = "", int initialDebugLevel = DebugLevelConstants.Medium, bool onlyConsoleOutput = false, bool onlyReturnLogData = false)
         {
             if (Logger == null)
                 Logger = new DbLogger.DbLogger(Environment.CurrentDirectory, "DbFactory", logId, initialDebugLevel, onlyConsoleOutput);
@@ -18,10 +18,10 @@ namespace DbInterface
                 Message = message,
             };
 
-            Logger.WriteInfo(data, onlyBallonTipp, debugLevel);
+            return Logger.WriteInfo(data, onlyBallonTipp, debugLevel, onlyReturnLogData);
         }
 
-        public static void WriteWarning(string function, string source, string message, int debugLevel = DebugLevelConstants.Unknow, string logId = "", int initialDebugLevel = DebugLevelConstants.Medium, bool onlyConsoleOutput = false)
+        public static LogData WriteWarning(string function, string source, string message, int debugLevel = DebugLevelConstants.Unknow, string logId = "", int initialDebugLevel = DebugLevelConstants.Medium, bool onlyConsoleOutput = false, bool onlyReturnLogData  = false)
         {
             if (Logger == null)
                 Logger = new DbLogger.DbLogger(Environment.CurrentDirectory, "DbFactory", logId, initialDebugLevel, onlyConsoleOutput);
@@ -33,15 +33,15 @@ namespace DbInterface
                 Message = message,
             };
 
-            Logger.WriteWarnng(data, debugLevel);
+            return Logger.WriteWarnng(data, debugLevel, onlyReturnLogData);
         }
 
-        public static void WriteError(LogData data, int debugLevel = DebugLevelConstants.Unknow, string logId = "", int initialDebugLevel = DebugLevelConstants.Medium, bool onlyConsoleOutput = false)
+        public static LogData WriteError(LogData data, int debugLevel = DebugLevelConstants.Unknow, string logId = "", int initialDebugLevel = DebugLevelConstants.Medium, bool onlyConsoleOutput = false, bool onlyReturnLogData = false)
         {
             if (Logger == null)
                 Logger = new DbLogger.DbLogger(Environment.CurrentDirectory, "DbFactory", logId, initialDebugLevel, onlyConsoleOutput);
 
-            Logger.WriteError(data, debugLevel);
+            return Logger.WriteError(data, debugLevel, onlyReturnLogData);
         }
     }
 }
