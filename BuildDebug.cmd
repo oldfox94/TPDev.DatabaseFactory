@@ -7,9 +7,11 @@ copy MySQLLibrary\bin\Release\MySql.Data.Entity.EF5.dll DbFactory\bin\Debug
 copy MySQLLibrary\bin\Release\MySql.Data.Entity.EF6.dll DbFactory\bin\Debug
 copy MySQLLibrary\bin\Release\MySql.Fabric.Plugin.dll DbFactory\bin\Debug
 
+echo Cleanup Binaries folder ...
+del Binaries\*.*  /s /q
 
 echo Building Project ...
-"C:\Program Files (x86)\MSBuild\14.0\Bin\msbuild.exe" DatabaseFactory.sln /p:Configuration=Debug;OutputPath=..\Binaries /t:Rebuild
+"C:\Program Files (x86)\MSBuild\14.0\Bin\msbuild.exe" DatabaseFactory.sln /p:Configuration=Debug /t:Rebuild
 
 
 echo Cleanup Debug folder ...
@@ -17,7 +19,6 @@ del _Debug\*.*  /s /q
 
 echo Copy new dll files ...
 copy DbFactory\bin\Debug\*.dll Binaries
-copy DbFactory\bin\Debug\*.pdb Binaries
 
 copy Binaries\Hardcodet.Wpf.TaskbarNotification.dll _Debug
 copy Binaries\System.Data.SQLite.dll _Debug
