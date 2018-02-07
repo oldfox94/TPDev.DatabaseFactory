@@ -18,14 +18,14 @@ namespace MySQLLibrary.Operations
             m_Execute = new MySQLExecute();
         }
 
-        public bool UpdateDataSet(DataSet dataSet)
+        public bool UpdateDataSet(DataSet dataSet, bool setInsertOn = true, bool setModifyOn = true)
         {
             try
             {
                 var result = false;
                 foreach (DataTable tbl in dataSet.Tables)
                 {
-                    result = UpdateTable(tbl);
+                    result = UpdateTable(tbl, setInsertOn, setModifyOn);
                     if (!result) break;
                 }
 
@@ -68,12 +68,12 @@ namespace MySQLLibrary.Operations
             }
         }
 
-        public bool UpdateTable(DataTable table)
+        public bool UpdateTable(DataTable table, bool setInsertOn = true, bool setModifyOn = true)
         {
             try
             {
                 var tableName = table.TableName;
-                return UpdateTable(table, tableName);
+                return UpdateTable(table, tableName, setInsertOn, setModifyOn);
             }
             catch (Exception ex)
             {
@@ -87,11 +87,11 @@ namespace MySQLLibrary.Operations
             }
         }
 
-        public bool UpdateTable(DataTable table, string tableName)
+        public bool UpdateTable(DataTable table, string tableName, bool setInsertOn = true, bool setModfyOn = true)
         {
             try
             {
-                TableHelper.SetDefaultColumnValues(table);
+                TableHelper.SetDefaultColumnValues(table, setInsertOn, setModfyOn);
 
                 var con = CONNECTION.OpenCon();
 
@@ -118,14 +118,14 @@ namespace MySQLLibrary.Operations
             }
         }
 
-        public bool UpdateTables(List<DataTable> tableList)
+        public bool UpdateTables(List<DataTable> tableList, bool setInsertOn = true, bool setModifyOn = true)
         {
             try
             {
                 var result = false;
                 foreach (DataTable tbl in tableList)
                 {
-                    result = UpdateTable(tbl);
+                    result = UpdateTable(tbl, setInsertOn, setModifyOn);
                 }
 
                 return result;

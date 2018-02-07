@@ -11,8 +11,8 @@ namespace DbInterface.Interfaces
         bool CreateTable(string tableName, List<ColumnData> columns);
         bool CreateTable(string tableName, Dictionary<string, string> columns);
 
-        bool InsertRow(string tableName, DataRow row);
-        bool InsertValue(string tableName, string columnName, string value);
-        bool InsertValue(string tableName, Dictionary<string, string> data);
+        bool InsertRow(string tableName, DataRow row, bool setInsertOn = true);
+        bool InsertValue(string tableName, string columnName, string value, bool setInsertOn = true);
+        bool InsertValue(string tableName, Dictionary<string, string> data, bool setInsertOn = true);
     }
 }

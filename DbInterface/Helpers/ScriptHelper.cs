@@ -69,13 +69,13 @@ namespace DbInterface.Helpers
             return sql;
         }
 
-        public static string GetInsertSqlScript(string tableName, Dictionary<string, string> data)
+        public static string GetInsertSqlScript(string tableName, Dictionary<string, string> data, bool setInsertOn = true)
         {
             var sql = string.Empty;
             string columns = "";
             string values = "";
 
-            ColumnHelper.SetDefaultColumnValues(data);
+            ColumnHelper.SetDefaultColumnValues(data, setInsertOn);
 
             foreach(KeyValuePair<string, string> val in data)
             {

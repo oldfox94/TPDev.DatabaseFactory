@@ -20,14 +20,14 @@ namespace DbInterface.Helpers
             return columns;
         }
 
-        public static Dictionary<string, string> SetDefaultColumnValues(Dictionary<string, string> data)
+        public static Dictionary<string, string> SetDefaultColumnValues(Dictionary<string, string> data, bool setInsertOn = true)
         {
             if (!data.ContainsKey(DbCIC.DsStatus))
                 data.Add(DbCIC.DsStatus, "1");
 
             if (!data.ContainsKey(DbCIC.InsertOn))
                 data.Add(DbCIC.InsertOn, DateTime.Now.ToString());
-            else
+            else if(setInsertOn)
                 data[DbCIC.InsertOn] = DateTime.Now.ToString();
 
             return data;

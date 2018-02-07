@@ -95,7 +95,7 @@ namespace SQLLibrary.Operations
             return result;
         }
 
-        public bool InsertRow(string tableName, DataRow row)
+        public bool InsertRow(string tableName, DataRow row, bool setInsertOn = true)
         {
             try
             {
@@ -105,7 +105,7 @@ namespace SQLLibrary.Operations
                     colRowDict.Add(dc.ColumnName, row[dc.ColumnName].ToString());
                 }
 
-                return InsertValue(tableName, colRowDict);
+                return InsertValue(tableName, colRowDict, setInsertOn);
             }
             catch (Exception ex)
             {
@@ -119,13 +119,13 @@ namespace SQLLibrary.Operations
             }
         }
 
-        public bool InsertValue(string tableName, string columnName, string value)
+        public bool InsertValue(string tableName, string columnName, string value, bool setInsertOn = true)
         {
             try
             {
                 var colRowDict = new Dictionary<string, string>();
                 colRowDict.Add(columnName, value);
-                return InsertValue(tableName, colRowDict);
+                return InsertValue(tableName, colRowDict, setInsertOn);
             }
             catch (Exception ex)
             {
@@ -139,11 +139,11 @@ namespace SQLLibrary.Operations
             }
         }
 
-        public bool InsertValue(string tableName, Dictionary<string, string> data)
+        public bool InsertValue(string tableName, Dictionary<string, string> data, bool setInsertOn = true)
         {
             try
             {
-                var sql = ScriptHelper.GetInsertSqlScript(tableName, data);
+                var sql = ScriptHelper.GetInsertSqlScript(tableName, data, setInsertOn);
                 var result = m_Execute.ExecuteNonQuery(sql);
 
                 if (result == -2) return false;
