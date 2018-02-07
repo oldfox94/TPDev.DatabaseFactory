@@ -49,7 +49,7 @@ namespace TestApp
             connectionData.Name = "";
             connectionData.User = "";
             connectionData.Password = "";
-            m_dbFactory = new DbFactory(DbType.Oracle, connectionData); //Uncomment for Oracle
+            //m_dbFactory = new DbFactory(DbType.Oracle, connectionData); //Uncomment for Oracle
 
             #region Init Logger
             m_dbFactory.InitLogger("DbFactoryLog");
@@ -83,11 +83,13 @@ namespace TestApp
         private void RefreshDataTbl()
         {
             var tbl = GetTable();
+            if (tbl == null) return;
 
             Grid.ItemsSource = null;
             Grid.ItemsSource = tbl.DefaultView;
         }
 
+        private int m_DataSetCounter;
         private void UpdateDataSet()
         {
             var ds = m_dbFactory.Get.GetDataSet(new List<string> { @"SELECT * FROM TestTbl" }, "TestDs");
@@ -98,28 +100,45 @@ namespace TestApp
             {
                 var dr = tbl.NewRow();
                 dr["Pk"] = Guid.NewGuid().ToString();
+                dr["Name"] = "Created with UpdateDataSet";
+                dr["Text"] = "Create a new row";
                 tbl.Rows.Add(dr);
-            };
+            }
+            else
+            {
+                var dr = tbl.Rows[0];
+                if (dr == null) return;
 
-            var row = tbl.Rows[0];
-            if (row == null) return;
-
-            row["Name"] = "Updatet with DataSet";
+                m_DataSetCounter++;
+                dr["Name"] = "Updatet with UpdateDataSet Count:" + m_DataSetCounter;
+                dr["Text"] = "Updates always the first row";
+            }
 
             m_dbFactory.Update.UpdateDataSet(ds);
         }
 
+        private int m_DataTableCounter;
         private void UpdateDataTable()
         {
             var tbl = m_dbFactory.Get.GetTable(@"SELECT * FROM TestTbl");
-            if (tbl.Rows.Count <= 0) return;
 
-            var dr = tbl.NewRow();
-            dr["Pk"] = Guid.NewGuid().ToString();
-            dr["Name"] = "Created with Update DataTable";
-            dr["Text"] = "Create always a new row";
+            if (tbl.Rows.Count <= 0)
+            {
+                var dr = tbl.NewRow();
+                dr["Pk"] = Guid.NewGuid().ToString();
+                dr["Name"] = "Created with UpdateDataTable";
+                dr["Text"] = "Create a new row";
+                tbl.Rows.Add(dr);
+            }
+            else
+            {
+                var dr = tbl.Rows[0];
+                if (dr == null) return;
 
-            tbl.Rows.Add(dr);
+                m_DataTableCounter++;
+                dr["Name"] = "Updated with UpdateDataTable Count: " + m_DataTableCounter;
+                dr["Text"] = "Updates always the first row";
+            }
             m_dbFactory.Update.UpdateTable(tbl);
         }
 
@@ -142,7 +161,7 @@ namespace TestApp
 
         private void UpdateOneValue()
         {
-            m_dbFactory.Update.UpdateOneValue("TestTbl", "Name", "Update by OneValue", ConvertionHelper.WHERE("Name", "Updatet with DataSet"));
+            m_dbFactory.Update.UpdateOneValue("TestTbl", "Name", "Update by OneValue", ConvertionHelper.WHERE("Text", "Updates always the first row"));
         }
 
         private void OnUpdateOneValueClick(object sender, RoutedEventArgs e)
