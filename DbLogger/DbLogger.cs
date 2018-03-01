@@ -82,6 +82,15 @@ namespace DbLogger
             {
                 data.StackTrace = data.Ex.StackTrace;
                 data.Message = data.Ex.Message;
+
+                // Get stack trace for the exception with source file information
+                var st = new StackTrace(data.Ex, true);
+                if (st != null)
+                {
+                    // Get the top stack frame
+                    var frame = st.GetFrame(0);
+                    if (frame != null) data.LineNumber = frame.GetFileLineNumber();
+                }
             }
 
             if (onlyReturnLogData) return data;
@@ -111,17 +120,23 @@ namespace DbLogger
             switch (logEntry.Type)
             {
                 case LogType.Info:
-                    return string.Format(@"[Info]{1} => {2}: {0}Function: {3} {0}Message: {4}{0}{0}",
-                            Environment.NewLine, Settings.LogId, logEntry.ExDate.ToString(), logEntry.FunctionName, logEntry.Message);
+                    return string.Format(@"[Info]{1} => {2}: {0}Function: {3} {0}Message: {4}{5}{0}{0}",
+                            Environment.NewLine, Settings.LogId, logEntry.ExDate.ToString(), logEntry.FunctionName, logEntry.Message,
+                            logEntry.LineNumber != 0
+                                ? string.Format(" [Line: {0}]", logEntry.LineNumber)
+                                : string.Empty);
 
                 case LogType.Warning:
-                    return string.Format(@"[Warning]{1} => {2}: {0}Function: {3} {0}Source: {4} {0}Message: {5}{0}{0}",
-                            Environment.NewLine, Settings.LogId, logEntry.ExDate.ToString(), logEntry.FunctionName, logEntry.Source, logEntry.Message);
+                    return string.Format(@"[Warning]{1} => {2}: {0}Function: {3} {0}Source: {4} {0}Message: {5}{6}{0}{0}",
+                            Environment.NewLine, Settings.LogId, logEntry.ExDate.ToString(), logEntry.FunctionName, logEntry.Source, logEntry.Message, 
+                            logEntry.LineNumber != 0 
+                                ? string.Format(" [Line: {0}]", logEntry.LineNumber) 
+                                : string.Empty);
 
                 case LogType.Error:
-                    return string.Format(@"[Error]{1} => {2}: {0}Function: {3} {0}Source: {4} {0}Message: {5} {0}StackTrace: {6}{0}{0}",
+                    return string.Format(@"[Error]{1} => {2}: {0}Function: {3} {0}Source: {4} {0}Message: {5} {0}StackTrace: {6} [Line: {7}]{0}{0}",
                             Environment.NewLine, Settings.LogId, logEntry.ExDate.ToString(), logEntry.FunctionName, logEntry.Source, logEntry.Message,
-                            logEntry.StackTrace);
+                            logEntry.StackTrace, logEntry.LineNumber);
             }
             return string.Empty;
         }

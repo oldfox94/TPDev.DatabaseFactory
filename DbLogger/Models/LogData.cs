@@ -12,6 +12,7 @@ namespace DbLogger.Models
         public string Source { get; set; }
         public string StackTrace { get; set; }
         public string Message { get; set; }
+        public int LineNumber { get; set; }
 
         public Exception Ex { get; set; }
 
