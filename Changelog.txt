@@ -1,6 +1,17 @@
 === DatabaseFactory ===
 ++++++ CHANGELOG ++++++
 
+V1.0.0.10:
+ADD		Optional parameter by Inserts if the InsertOn date should be set automatically to DateTime.now
+ADD		Optional parameter by Updates if the ModifyOn date should be set automatically to DateTime.now
+FIX		Remove locker from writing in LogFile => WindowsServices coudn't write in file
+ADD		Thread by writing LogFile
+ADD		Sleep if the LogFile is in access by other
+ADD		Miliseconds in Info, Warning, Error LogLines
+FIX		BallonTip fires exeption if he as calls from a other Thread
+UPD		Performance improvments by SQLite DataTable and DataSet Update
+ADD		TestApp: Added LoggerTester Methode
+
 V1.0.0.9:
 ADD		Added ORDERBYDATETIME
 ADD		DebugLevelConstants by Logging
