@@ -104,6 +104,10 @@
       <Project>{a4c12bfa-ca1c-42aa-8670-25000fa1d80b}</Project>
       <Name>DbInterface</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DbLogger\DbLogger.csproj">
+      <Project>{12CF0444-A2E4-463A-99C3-733847BD61FC}</Project>
+      <Name>DbLogger</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DbNotifyer\DbNotifyer.csproj">
       <Project>{3a20f5a5-82c2-4607-a6a8-1a717beab322}</Project>
       <Name>DbNotifyer</Name>

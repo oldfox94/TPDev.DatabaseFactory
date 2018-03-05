@@ -1,10 +1,14 @@
 ﻿using DatabaseFactory;
+using DbInterface;
 using DbInterface.Helpers;
 using DbInterface.Models;
+using DbLogger.Models;
 using DbNotifyer.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using DbType = DbInterface.Models.DbType;
 
@@ -52,9 +56,48 @@ namespace TestApp
             //m_dbFactory = new DbFactory(DbType.Oracle, connectionData); //Uncomment for Oracle
 
             #region Init Logger
-            m_dbFactory.InitLogger("DbFactoryLog");
+            m_dbFactory.InitLogger("DbFactoryLog", debugLevel: DebugLevelConstants.VeryHigh);
             m_dbFactory.InitNotifyIcon(new NotifyData { Title = "TestApp", NotifyOnError = true, NotifyOnInfo = true });
+            LogTester();
             #endregion
+        }
+
+        private void LogTester()
+        {
+            SLLog.WriteInfo("LogTester", "TestInfo!");
+            SLLog.WriteWarning("LogTester", ToString(), "TestWarning");
+            try
+            {
+                throw new ApplicationException("TestException!");
+            }
+            catch(Exception ex)
+            {
+                SLLog.WriteError(new LogData
+                {
+                    FunctionName = "LogTester",
+                    Source = ToString(),
+                    Ex = ex,
+                });
+            }
+
+            Task.Run(() => 
+            {
+                SLLog.WriteInfo("LogTester", "TestInfo (Thread)!");
+                SLLog.WriteWarning("LogTester", ToString(), "TestWarning (Thread)!");
+                try
+                {
+                    throw new ApplicationException("TestException (Thread)!");
+                }
+                catch (Exception ex)
+                {
+                    SLLog.WriteError(new LogData
+                    {
+                        FunctionName = "LogTester",
+                        Source = ToString(),
+                        Ex = ex,
+                    });
+                }
+            });
         }
 
         private void CreateTable()
