@@ -4,7 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace DbLogger
 {
@@ -107,7 +110,8 @@ namespace DbLogger
             if (Settings.OnlyConsoleOutput) return;
 
             var title = string.Empty;
-            SLLogEvents.FireShowBallonTipp(new SLLogEventArgs { Type = data.Type, Titel = "DatabaseFactory " + data.Type.ToString() + "!", LogMessage = data.Message });
+            if (Settings.IsMainThread)
+                SLLogEvents.FireShowBallonTipp(new SLLogEventArgs { Type = data.Type, Titel = "DatabaseFactory " + data.Type.ToString() + "!", LogMessage = data.Message });
         }
 
         private void LogToFile()
@@ -121,21 +125,21 @@ namespace DbLogger
             {
                 case LogType.Info:
                     return string.Format(@"[Info]{1} => {2}: {0}Function: {3} {0}Message: {4}{5}{0}{0}",
-                            Environment.NewLine, Settings.LogId, logEntry.ExDate.ToString(), logEntry.FunctionName, logEntry.Message,
+                            Environment.NewLine, Settings.LogId, logEntry.ExDate.ToString() + string.Format(" [{0}]", logEntry.ExDate.Millisecond), logEntry.FunctionName, logEntry.Message,
                             logEntry.LineNumber != 0
                                 ? string.Format(" [Line: {0}]", logEntry.LineNumber)
                                 : string.Empty);
 
                 case LogType.Warning:
                     return string.Format(@"[Warning]{1} => {2}: {0}Function: {3} {0}Source: {4} {0}Message: {5}{6}{0}{0}",
-                            Environment.NewLine, Settings.LogId, logEntry.ExDate.ToString(), logEntry.FunctionName, logEntry.Source, logEntry.Message, 
+                            Environment.NewLine, Settings.LogId, logEntry.ExDate.ToString() + string.Format(" [{0}]", logEntry.ExDate.Millisecond), logEntry.FunctionName, logEntry.Source, logEntry.Message, 
                             logEntry.LineNumber != 0 
                                 ? string.Format(" [Line: {0}]", logEntry.LineNumber) 
                                 : string.Empty);
 
                 case LogType.Error:
                     return string.Format(@"[Error]{1} => {2}: {0}Function: {3} {0}Source: {4} {0}Message: {5} {0}StackTrace: {6} [Line: {7}]{0}{0}",
-                            Environment.NewLine, Settings.LogId, logEntry.ExDate.ToString(), logEntry.FunctionName, logEntry.Source, logEntry.Message,
+                            Environment.NewLine, Settings.LogId, logEntry.ExDate.ToString() + string.Format(" [{0}]", logEntry.ExDate.Millisecond), logEntry.FunctionName, logEntry.Source, logEntry.Message,
                             logEntry.StackTrace, logEntry.LineNumber);
             }
             return string.Empty;
@@ -169,21 +173,40 @@ namespace DbLogger
                     WriteAsync(Settings.LogFile, line);
                     logEntry.IsInLogFile = true;
                 }
-                catch(Exception)
+                catch(Exception ex)
                 {
-
+                    Console.WriteLine("Error writing Log: " + ex.Message);
                     logEntry.IsInLogFile = false;
                 }
             }
         }
 
-        private ReaderWriterLock locker = new ReaderWriterLock();
+        private bool m_FileLocked { get; set; }
         private void WriteAsync(string path, string line)
         {
             if (Settings.OnlyConsoleOutput) return;
+            Task.Run(() =>
+            {
+                try
+                {
+                    while(m_FileLocked)
+                    {
+                        Thread.Sleep(100);
+                    }
+                    m_FileLocked = true;
 
-            locker.AcquireWriterLock(int.MaxValue);
-            File.AppendAllLines(path, new[] { line });
+                    using (FileStream fs = new FileStream(path, FileMode.Append, FileAccess.Write))
+                    using (StreamWriter sw = new StreamWriter(fs))
+                    {
+                        sw.WriteLine(line);
+                    }
+                    m_FileLocked = false;
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine("Error writing Log: " + ex.Message);
+                }
+            });           
         }
 
         private void WriteEventLog(string message)
