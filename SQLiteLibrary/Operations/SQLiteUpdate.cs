@@ -22,14 +22,22 @@ namespace SQLiteLibrary.Operations
         {
             try
             {
-                var result = false;
-                foreach(DataTable tbl in dataSet.Tables)
+                using (var con = new SQLiteConnection(Settings.ConnectionString))
                 {
-                    result = UpdateTable(tbl, setInsertOn, setModifyOn);
-                    if (!result) return result;
+                    foreach (DataTable tbl in dataSet.Tables)
+                    {
+                        using (var adapter = new SQLiteDataAdapter(string.Format(@"SELECT * FROM {0} WHERE 1=0", tbl.TableName), con))
+                        {
+                            using (var cmd = new SQLiteCommandBuilder(adapter))
+                            {
+                                adapter.Update(tbl);
+                                cmd.Dispose();
+                            }
+                            adapter.Dispose();
+                        }
+                    }
                 }
-
-                return result;
+                return true;
             }
             catch(Exception ex)
             {
@@ -94,18 +102,20 @@ namespace SQLiteLibrary.Operations
         {
             try
             {
-                TableHelper.SetDefaultColumnValues(table, setInsertOn, setModifyOn);
+                TableHelper.SetDefaultColumnValues(table);
 
-                var con = CONNECTION.OpenCon();
-
-                var adapter = new SQLiteDataAdapter(string.Format(@"SELECT * FROM {0}", tableName), con);
-                var cmd = new SQLiteCommandBuilder(adapter);
-                adapter.Update(table);
-
-                cmd.Dispose();
-                adapter.Dispose();
-                CONNECTION.CloseCon(con);
-
+                using (var con = new SQLiteConnection(Settings.ConnectionString))
+                {
+                    using (var adapter = new SQLiteDataAdapter(string.Format(@"SELECT * FROM {0} WHERE 1=0", tableName), con))
+                    {
+                        using (var cmd = new SQLiteCommandBuilder(adapter))
+                        {
+                            adapter.Update(table);
+                            cmd.Dispose();
+                        }
+                        adapter.Dispose();
+                    }
+                }
                 return true;
             }
             catch (DBConcurrencyException cex)
