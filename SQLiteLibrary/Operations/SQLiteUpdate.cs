@@ -102,7 +102,7 @@ namespace SQLiteLibrary.Operations
         {
             try
             {
-                TableHelper.SetDefaultColumnValues(table);
+                TableHelper.SetDefaultColumnValues(table, setInsertOn, setModifyOn);
 
                 using (var con = new SQLiteConnection(Settings.ConnectionString))
                 {
