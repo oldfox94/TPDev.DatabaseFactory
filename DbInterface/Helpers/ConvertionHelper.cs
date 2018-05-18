@@ -165,11 +165,22 @@ namespace DbInterface.Helpers
             }
         }
 
-        public static string GetDateFromString(DbType dbType, string dateStr)
+        public static string GetDateFromString(DbType dbType, string columnName)
         {
+            switch (dbType)
+            {
+                case DbType.SQLite:
+                    return string.Format(
+                        @" strftime('%d.%m.%Y %H:%M:%S',substr({0}, 7, 4) || '-' || substr({0}, 4, 2) || '-' || substr({0}, 1, 2))",
+                        columnName);
 
+                default:
+                    return string.Format(
+                        @" CAST(substring({0}, 7, 4) + '-' + substring({0}, 4, 2) + '-' + substring({0}, 1, 2))",
+                        columnName);
+            }
         }
-        public static string GetDateTimeFromString(DbType dbType, string dateTimeStr)
+        public static string GetDateTimeFromString(DbType dbType, string columnName)
         {
             switch(dbType)
             {
@@ -177,13 +188,25 @@ namespace DbInterface.Helpers
                     return string.Format(
                         @" strftime('%d.%m.%Y %H:%M:%S',substr({0}, 7, 4) || '-' || substr({0}, 4, 2) || '-' || substr({0}, 1, 2) || ' ' ||
 								                        substr({0}, 12, 2) || ':' || substr({0}, 15, 2) || ':' || substr({0}, 18, 2))",
-                        dateTimeStr);
+                        columnName);
 
                 default:
                     return string.Format(
-                        @" strftime('%d.%m.%Y %H:%M:%S',substring({0}, 7, 4) + '-' + substring({0}, 4, 2) + '-' + substring({0}, 1, 2) + ' ' +
-								                        substring({0}, 12, 2) + ':' + substring({0}, 15, 2) + ':' + substring({0}, 18, 2))",
-                        dateTimeStr); ;
+                        @" CAST(substring({0}, 7, 4) + '-' + substring({0}, 4, 2) + '-' + substring({0}, 1, 2) + ' ' +
+								substring({0}, 12, 2) + ':' + substring({0}, 15, 2) + ':' + substring({0}, 18, 2))",
+                        columnName);
+            }
+        }
+
+        public static string GetTimeSum(DbType dbType, string columnName)
+        {
+            switch(dbType)
+            {
+                case DbType.SQLite:
+                    return string.Format(@" strftime('%H:%M:%S', SUM(strftime('%s', {0})) ,'unixepoch')", columnName);
+
+                default:
+                    return string.Format(@" CONVERT(varchar, SUM(CONVERT(TIME({0})), 108)", columnName);
             }
         }
     }
