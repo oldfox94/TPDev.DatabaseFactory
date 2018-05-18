@@ -153,9 +153,38 @@ namespace DbInterface.Helpers
             return colName + " " + orderBy;
         }
 
-        public static string ORDERBYDATETIME(string colName, string orderBy)
+        public static string ORDERBYDATETIME(DbType dbType, string colName, string orderBy)
         {
-            return string.Format(" substr({0}, 7, 4) || substr({0}, 4, 2) || substr({0}, 1, 2) || substr({0}, 12, 2) || substr({0}, 15, 2) || substr({0}, 18, 2) {1}", colName, orderBy);
+            switch (dbType)
+            {
+                case DbType.SQLite:
+                    return string.Format(" substr({0}, 7, 4) || substr({0}, 4, 2) || substr({0}, 1, 2) || substr({0}, 12, 2) || substr({0}, 15, 2) || substr({0}, 18, 2) {1}", colName, orderBy);
+
+                default:
+                    return string.Format(" substring({0}, 7, 4) + substring({0}, 4, 2) + substring({0}, 1, 2) + substring({0}, 12, 2) + substring({0}, 15, 2) + substring({0}, 18, 2) {1}", colName, orderBy);
+            }
+        }
+
+        public static string GetDateFromString(DbType dbType, string dateStr)
+        {
+
+        }
+        public static string GetDateTimeFromString(DbType dbType, string dateTimeStr)
+        {
+            switch(dbType)
+            {
+                case DbType.SQLite:
+                    return string.Format(
+                        @" strftime('%d.%m.%Y %H:%M:%S',substr({0}, 7, 4) || '-' || substr({0}, 4, 2) || '-' || substr({0}, 1, 2) || ' ' ||
+								                        substr({0}, 12, 2) || ':' || substr({0}, 15, 2) || ':' || substr({0}, 18, 2))",
+                        dateTimeStr);
+
+                default:
+                    return string.Format(
+                        @" strftime('%d.%m.%Y %H:%M:%S',substring({0}, 7, 4) + '-' + substring({0}, 4, 2) + '-' + substring({0}, 1, 2) + ' ' +
+								                        substring({0}, 12, 2) + ':' + substring({0}, 15, 2) + ':' + substring({0}, 18, 2))",
+                        dateTimeStr); ;
+            }
         }
     }
 }
