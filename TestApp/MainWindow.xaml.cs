@@ -58,7 +58,7 @@ namespace TestApp
             #region Init Logger
             m_dbFactory.InitLogger("DbFactoryLog", debugLevel: DebugLevelConstants.VeryHigh);
             m_dbFactory.InitNotifyIcon(new NotifyData { Title = "TestApp", NotifyOnError = true, NotifyOnInfo = true });
-            LogTester();
+            //LogTester();
             #endregion
         }
 
@@ -102,15 +102,30 @@ namespace TestApp
 
         private void CreateTable()
         {
-            var columns = GetSampleColumns();
-            m_dbFactory.Insert.CreateTable("TestTbl", columns);
+            var tbl1Columns = GetSampleTable1Columns();
+            m_dbFactory.Insert.CreateTable("TestTbl", tbl1Columns);
+
+            var tbl2Columns = GetSampleTable2Columns();
+            m_dbFactory.Insert.CreateTable("TestTbl2", tbl2Columns);
         }
 
-        private List<ColumnData> GetSampleColumns()
+        private List<ColumnData> GetSampleTable1Columns()
         {
             var colList = new List<ColumnData>();
 
             colList.Add(new ColumnData { Name = "Pk", Type = DbDEF.VarchrNotNullPk(50) });
+            colList.Add(new ColumnData { Name = "Name", Type = DbDEF.VarchrNull(100) });
+            colList.Add(new ColumnData { Name = "Text", Type = DbDEF.TxtNull });
+
+            return colList;
+        }
+
+        private List<ColumnData> GetSampleTable2Columns()
+        {
+            var colList = new List<ColumnData>();
+
+            colList.Add(new ColumnData { Name = "Pk", Type = DbDEF.VarchrNotNullPk(50) });
+            colList.Add(new ColumnData { Name = "ParentPk", Type = DbDEF.VarchrNotNull(50), FkList = new List<FkData> { new FkData { RefTable = "TestTbl", RefColumn = "Pk" } } });
             colList.Add(new ColumnData { Name = "Name", Type = DbDEF.VarchrNull(100) });
             colList.Add(new ColumnData { Name = "Text", Type = DbDEF.TxtNull });
 
