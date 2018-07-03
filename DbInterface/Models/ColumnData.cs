@@ -1,4 +1,6 @@
-﻿namespace DbInterface.Models
+﻿using System.Collections.Generic;
+
+namespace DbInterface.Models
 {
     public class ColumnData
     {
@@ -8,5 +10,7 @@
 
         public bool existsInDB { get; set; }
         public bool isNew { get; set; }
+
+        public List<FkData> FkList { get; set; }
     }
 }

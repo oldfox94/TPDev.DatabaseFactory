@@ -57,6 +57,7 @@
     <Compile Include="Models\DbCIC.cs" />
     <Compile Include="Models\DbConnectionData.cs" />
     <Compile Include="Models\Enums.cs" />
+    <Compile Include="Models\FkData.cs" />
     <Compile Include="SLLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SLNotify.cs" />

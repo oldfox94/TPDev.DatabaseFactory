@@ -237,7 +237,7 @@ namespace MySQLLibrary.Operations
 
                 scriptList.Add(string.Format("ALTER TABLE {0} RENAME TO {0}_OLD{1}", tableName, timeStamp));
 
-                scriptList.Add(ScriptHelper.GetCreateTableSql(tableName, columns));
+                scriptList.Add(ScriptHelper.GetMySQLCreateTableSql(tableName, columns));
 
                 var insertSQL = string.Format("INSERT INTO {0} ({1}) ", tableName, ColumnHelper.GetColumnString(columns, true));
                 insertSQL += string.Format("SELECT {2} FROM {0}_OLD{1}", tableName, timeStamp, ColumnHelper.GetColumnString(columns));

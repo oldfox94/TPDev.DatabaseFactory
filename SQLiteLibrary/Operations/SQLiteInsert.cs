@@ -51,7 +51,7 @@ namespace SQLiteLibrary.Operations
             {
                 ColumnHelper.SetDefaultColumns(columns);
 
-                var sql = ScriptHelper.GetCreateTableSql(tableName, columns);
+                var sql = ScriptHelper.GetSQLiteCreateTableSql(tableName, columns);
                 var result = m_Execute.ExecuteNonQuery(sql);
 
                 if (result == -2) return false;

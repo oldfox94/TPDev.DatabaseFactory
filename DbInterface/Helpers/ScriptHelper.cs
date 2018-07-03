@@ -14,18 +14,10 @@ namespace DbInterface.Helpers
             {
                 count++;
 
-                sql += string.Format(@"[{0}] ", col.Name);
-                foreach (var colSettings in columns)
+                sql += string.Format(@"[{0}] {1}", col.Name, col.Type);
+                if (!string.IsNullOrEmpty(col.DefaultValue))
                 {
-                    if (colSettings.Name == col.Name)
-                    {
-                        sql += colSettings.Type;
-                        if (!string.IsNullOrEmpty(colSettings.DefaultValue))
-                        {
-                            sql += string.Format(@" DEFAULT '{0}'", colSettings.DefaultValue);
-                        }
-                        break;
-                    }
+                    sql += string.Format(@" DEFAULT '{0}'", col.DefaultValue);
                 }
 
                 if (count != columns.Count)
@@ -34,6 +26,45 @@ namespace DbInterface.Helpers
                     sql += ")";
             }
 
+            return sql;
+        }
+
+        public static string GetSQLiteCreateTableSql(string tableName, List<ColumnData> columns)
+        {
+            var sql = string.Format(@"CREATE TABLE [{0}] (", tableName);
+
+            int colCount = 0;
+            var fkList = new List<FkData>();
+            foreach (var col in columns)
+            {
+                colCount++;
+
+                if (col.FkList != null)
+                {
+                    foreach(var fk in col.FkList)
+                    {
+                        fk.SourceColumn = col.Name;
+                        fkList.Add(fk);
+                    }
+                }
+
+                sql += string.Format(@"[{0}] {1}", col.Name, col.Type);
+                if (!string.IsNullOrEmpty(col.DefaultValue))
+                {
+                    sql += string.Format(@" DEFAULT '{0}'", col.DefaultValue);
+                }
+
+                if (colCount != columns.Count) sql += ", ";
+            }
+
+            int fkCount = 0;
+            foreach(var fk in fkList)
+            {
+                fkCount++;
+                sql += string.Format(", FOREIGN KEY ({0}) REFERENCES {1}({2})", fk.SourceColumn, fk.RefTable, fk.RefColumn);
+            }
+
+            sql += ")";
             return sql;
         }
 
@@ -46,18 +77,10 @@ namespace DbInterface.Helpers
             {
                 count++;
 
-                sql += string.Format(@"{0} ", col.Name);
-                foreach(var colSettings in columns)
+                sql += string.Format(@"{0} {1}", col.Name, col.Type);
+                if(!string.IsNullOrEmpty(col.DefaultValue))
                 {
-                    if(colSettings.Name == col.Name)
-                    {
-                        sql += colSettings.Type;
-                        if(!string.IsNullOrEmpty(colSettings.DefaultValue))
-                        {
-                            sql += string.Format(@" DEFAULT '{0}'", colSettings.DefaultValue);
-                        }
-                        break;
-                    }
+                    sql += string.Format(@" DEFAULT '{0}'", col.DefaultValue);
                 }
 
                 if (count != columns.Count)
