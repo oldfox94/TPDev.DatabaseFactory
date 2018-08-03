@@ -121,7 +121,12 @@ namespace DbInterface.Helpers
                     break;
 
                 case DbType.SQL:
+                    minDate = minValue.ToString();
+                    maxDate = maxValue.ToString();
+                    colDate = string.Format(" CAST({0} AS DATETIME)", ColName);
 
+                    where = string.Format("CAST('{0}' AS DATETIME) AND CAST('{1}' AS DATETIME)", minDate, maxDate);
+                    where = string.Format(@"{0} BETWEEN {1}", colDate, where);
                     break;
 
                 default:
@@ -217,8 +222,7 @@ namespace DbInterface.Helpers
 
                 case DbType.SQL:
                     return string.Format(
-                        @" CONVERT(DATETIME, substring({0}, 7, 4) + '-' + substring({0}, 4, 2) + '-' + substring({0}, 1, 2) + ' ' +
-								                    substring({0}, 12, 2) + ':' + substring({0}, 15, 2) + ':' + substring({0}, 18, 2))",
+                        @" CONVERT(DATETIME, {0})",
                         columnName);
 
                 default:
@@ -241,15 +245,6 @@ namespace DbInterface.Helpers
 
                 default:
                     return string.Format(@" CONVERT(varchar, SUM(CONVERT(TIME({0})), 108)", columnName);
-            }
-        }
-
-        public static string GetTimeSumFromTicks(DbType dbType, string columnName)
-        {
-            switch(dbType)
-            {
-                default:
-                    return string.Format(" SUM({0})", columnName);
             }
         }
     }
