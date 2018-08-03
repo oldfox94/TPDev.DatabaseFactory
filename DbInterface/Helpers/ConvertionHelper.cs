@@ -120,6 +120,10 @@ namespace DbInterface.Helpers
                     where = string.Format(@"{0} BETWEEN {1}", colDate, where);
                     break;
 
+                case DbType.SQL:
+
+                    break;
+
                 default:
                     colDate = string.Format(" CAST(substring({0}, 7, 4) + '-' + substring({0}, 4, 2) + '-' + substring({0}, 1, 2) AS DATETIME)", ColName);
 
