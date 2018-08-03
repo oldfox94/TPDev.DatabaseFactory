@@ -45,6 +45,9 @@
         public const string IntNull = "INTEGER  NULL";
         public const string IntNotNull = "INTEGER  NOT NULL";
 
+        public const string BigIntNull = "BIGINT  NULL";
+        public const string BigIntNotNull = "BIGINT  NOT NULL";
+
         public const string BoolNull = "BOOLEAN  NULL";
         public const string BoolNotNull = "BOOLEAN  NOT NULL";
     }

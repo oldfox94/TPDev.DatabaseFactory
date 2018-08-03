@@ -165,6 +165,22 @@ namespace DbInterface.Helpers
             }
         }
 
+
+        public static string GetSelectWithLimit(DbType dbType, int limit, string innerQuery)
+        {
+            switch(dbType)
+            {
+                case DbType.SQLite:
+                    return string.Format(@"SELECT {1} LIMIT {0}", limit, innerQuery);
+
+                case DbType.SQL:
+                    return string.Format(@"SELECT TOP {0} {1}", limit, innerQuery);
+
+                default:
+                    return string.Format(@"SELECT TOP {0} {1}", limit, innerQuery);
+            }
+        }
+
         public static string GetDateFromString(DbType dbType, string columnName)
         {
             switch (dbType)
@@ -172,6 +188,11 @@ namespace DbInterface.Helpers
                 case DbType.SQLite:
                     return string.Format(
                         @" strftime('%d.%m.%Y %H:%M:%S',substr({0}, 7, 4) || '-' || substr({0}, 4, 2) || '-' || substr({0}, 1, 2))",
+                        columnName);
+
+                case DbType.SQL:
+                    return string.Format(
+                        @" CONVERT(DATE, substring({0}, 7, 4) + '-' + substring({0}, 4, 2) + '-' + substring({0}, 1, 2))",
                         columnName);
 
                 default:
@@ -190,6 +211,12 @@ namespace DbInterface.Helpers
 								                        substr({0}, 12, 2) || ':' || substr({0}, 15, 2) || ':' || substr({0}, 18, 2))",
                         columnName);
 
+                case DbType.SQL:
+                    return string.Format(
+                        @" CONVERT(DATETIME, substring({0}, 7, 4) + '-' + substring({0}, 4, 2) + '-' + substring({0}, 1, 2) + ' ' +
+								                    substring({0}, 12, 2) + ':' + substring({0}, 15, 2) + ':' + substring({0}, 18, 2))",
+                        columnName);
+
                 default:
                     return string.Format(
                         @" CAST(substring({0}, 7, 4) + '-' + substring({0}, 4, 2) + '-' + substring({0}, 1, 2) + ' ' +
@@ -205,8 +232,20 @@ namespace DbInterface.Helpers
                 case DbType.SQLite:
                     return string.Format(@" strftime('%H:%M:%S', SUM(strftime('%s', {0})) ,'unixepoch')", columnName);
 
+                case DbType.SQL:
+                    return string.Format(@" CONVERT(varchar, SUM(DATEDIFF(MINUTE, '0:00:00', capTotalCallTime)))", columnName);
+
                 default:
                     return string.Format(@" CONVERT(varchar, SUM(CONVERT(TIME({0})), 108)", columnName);
+            }
+        }
+
+        public static string GetTimeSumFromTicks(DbType dbType, string columnName)
+        {
+            switch(dbType)
+            {
+                default:
+                    return string.Format(" SUM({0})", columnName);
             }
         }
     }
