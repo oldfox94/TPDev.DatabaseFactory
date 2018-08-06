@@ -306,3 +306,4 @@ SQLLibrary/obj/Release/
 SQLiteLibrary/obj/Release/
 .vs/DatabaseFactory/v15/sqlite3/
 .vs/DatabaseFactory/v15/
+.vs/DatabaseFactory/DesignTimeBuild/.dtbcache
