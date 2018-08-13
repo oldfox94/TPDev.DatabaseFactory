@@ -92,6 +92,13 @@ namespace DbInterface.Helpers
                     where += string.Format(" datetime(substr({0}, 7, 4) || '-' || substr({0}, 4, 2) || '-' || substr({0}, 1, 2))", ColName);
                     break;
 
+                case DbType.SQL:
+                    date = Value.ToString();
+
+                    where = "CAST('" + date + "' AS DATETIME) " + whereOperator;
+                    where += string.Format(" CAST({0} AS DATETIME)", ColName);
+                    break;
+
                 default:
                     where = "CAST('" + date + "' AS DATETIME) " + whereOperator;
                     where += string.Format(" CAST(substring({0}, 7, 4) + '-' + substring({0}, 4, 2) + '-' + substring({0}, 1, 2) AS DATETIME)", ColName);
