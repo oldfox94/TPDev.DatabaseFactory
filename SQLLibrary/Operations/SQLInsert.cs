@@ -41,6 +41,7 @@ namespace SQLLibrary.Operations
                     FunctionName = "CreateTable Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("CreateTable Error!", ex);
                 return false;
             }
         }
@@ -65,6 +66,7 @@ namespace SQLLibrary.Operations
                     FunctionName = "CreateTable Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("CreateTable Error!", ex);
                 return false;
             }
         }
@@ -72,6 +74,7 @@ namespace SQLLibrary.Operations
         public bool CreateDatabase(string databaseName)
         {
             var result = false;
+            Exception Ex = null;
             try
             {
                 new CONNECTION(new DbConnectionData { Name = "master", ServerName = Settings.ConnectionData.ServerName, Instance = Settings.ConnectionData.Instance,
@@ -88,10 +91,12 @@ namespace SQLLibrary.Operations
                     FunctionName = "CreateDatabase Error!",
                     Ex = ex,
                 });
+                Ex = ex;
                 result = false;
             }
 
             new CONNECTION(Settings.ConnectionData);
+            if (!result && Ex != null && Settings.ThrowExceptions) throw new Exception("CreateDatabase Error!", Ex);
             return result;
         }
 
@@ -115,6 +120,7 @@ namespace SQLLibrary.Operations
                     FunctionName = "InsertRow Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("InsertRow Error!", ex);
                 return false;
             }
         }
@@ -135,6 +141,7 @@ namespace SQLLibrary.Operations
                     FunctionName = "InsertValue Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("InsertValue Error!", ex);
                 return false;
             }
         }
@@ -157,6 +164,7 @@ namespace SQLLibrary.Operations
                     FunctionName = "InsertValue Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("InsertValue Error!", ex);
                 return false;
             }
         }

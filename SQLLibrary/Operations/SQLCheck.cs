@@ -43,6 +43,7 @@ namespace SQLLibrary.Operations
                     FunctionName = "ColumnExists Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("ColumnExists Error!", ex);
                 return false;
             }
         }
@@ -62,6 +63,7 @@ namespace SQLLibrary.Operations
                     FunctionName = "ColumnValueExists Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("ColumnValueExists Error!", ex);
                 return false;
             }
         }
@@ -83,6 +85,7 @@ namespace SQLLibrary.Operations
                     FunctionName = "TableExists Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("TableExists Error!", ex);
                 return false;
             }
         }
@@ -90,6 +93,7 @@ namespace SQLLibrary.Operations
         public bool DatabaseExists(string databaseName)
         {
             var result = false;
+            Exception Ex = null;
             try
             {
                 new CONNECTION(new DbConnectionData { Name = "master", ServerName = Settings.ConnectionData.ServerName, Instance = Settings.ConnectionData.Instance,
@@ -109,10 +113,12 @@ namespace SQLLibrary.Operations
                     FunctionName = "DatabaseExists Error!",
                     Ex = ex,
                 });
+                Ex = ex;
                 result = false;
             }
 
             new CONNECTION(Settings.ConnectionData);
+            if(!result && Ex != null && Settings.ThrowExceptions) throw new Exception("DatabaseExists Error!", Ex);
             return result;
         }
     }

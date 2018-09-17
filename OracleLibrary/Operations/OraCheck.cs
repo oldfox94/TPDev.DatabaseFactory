@@ -42,6 +42,7 @@ namespace OracleLibrary.Operations
                     FunctionName = "ColumnExists Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("ColumnExists Error!", ex);
                 return false;
             }
         }
@@ -61,6 +62,7 @@ namespace OracleLibrary.Operations
                     FunctionName = "ColumnValueExists Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("ColumnValueExists Error!", ex);
                 return false;
             }
         }
@@ -82,6 +84,7 @@ namespace OracleLibrary.Operations
                     FunctionName = "TableExists Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("TableExists Error!", ex);
                 return false;
             }
         }
@@ -103,6 +106,7 @@ namespace OracleLibrary.Operations
                     FunctionName = "DatabaseExists Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("DatabaseExists Error!", ex);
                 return false;
             }
         }

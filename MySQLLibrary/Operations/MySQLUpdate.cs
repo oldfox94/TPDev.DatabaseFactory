@@ -39,6 +39,7 @@ namespace MySQLLibrary.Operations
                     FunctionName = "UpdateDataSet Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("UpdateDataSet Error!", ex);
                 return false;
             }
         }
@@ -64,6 +65,7 @@ namespace MySQLLibrary.Operations
                     FunctionName = "UpdateOneValue Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("UpdateOneValue Error!", ex);
                 return false;
             }
         }
@@ -83,6 +85,7 @@ namespace MySQLLibrary.Operations
                     FunctionName = "UpdateTable Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("UpdateTable Error!", ex);
                 return false;
             }
         }
@@ -114,6 +117,7 @@ namespace MySQLLibrary.Operations
                     FunctionName = "UpdateTable Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("UpdateTable Error!", ex);
                 return false;
             }
         }
@@ -138,6 +142,7 @@ namespace MySQLLibrary.Operations
                     FunctionName = "UpdateTables Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("UpdateTables Error!", ex);
                 return false;
             }
         }

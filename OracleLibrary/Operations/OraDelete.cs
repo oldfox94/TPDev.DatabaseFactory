@@ -33,6 +33,7 @@ namespace OracleLibrary.Operations
                     FunctionName = "ClearTable Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("ClearTable Error!", ex);
                 return false;
             }
         }
@@ -60,6 +61,7 @@ namespace OracleLibrary.Operations
                     FunctionName = "ClearDatabase Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("ClearDatabase Error!", ex);
                 return false;
             }
         }
@@ -82,6 +84,7 @@ namespace OracleLibrary.Operations
                     FunctionName = "DeleteRows Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("DeleteRows Error!", ex);
                 return false;
             }
         }
@@ -102,6 +105,7 @@ namespace OracleLibrary.Operations
                     FunctionName = "DeleteTable Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("DeleteTable Error!", ex);
                 return false;
             }
         }
@@ -122,6 +126,7 @@ namespace OracleLibrary.Operations
                     FunctionName = "DeleteDatabase Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("DeleteDatabase Error!", ex);
                 return false;
             }
         }

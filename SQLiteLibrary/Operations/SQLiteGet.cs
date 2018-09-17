@@ -35,6 +35,7 @@ namespace SQLiteLibrary.Operations
                     FunctionName = "GetDataSet Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("GetDataSet Error!", ex);
             }
 
             return ds;
@@ -56,6 +57,7 @@ namespace SQLiteLibrary.Operations
                     FunctionName = "GetRow Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("GetRow Error!", ex);
                 return null;
             }
         }
@@ -78,6 +80,7 @@ namespace SQLiteLibrary.Operations
                     FunctionName = "GetRow Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("GetRow Error!", ex);
                 return null;
             }
         }
@@ -99,6 +102,7 @@ namespace SQLiteLibrary.Operations
                     FunctionName = "GetTable Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("GetTable Error!", ex);
             }
 
             return dt;
@@ -123,6 +127,7 @@ namespace SQLiteLibrary.Operations
                     FunctionName = "GetTable Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("GetTable Error!", ex);
             }
 
             return dt;
@@ -146,6 +151,7 @@ namespace SQLiteLibrary.Operations
                     FunctionName = "GetTableSchema Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("GetTableSchema Error!", ex);
             }
 
             return schemaTbl;
@@ -173,6 +179,7 @@ namespace SQLiteLibrary.Operations
                     FunctionName = "GetValueFromColumn Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("GetValueFromColumn Error!", ex);
             }
 
             return resultStr;
@@ -192,6 +199,7 @@ namespace SQLiteLibrary.Operations
                     FunctionName = "GetTableNameFromColumn Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("GetTableNameFromColumn Error!", ex);
                 return string.Empty;
             }
         }
@@ -219,6 +227,7 @@ namespace SQLiteLibrary.Operations
                     FunctionName = "GetLastSortOrder Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("GetLastSortOrder Error!", ex);
             }
 
             return result;
@@ -242,6 +251,7 @@ namespace SQLiteLibrary.Operations
                     FunctionName = "GetNextSortOrder Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("GetNextSortOrder Error!", ex);
             }
 
             return lstSortOrder;

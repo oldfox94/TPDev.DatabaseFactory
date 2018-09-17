@@ -38,6 +38,7 @@ namespace SQLLibrary.Operations
                     FunctionName = "ExecuteNonQuery Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("ExecuteNonQuery Error!", ex);
                 return -2;
             }
 
@@ -71,6 +72,7 @@ namespace SQLLibrary.Operations
                     FunctionName = "ExecuteNonQuery Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("ExecuteNonQuery Error!", ex);
                 return -2;
             }
 
@@ -99,6 +101,7 @@ namespace SQLLibrary.Operations
                     FunctionName = "ExecuteScalar Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("ExecuteScalar Error!", ex);
                 return null;
             }
 
@@ -142,6 +145,7 @@ namespace SQLLibrary.Operations
                     FunctionName = "ExecuteReadTable Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("ExecuteReadTable Error!", ex);
                 return null;
             }
 
@@ -173,6 +177,7 @@ namespace SQLLibrary.Operations
                     FunctionName = "ExecuteReadTableSchema Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("ExecuteReadTableSchema Error!", ex);
                 return null;
             }
 
@@ -208,6 +213,7 @@ namespace SQLLibrary.Operations
                     FunctionName = "ExecuteReadTableName Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("ExecuteReadTableName Error!", ex);
                 return null;
             }
         }
@@ -259,6 +265,7 @@ namespace SQLLibrary.Operations
                     FunctionName = "RenewTbl Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("RenewTbl Error!", ex);
                 return false;
             }
         }
@@ -292,6 +299,7 @@ namespace SQLLibrary.Operations
                     FunctionName = "RenewTbl Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("RenewTbl Error!", ex);
                 return false;
             }
         }

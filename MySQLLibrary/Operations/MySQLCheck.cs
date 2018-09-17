@@ -42,6 +42,7 @@ namespace MySQLLibrary.Operations
                     FunctionName = "ColumnExists Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("ColumnExists Error!", ex);
                 return false;
             }
         }
@@ -61,6 +62,7 @@ namespace MySQLLibrary.Operations
                     FunctionName = "ColumnValueExists Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("ColumnValueExists Error!", ex);
                 return false;
             }
         }
@@ -82,6 +84,7 @@ namespace MySQLLibrary.Operations
                     FunctionName = "TableExists Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("TableExists Error!", ex);
                 return false;
             }
         }
@@ -96,6 +99,7 @@ namespace MySQLLibrary.Operations
                     result = false;
                 else
                     result = exResult.ToString() == databaseName;
+                return result;
             }
             catch (Exception ex)
             {
@@ -105,11 +109,9 @@ namespace MySQLLibrary.Operations
                     FunctionName = "DatabaseExists Error!",
                     Ex = ex,
                 });
-                result = false;
+                if (Settings.ThrowExceptions) throw new Exception("DatabaseExists Error!", ex);
+                return false;
             }
-
-            //new CONNECTION(Settings.ConnectionData);
-            return result;
         }
     }
 }

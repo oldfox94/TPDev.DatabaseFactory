@@ -41,6 +41,7 @@ namespace MySQLLibrary.Operations
                     FunctionName = "CreateTable Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("CreateTable Error!", ex);
                 return false;
             }
         }
@@ -65,6 +66,7 @@ namespace MySQLLibrary.Operations
                     FunctionName = "CreateTable Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("CreateTable Error!", ex);
                 return false;
             }
         }
@@ -76,6 +78,7 @@ namespace MySQLLibrary.Operations
             {
                 var cmdResult = m_Execute.ExecuteNonQuery(string.Format(@"CREATE DATABASE {0};", databaseName));
                 result = cmdResult != -2;
+                return result;
             }
             catch(Exception ex)
             {
@@ -85,11 +88,9 @@ namespace MySQLLibrary.Operations
                     FunctionName = "CreateDatabase Error!",
                     Ex = ex,
                 });
-                result = false;
+                if (Settings.ThrowExceptions) throw new Exception("CreateDatabase Error!", ex);
+                return false;
             }
-
-            //new CONNECTION(Settings.ConnectionData);
-            return result;
         }
 
         public bool InsertRow(string tableName, DataRow row, bool setInsertOn = true)
@@ -112,6 +113,7 @@ namespace MySQLLibrary.Operations
                     FunctionName = "InsertRow Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("InsertRow Error!", ex);
                 return false;
             }
         }
@@ -132,6 +134,7 @@ namespace MySQLLibrary.Operations
                     FunctionName = "InsertValue Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("InsertValue Error!", ex);
                 return false;
             }
         }
@@ -154,6 +157,7 @@ namespace MySQLLibrary.Operations
                     FunctionName = "InsertValue Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("InsertValue Error!", ex);
                 return false;
             }
         }

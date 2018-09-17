@@ -38,6 +38,7 @@ namespace SQLiteLibrary.Operations
                     FunctionName = "ExecuteNonQuery Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("ExecuteNonQuery Error!", ex);
                 return -2;
             }
 
@@ -71,6 +72,7 @@ namespace SQLiteLibrary.Operations
                     FunctionName = "ExecuteNonQuery Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("ExecuteNonQuery Error!", ex);
                 return -2;
             }
 
@@ -99,6 +101,7 @@ namespace SQLiteLibrary.Operations
                     FunctionName = "ExecuteScalar Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("ExecuteScalar Error!", ex);
                 return null;
             }
 
@@ -141,6 +144,7 @@ namespace SQLiteLibrary.Operations
                     FunctionName = "ExecuteReadTable Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("ExecuteReadTable Error!", ex);
                 return null;
             }
 
@@ -172,6 +176,7 @@ namespace SQLiteLibrary.Operations
                     FunctionName = "ExecuteReadTableSchema Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("ExecuteReadTableSchema Error!", ex);
                 return null;
             }
 
@@ -207,6 +212,7 @@ namespace SQLiteLibrary.Operations
                     FunctionName = "ExecuteReadTableName Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("ExecuteReadTableName Error!", ex);
                 return string.Empty;
             }
         }
@@ -258,6 +264,7 @@ namespace SQLiteLibrary.Operations
                     FunctionName = "RenewTbl Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("RenewTbl Error!", ex);
                 return false;
             }
         }
@@ -291,6 +298,7 @@ namespace SQLiteLibrary.Operations
                     FunctionName = "RenewTbl Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("RenewTbl Error!", ex);
                 return false;
             }
         }

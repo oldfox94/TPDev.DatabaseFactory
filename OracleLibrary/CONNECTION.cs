@@ -19,6 +19,9 @@ namespace OracleLibrary
                 Settings.ConnectionString = string.Format(@"Data Source={1}\{0};Initial Catalog={2};User Id={3};Password = {4};",
                                                 conData.Instance, conData.ServerName, conData.Name, conData.User, conData.Password);
             }
+
+            //Set Addentional Settings
+            Settings.ThrowExceptions = conData.ThrowExceptions;
         }
 
         public static OracleConnection OpenCon()

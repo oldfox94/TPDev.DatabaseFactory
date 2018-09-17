@@ -41,6 +41,7 @@ namespace SQLiteLibrary.Operations
                     FunctionName = "CreateTable Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("CreateTable Error!", ex);
                 return false;
             }
         }
@@ -65,6 +66,7 @@ namespace SQLiteLibrary.Operations
                     FunctionName = "CreateTable Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("CreateTable Error!", ex);
                 return false;
             }
         }
@@ -83,6 +85,7 @@ namespace SQLiteLibrary.Operations
                     FunctionName = "CreateDatabase Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("CreateDatabase Error!", ex);
                 return false;
             }
         }
@@ -107,6 +110,7 @@ namespace SQLiteLibrary.Operations
                     FunctionName = "InsertRow Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("InsertRow Error!", ex);
                 return false;
             }
         }
@@ -127,6 +131,7 @@ namespace SQLiteLibrary.Operations
                     FunctionName = "InsertValue Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("InsertValue Error!", ex);
                 return false;
             }
         }
@@ -149,6 +154,7 @@ namespace SQLiteLibrary.Operations
                     FunctionName = "InsertValue Error!",
                     Ex = ex,
                 });
+                if (Settings.ThrowExceptions) throw new Exception("InsertValue Error!", ex);
                 return false;
             }
         }
