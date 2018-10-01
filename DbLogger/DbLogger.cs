@@ -4,10 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace DbLogger
 {
@@ -124,23 +122,30 @@ namespace DbLogger
             switch (logEntry.Type)
             {
                 case LogType.Info:
-                    return string.Format(@"[Info]{1} => {2}: {0}Function: {3} {0}Message: {4}{5}{0}{0}",
+                    return string.Format(@"[Info]{1} => {2}: {0}Function: {3} {0}Message: {4}{5}{6}{0}{0}",
                             Environment.NewLine, Settings.LogId, logEntry.ExDate.ToString() + string.Format(" [{0}]", logEntry.ExDate.Millisecond), logEntry.FunctionName, logEntry.Message,
+                            !string.IsNullOrEmpty(logEntry.AdditionalMessage)
+                                ? $"{Environment.NewLine}Extra Msg.: {logEntry.AdditionalMessage}" : string.Empty,
                             logEntry.LineNumber != 0
-                                ? string.Format(" [Line: {0}]", logEntry.LineNumber)
-                                : string.Empty);
+                                ? string.Format(" [Line: {0}]", logEntry.LineNumber) : string.Empty);
 
                 case LogType.Warning:
-                    return string.Format(@"[Warning]{1} => {2}: {0}Function: {3} {0}Source: {4} {0}Message: {5}{6}{0}{0}",
-                            Environment.NewLine, Settings.LogId, logEntry.ExDate.ToString() + string.Format(" [{0}]", logEntry.ExDate.Millisecond), logEntry.FunctionName, logEntry.Source, logEntry.Message, 
+                    return string.Format(@"[Warning]{1} => {2}: {0}Function: {3} {0}Source: {4} {0}Message: {5}{6}{7}{0}{0}",
+                            Environment.NewLine, Settings.LogId, logEntry.ExDate.ToString() + string.Format(" [{0}]", logEntry.ExDate.Millisecond), logEntry.FunctionName, logEntry.Source, logEntry.Message,
+                            !string.IsNullOrEmpty(logEntry.AdditionalMessage)
+                                ? $"{Environment.NewLine}Extra Msg.: {logEntry.AdditionalMessage}" : string.Empty,
                             logEntry.LineNumber != 0 
                                 ? string.Format(" [Line: {0}]", logEntry.LineNumber) 
                                 : string.Empty);
 
                 case LogType.Error:
-                    return string.Format(@"[Error]{1} => {2}: {0}Function: {3} {0}Source: {4} {0}Message: {5} {0}StackTrace: {6} [Line: {7}]{0}{0}",
+                    return string.Format(@"[Error]{1} => {2}: {0}Function: {3} {0}Source: {4} {0}Message: {5}{7} {0}StackTrace: {6}{8}{0}{0}",
                             Environment.NewLine, Settings.LogId, logEntry.ExDate.ToString() + string.Format(" [{0}]", logEntry.ExDate.Millisecond), logEntry.FunctionName, logEntry.Source, logEntry.Message,
-                            logEntry.StackTrace, logEntry.LineNumber);
+                            logEntry.StackTrace,
+                            !string.IsNullOrEmpty(logEntry.AdditionalMessage)
+                                ? $"{Environment.NewLine}Extra Msg.: {logEntry.AdditionalMessage}" : string.Empty,
+                            logEntry.LineNumber != 0
+                                ? string.Format(" [Line: {0}]", logEntry.LineNumber) : string.Empty);
             }
             return string.Empty;
         }

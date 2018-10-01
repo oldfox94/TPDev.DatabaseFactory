@@ -37,6 +37,7 @@ namespace SQLLibrary.Operations
                     Source = ToString(),
                     FunctionName = "ExecuteNonQuery Error!",
                     Ex = ex,
+                    AdditionalMessage = $"SQL: {sql}",
                 });
                 if (Settings.ThrowExceptions) throw new Exception("ExecuteNonQuery Error!", ex);
                 return -2;
@@ -100,6 +101,7 @@ namespace SQLLibrary.Operations
                     Source = ToString(),
                     FunctionName = "ExecuteScalar Error!",
                     Ex = ex,
+                    AdditionalMessage = $"SQL: {sql}",
                 });
                 if (Settings.ThrowExceptions) throw new Exception("ExecuteScalar Error!", ex);
                 return null;
@@ -144,6 +146,7 @@ namespace SQLLibrary.Operations
                     Source = ToString(),
                     FunctionName = "ExecuteReadTable Error!",
                     Ex = ex,
+                    AdditionalMessage = $"SQL: {sql}",
                 });
                 if (Settings.ThrowExceptions) throw new Exception("ExecuteReadTable Error!", ex);
                 return null;
@@ -176,6 +179,7 @@ namespace SQLLibrary.Operations
                     Source = ToString(),
                     FunctionName = "ExecuteReadTableSchema Error!",
                     Ex = ex,
+                    AdditionalMessage = $"SQL: {sql}",
                 });
                 if (Settings.ThrowExceptions) throw new Exception("ExecuteReadTableSchema Error!", ex);
                 return null;
