@@ -152,37 +152,44 @@ namespace DbLogger
 
         private void WriteToFile()
         {
-            foreach(var logEntry in m_LogDataList)
-            {
-                if (logEntry.IsInLogFile) continue;
-
-                var line = string.Empty;
-                try
+            try
+            { 
+                foreach (var logEntry in m_LogDataList)
                 {
-                    switch(logEntry.Type)
+                    if (logEntry.IsInLogFile) continue;
+
+                    var line = string.Empty;
+                    try
                     {
-                        case LogType.Info:
-                        case LogType.Warning:
-                            line = GetLogText(logEntry);
-                            WriteConsoleLog(line);
-                            break;
+                        switch (logEntry.Type)
+                        {
+                            case LogType.Info:
+                            case LogType.Warning:
+                                line = GetLogText(logEntry);
+                                WriteConsoleLog(line);
+                                break;
 
-                        case LogType.Error:
-                            line = GetLogText(logEntry);
-                            
-                            WriteConsoleLog(line);
-                            WriteEventLog(line);
-                            break;
+                            case LogType.Error:
+                                line = GetLogText(logEntry);
+
+                                WriteConsoleLog(line);
+                                WriteEventLog(line);
+                                break;
+                        }
+
+                        WriteAsync(Settings.LogFile, line);
+                        logEntry.IsInLogFile = true;
                     }
-
-                    WriteAsync(Settings.LogFile, line);
-                    logEntry.IsInLogFile = true;
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error writing Log: " + ex.Message);
+                        logEntry.IsInLogFile = false;
+                    }
                 }
-                catch(Exception ex)
-                {
-                    Console.WriteLine("Error writing Log: " + ex.Message);
-                    logEntry.IsInLogFile = false;
-                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Error writing Log: " + ex.Message);
             }
         }
 
@@ -194,9 +201,17 @@ namespace DbLogger
             {
                 try
                 {
+                    var tryCnt = 0;
                     while(m_FileLocked)
                     {
+                        if (tryCnt > 25)
+                        {
+                            Console.WriteLine("WriteAync: TryCnt reached! => Abort!");
+                            return;
+                        }
+
                         Thread.Sleep(100);
+                        tryCnt++;
                     }
                     m_FileLocked = true;
 
