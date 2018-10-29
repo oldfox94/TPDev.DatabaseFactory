@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -150,13 +151,18 @@ namespace DbLogger
             return string.Empty;
         }
 
+        private DateTime m_LastRequest { get; set; }
         private void WriteToFile()
         {
             try
-            { 
-                foreach (var logEntry in m_LogDataList)
+            {
+                var currentList = new List<LogData>();
+                currentList.AddRange(m_LogDataList);
+                m_LastRequest = DateTime.Now;
+
+                foreach (var logEntry in currentList.Where(x => x.IsInLogFile == false))
                 {
-                    if (logEntry.IsInLogFile) continue;
+                    if (logEntry.IsInLogFile) continue; //Sicherheitshalber => Sollten jedoch durch WHERE schon gefiltert werden
 
                     var line = string.Empty;
                     try
@@ -185,6 +191,30 @@ namespace DbLogger
                         Console.WriteLine("Error writing Log: " + ex.Message);
                         logEntry.IsInLogFile = false;
                     }
+                }
+
+                try
+                {
+                    if (m_LastRequest < DateTime.Now.AddMinutes(-15))
+                    {
+                        var removeItemList = new List<LogData>();
+                        foreach (var item in currentList.Where(x => x.IsInLogFile == true))
+                            removeItemList.Add(item);
+
+                        foreach (var item in removeItemList)
+                            m_LogDataList.Remove(item);
+
+                        GC.Collect();
+                    }
+                }
+                catch(Exception ex)
+                {
+                    WriteError(new LogData
+                    {
+                        Source = ToString(),
+                        FunctionName = "WriteToFile",
+                        Ex = ex,
+                    });
                 }
             }
             catch(Exception ex)
