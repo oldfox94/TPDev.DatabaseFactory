@@ -206,7 +206,7 @@ namespace DbLogger
                     {
                         if (tryCnt > 25)
                         {
-                            Console.WriteLine("WriteAync: TryCnt reached! => Abort!");
+                            Console.WriteLine($"Source: {ToString()}{Environment.NewLine}Message: WriteAync: TryCnt reached! => Abort!");
                             return;
                         }
 
@@ -224,7 +224,7 @@ namespace DbLogger
                 }
                 catch(Exception ex)
                 {
-                    Console.WriteLine("Error writing Log: " + ex.Message);
+                    Console.WriteLine($"Source: {ToString()}{Environment.NewLine}Message: Error writing Log: {ex.Message}");
                 }
             });           
         }

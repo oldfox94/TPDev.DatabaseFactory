@@ -49,12 +49,14 @@ namespace SQLLibrary.Operations
         public int ExecuteNonQuery(List<string> sqlList)
         {
             int rowsUpdated = 0;
+            var currentSql = string.Empty;
             try
             {
                 var con = CONNECTION.OpenCon();
 
                 foreach (var sql in sqlList)
                 {
+                    currentSql = sql;
                     var cmd = new SqlCommand(sql, con);
                     var cmdResult = cmd.ExecuteNonQuery();
                     if (cmdResult == -2) return -2;
@@ -71,6 +73,7 @@ namespace SQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "ExecuteNonQuery Error!",
+                    AdditionalMessage = $"SQL: {currentSql}",
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("ExecuteNonQuery Error!", ex);
@@ -100,8 +103,8 @@ namespace SQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "ExecuteScalar Error!",
-                    Ex = ex,
                     AdditionalMessage = $"SQL: {sql}",
+                    Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("ExecuteScalar Error!", ex);
                 return null;
@@ -145,8 +148,8 @@ namespace SQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "ExecuteReadTable Error!",
-                    Ex = ex,
                     AdditionalMessage = $"SQL: {sql}",
+                    Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("ExecuteReadTable Error!", ex);
                 return null;
@@ -178,8 +181,8 @@ namespace SQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "ExecuteReadTableSchema Error!",
-                    Ex = ex,
                     AdditionalMessage = $"SQL: {sql}",
+                    Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("ExecuteReadTableSchema Error!", ex);
                 return null;
@@ -190,6 +193,7 @@ namespace SQLLibrary.Operations
 
         public string ExecuteReadTableName(string columnName)
         {
+            var currentSql = string.Empty;
             try
             {
                 var dt = new DataTable();
@@ -197,6 +201,7 @@ namespace SQLLibrary.Operations
 
                 var con = CONNECTION.OpenCon();
 
+                currentSql = sql;
                 var cmd = new SqlCommand(sql, con);
                 var reader = cmd.ExecuteReader();
 
@@ -215,6 +220,7 @@ namespace SQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "ExecuteReadTableName Error!",
+                    AdditionalMessage = $"SQL: {currentSql}",
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("ExecuteReadTableName Error!", ex);

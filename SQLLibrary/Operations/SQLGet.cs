@@ -18,11 +18,13 @@ namespace SQLLibrary.Operations
 
         public DataSet GetDataSet(List<string> tblSqlDict, string dataSetName)
         {
+            var currentSql = string.Empty;
             var ds = new DataSet(dataSetName);
             try
             {
                 foreach (var item in tblSqlDict)
                 {
+                    currentSql = item;
                     var tbl = GetTable(item);
                     ds.Tables.Add(tbl);
                 }
@@ -33,6 +35,7 @@ namespace SQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "GetDataSet Error!",
+                    AdditionalMessage = $"SQL: {currentSql}",
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("GetDataSet Error!", ex);
@@ -55,6 +58,7 @@ namespace SQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "GetRow Error!",
+                    AdditionalMessage = $"SQL: {sql}",
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("GetRow Error!", ex);
@@ -64,12 +68,13 @@ namespace SQLLibrary.Operations
 
         public DataRow GetRow(string tableName, string where = null, string orderBy = null)
         {
+            var currentSql = string.Empty;
             try
             {
                 var whereCond = ConvertionHelper.GetWhere(where);
                 var orderCnd = ConvertionHelper.GetOrderBy(orderBy);
 
-                var sql = string.Format(@"SELECT * FROM {0} {1} {2}", tableName, whereCond, orderCnd);
+                var sql = currentSql = string.Format(@"SELECT * FROM {0} {1} {2}", tableName, whereCond, orderCnd);
                 return GetRow(sql);
             }
             catch (Exception ex)
@@ -78,6 +83,7 @@ namespace SQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "GetRow Error!",
+                    AdditionalMessage = $"SQL: {currentSql}",
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("GetRow Error!", ex);
@@ -100,6 +106,7 @@ namespace SQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "GetTable Error!",
+                    AdditionalMessage = $"SQL: {sql}",
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("GetTable Error!", ex);
@@ -110,13 +117,14 @@ namespace SQLLibrary.Operations
 
         public DataTable GetTable(string tableName, string where = null, string orderBy = null)
         {
+            var currentSql = string.Empty;
             var dt = new DataTable(tableName);
             try
             {
                 var whereCond = ConvertionHelper.GetWhere(where);
                 var orderCond = ConvertionHelper.GetOrderBy(orderBy);
 
-                var sql = string.Format(@"SELECT * FROM {0} {1} {2}", tableName, whereCond, orderCond);
+                var sql = currentSql = string.Format(@"SELECT * FROM {0} {1} {2}", tableName, whereCond, orderCond);
                 dt = GetTable(sql);
             }
             catch (Exception ex)
@@ -125,6 +133,7 @@ namespace SQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "GetTable Error!",
+                    AdditionalMessage = $"SQL: {currentSql}",
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("GetTable Error!", ex);
@@ -135,10 +144,11 @@ namespace SQLLibrary.Operations
 
         public DataTable GetTableSchema(string tableName)
         {
+            var currentSql = string.Empty;
             DataTable schemaTbl = new DataTable();
             try
             {
-                var sql = string.Format("SELECT * FROM {0}", tableName);
+                var sql = currentSql = string.Format("SELECT * FROM {0}", tableName);
                 schemaTbl = m_Execute.ExecuteReadTableSchema(sql);
 
                 SLLog.WriteInfo("GetTableSchema", "Getting Schema Table successfully!", true);
@@ -149,6 +159,7 @@ namespace SQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "GetTableSchema Error!",
+                    AdditionalMessage = $"SQL: {currentSql}",
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("GetTableSchema Error!", ex);
@@ -159,12 +170,13 @@ namespace SQLLibrary.Operations
 
         public string GetValueFromColumn(string tableName, string columnName, string where)
         {
+            var currentSql = string.Empty;
             var resultStr = string.Empty;
             try
             {
                 var whereCnd = ConvertionHelper.GetWhere(where);
 
-                var sql = string.Format(@"SELECT {1} FROM {0} {2}", tableName, columnName, whereCnd);
+                var sql = currentSql = string.Format(@"SELECT {1} FROM {0} {2}", tableName, columnName, whereCnd);
 
                 var tbl = GetTable(sql);
                 if (tbl.Rows.Count <= 0) return resultStr;
@@ -177,6 +189,7 @@ namespace SQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "GetValueFromColumn Error!",
+                    AdditionalMessage = $"SQL: {currentSql}",
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("GetValueFromColumn Error!", ex);
@@ -206,12 +219,13 @@ namespace SQLLibrary.Operations
 
         public string GetLastSortOrder(string tableName, string sortOrderColName, string where = null)
         {
+            var currentSql = string.Empty;
             var result = "0";
             try
             {
                 var whereCnd = ConvertionHelper.GetWhere(where);
 
-                var sql = string.Format(@"SELECT {0} FROM {1} {2} ORDER BY CAST({0} AS INTEGER) DESC", sortOrderColName, tableName, whereCnd);
+                var sql = currentSql = string.Format(@"SELECT {0} FROM {1} {2} ORDER BY CAST({0} AS INTEGER) DESC", sortOrderColName, tableName, whereCnd);
                 var tbl = GetTable(sql);
 
                 if (tbl.Rows.Count <= 0) return result;
@@ -225,6 +239,7 @@ namespace SQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "GetLastSortOrder Error!",
+                    AdditionalMessage = $"SQL: {currentSql}",
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("GetLastSortOrder Error!", ex);

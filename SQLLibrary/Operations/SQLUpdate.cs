@@ -46,11 +46,12 @@ namespace SQLLibrary.Operations
 
         public bool UpdateOneValue(string tableName, string column, string value, string where)
         {
+            var currentSql = string.Empty;
             try
             {
                 var whereCnd = ConvertionHelper.GetWhere(where);
 
-                var sql = string.Format(@"UPDATE {0} SET {1} = '{2}', {3} = '{4}' {5}",
+                var sql = currentSql = string.Format(@"UPDATE {0} SET {1} = '{2}', {3} = '{4}' {5}",
                             tableName, column, ConvertionHelper.CleanStringForSQL(value), DbCIC.ModifyOn, DateTime.Now.ToString(), whereCnd);
                 var result = m_Execute.ExecuteNonQuery(sql);
 
@@ -63,6 +64,7 @@ namespace SQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "UpdateOneValue Error!",
+                    AdditionalMessage = $"SQL: {currentSql}",
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("UpdateOneValue Error!", ex);
@@ -114,7 +116,7 @@ namespace SQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "UpdateTable DBConcurrencyError!",
-                    Ex = cex,
+                    Ex = cex.InnerException != null ? cex.InnerException : cex,
                 });
                 if (Settings.ThrowExceptions) throw new DBConcurrencyException("UpdateTable Error!", cex);
                 return false;
