@@ -151,14 +151,13 @@ namespace DbLogger
             return string.Empty;
         }
 
-        private DateTime m_LastRequest { get; set; }
+        private DateTime m_LastCleanUp { get; set; }
         private void WriteToFile()
         {
             try
             {
                 var currentList = new List<LogData>();
                 currentList.AddRange(m_LogDataList);
-                m_LastRequest = DateTime.Now;
 
                 foreach (var logEntry in currentList.Where(x => x.IsInLogFile == false))
                 {
@@ -195,8 +194,10 @@ namespace DbLogger
 
                 try
                 {
-                    if (m_LastRequest < DateTime.Now.AddMinutes(-15))
+                    if (m_LastCleanUp < DateTime.Now.AddMinutes(-15))
                     {
+                        m_LastCleanUp = DateTime.Now;
+
                         var removeItemList = new List<LogData>();
                         foreach (var item in currentList.Where(x => x.IsInLogFile == true))
                             removeItemList.Add(item);
