@@ -21,6 +21,8 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.ColumnSpan="4" Orientation="Horizontal">
+            <Button Content="Create Database" MaxWidth="120" Click="OnCreateDbClick"/>
+            <Button Content="Renew Database" MaxWidth="120" Click="OnRenewDbClick"/>
             <Button Content="Create Sample Table" MaxWidth="120" Click="OnCreateSampleTableClick"/>
             <Button Content="Get Table" MaxWidth="120" Click="OnGetTableClick"/>
             <Button Content="Update with DataSet" MaxHeight="120" Click="OnUpdateWithDataSetClick"/>

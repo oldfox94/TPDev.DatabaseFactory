@@ -19,41 +19,42 @@ namespace TestApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        DbConnectionData m_connectionData;
         DbFactory m_dbFactory { get; set; }
         public MainWindow()
         {
             InitializeComponent();
 
-            var connectionData = new DbConnectionData();
+            m_connectionData = new DbConnectionData();
 
             //SQL
-            connectionData.ServerName = "localhost";
-            connectionData.Name = "";
-            connectionData.User = "";
-            connectionData.Password = "";
-            connectionData.Instance = ""; //Leave empty for default Instance
-            //m_dbFactory = new DbFactory(DbType.SQL, connectionData); //Uncomment for SQL
+            m_connectionData.ServerName = "";
+            m_connectionData.Name = "TestDb";
+            m_connectionData.User = "";
+            m_connectionData.Password = "";
+            m_connectionData.Instance = ""; //Leave empty for default Instance
+            m_dbFactory = new DbFactory(DbType.SQL, m_connectionData); //Uncomment for SQL
 
-            //SQLite
-            connectionData.Path = Environment.CurrentDirectory;
-            connectionData.Name = "D_TestApp.db";
-            //m_dbFactory = new DbFactory(DbType.SQLite, connectionData); //Uncomment for SQLite
+            ////SQLite
+            //m_connectionData.Path = Environment.CurrentDirectory;
+            //m_connectionData.Name = "D_TestApp.db";
+            //m_dbFactory = new DbFactory(DbType.SQLite, m_connectionData); //Uncomment for SQLite
 
-            //MySQL
-            connectionData.ServerName = "";
-            connectionData.Port = "";
-            connectionData.Name = "";
-            connectionData.User = "";
-            connectionData.Password = "";
-            //m_dbFactory = new DbFactory(DbType.MySQL, connectionData); //Uncomment for MySQL
+            ////MySQL
+            //m_connectionData.ServerName = "";
+            //m_connectionData.Port = "";
+            //m_connectionData.Name = "";
+            //m_connectionData.User = "";
+            //m_connectionData.Password = "";
+            //m_dbFactory = new DbFactory(DbType.MySQL, m_connectionData); //Uncomment for MySQL
 
-            //Oracle
-            connectionData.ServerName = "";
-            connectionData.Port = "";
-            connectionData.Name = "";
-            connectionData.User = "";
-            connectionData.Password = "";
-            //m_dbFactory = new DbFactory(DbType.Oracle, connectionData); //Uncomment for Oracle
+            ////Oracle
+            //m_connectionData.ServerName = "";
+            //m_connectionData.Port = "";
+            //m_connectionData.Name = "";
+            //m_connectionData.User = "";
+            //m_connectionData.Password = "";
+            //m_dbFactory = new DbFactory(DbType.Oracle, m_connectionData); //Uncomment for Oracle
 
             #region Init Logger
             m_dbFactory.InitLogger("DbFactoryLog", debugLevel: DebugLevelConstants.VeryHigh);
@@ -100,13 +101,32 @@ namespace TestApp
             });
         }
 
+        private void CreateDatabase()
+        {
+            if (!m_dbFactory.Check.DatabaseExists(m_connectionData.Name))
+            {
+                m_dbFactory.Insert.CreateDatabase(m_connectionData.Name);
+            }
+        }
+
         private void CreateTable()
         {
+            CreateDatabase();
+
             var tbl1Columns = GetSampleTable1Columns();
             m_dbFactory.Insert.CreateTable("TestTbl", tbl1Columns);
 
             var tbl2Columns = GetSampleTable2Columns();
             m_dbFactory.Insert.CreateTable("TestTbl2", tbl2Columns);
+        }
+
+        private void RenewDatabase()
+        {
+            var tbl1Columns = GetSampleTable1Columns();
+            m_dbFactory.Execute.RenewTbl("TestTbl", tbl1Columns);
+
+            var tbl2Columns = GetSampleTable2Columns();
+            m_dbFactory.Execute.RenewTbl("TestTbl2", tbl2Columns);
         }
 
         private List<ColumnData> GetSampleTable1Columns()
@@ -130,6 +150,17 @@ namespace TestApp
             colList.Add(new ColumnData { Name = "Text", Type = DbDEF.TxtNull });
 
             return colList;
+        }
+
+
+        private void OnCreateDbClick(object sender, RoutedEventArgs e)
+        {
+            CreateDatabase();
+        }
+
+        private void OnRenewDbClick(object sender, RoutedEventArgs e)
+        {
+            RenewDatabase();
         }
 
         private void OnCreateSampleTableClick(object sender, RoutedEventArgs e)
