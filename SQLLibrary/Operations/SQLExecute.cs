@@ -228,7 +228,7 @@ namespace SQLLibrary.Operations
             }
         }
 
-        public bool RenewTbl(string tableName, List<ColumnData> columns)
+        public bool RenewTbl(string tableName, List<ColumnData> columns, bool cleanUpAfterRenew = false)
         {
             try
             {
@@ -260,6 +260,7 @@ namespace SQLLibrary.Operations
                 insertSQL += string.Format("SELECT {2} FROM {0}_OLD{1}", tableName, timeStamp, ColumnHelper.GetColumnString(columns));
                 scriptList.Add(insertSQL);
 
+                if (cleanUpAfterRenew) scriptList.Add($"DROP TABLE {tableName}_OLD{timeStamp}");
 
                 var exResult = ExecuteNonQuery(scriptList);
                 if (exResult == -2)
@@ -280,7 +281,7 @@ namespace SQLLibrary.Operations
             }
         }
 
-        public bool RenewTbl(string tableName, Dictionary<string, string> columns)
+        public bool RenewTbl(string tableName, Dictionary<string, string> columns, bool cleanUpAfterRenew = false)
         {
             try
             {
@@ -299,7 +300,7 @@ namespace SQLLibrary.Operations
                     colList.Add(colData);
                 }
 
-                return RenewTbl(tableName, colList);
+                return RenewTbl(tableName, colList, cleanUpAfterRenew);
             }
             catch (Exception ex)
             {
