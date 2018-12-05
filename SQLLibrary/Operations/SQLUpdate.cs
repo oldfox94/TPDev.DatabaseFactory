@@ -18,14 +18,14 @@ namespace SQLLibrary.Operations
             m_Execute = new SQLExecute();
         }
 
-        public bool UpdateDataSet(DataSet dataSet, bool setInsertOn = true, bool setModifyOn = true)
+        public bool UpdateDataSet(DataSet dataSet, bool setInsertOn = true, bool setModifyOn = true, string additionalMessage = "")
         {
             try
             {
                 var result = false;
                 foreach (DataTable tbl in dataSet.Tables)
                 {
-                    result = UpdateTable(tbl, setInsertOn, setModifyOn);
+                    result = UpdateTable(tbl, setInsertOn, setModifyOn, additionalMessage);
                     if (!result) return result;
                 }
 
@@ -37,6 +37,7 @@ namespace SQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "UpdateDataSet Error!",
+                    AdditionalMessage = additionalMessage,
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("UpdateDataSet Error!", ex);
@@ -44,7 +45,7 @@ namespace SQLLibrary.Operations
             }
         }
 
-        public bool UpdateOneValue(string tableName, string column, string value, string where)
+        public bool UpdateOneValue(string tableName, string column, string value, string where, string additionalMessage = "")
         {
             var currentSql = string.Empty;
             try
@@ -64,7 +65,7 @@ namespace SQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "UpdateOneValue Error!",
-                    AdditionalMessage = $"SQL: {currentSql}",
+                    AdditionalMessage = $"SQL: {currentSql}{Environment.NewLine}AdditionalMessage: {additionalMessage}",
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("UpdateOneValue Error!", ex);
@@ -72,12 +73,12 @@ namespace SQLLibrary.Operations
             }
         }
 
-        public bool UpdateTable(DataTable table, bool setInsertOn = true, bool setModifyOn = true)
+        public bool UpdateTable(DataTable table, bool setInsertOn = true, bool setModifyOn = true, string additionalMessage = "")
         {
             try
             {
                 var tableName = table.TableName;
-                return UpdateTable(table, tableName, setInsertOn, setModifyOn);
+                return UpdateTable(table, tableName, setInsertOn, setModifyOn, additionalMessage);
             }
             catch (Exception ex)
             {
@@ -85,6 +86,7 @@ namespace SQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "UpdateTable Error!",
+                    AdditionalMessage = additionalMessage,
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("UpdateTable Error!", ex);
@@ -92,7 +94,7 @@ namespace SQLLibrary.Operations
             }
         }
 
-        public bool UpdateTable(DataTable table, string tableName, bool setInsertOn = true, bool setModifyOn = true)
+        public bool UpdateTable(DataTable table, string tableName, bool setInsertOn = true, bool setModifyOn = true, string additionalMessage = "")
         {
             try
             {
@@ -116,6 +118,7 @@ namespace SQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "UpdateTable DBConcurrencyError!",
+                    AdditionalMessage = $"Table: {tableName}{Environment.NewLine}AdditionalMessage: {additionalMessage}",
                     Ex = cex.InnerException != null ? cex.InnerException : cex,
                 });
                 if (Settings.ThrowExceptions) throw new DBConcurrencyException("UpdateTable Error!", cex);
@@ -127,6 +130,7 @@ namespace SQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "UpdateTable Error!",
+                    AdditionalMessage = $"Table: {tableName}{Environment.NewLine}AdditionalMessage: {additionalMessage}",
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("UpdateTable Error!", ex);
@@ -134,14 +138,14 @@ namespace SQLLibrary.Operations
             }
         }
 
-        public bool UpdateTables(List<DataTable> tableList, bool setInsertOn = true, bool setModifyOn = true)
+        public bool UpdateTables(List<DataTable> tableList, bool setInsertOn = true, bool setModifyOn = true, string additionalMessage = "")
         {
             try
             {
                 var result = false;
                 foreach (DataTable tbl in tableList)
                 {
-                    result = UpdateTable(tbl, setInsertOn, setModifyOn);
+                    result = UpdateTable(tbl, setInsertOn, setModifyOn, additionalMessage);
                     if (!result) return result;
                 }
 
@@ -153,6 +157,7 @@ namespace SQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "UpdateTables Error!",
+                    AdditionalMessage = additionalMessage,
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("UpdateTables Error!", ex);

@@ -18,7 +18,7 @@ namespace SQLiteLibrary.Operations
             m_Execute = new SQLiteExecute();
         }
 
-        public bool UpdateDataSet(DataSet dataSet, bool setInsertOn = true, bool setModifyOn = true)
+        public bool UpdateDataSet(DataSet dataSet, bool setInsertOn = true, bool setModifyOn = true, string additionalMessage = "")
         {
             try
             {
@@ -39,12 +39,13 @@ namespace SQLiteLibrary.Operations
                 }
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 SLLog.WriteError(new LogData
                 {
                     Source = ToString(),
                     FunctionName = "UpdateDataSet Error!",
+                    AdditionalMessage = additionalMessage,
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("UpdateDataSet Error!", ex);
@@ -52,7 +53,7 @@ namespace SQLiteLibrary.Operations
             }
         }
 
-        public bool UpdateOneValue(string tableName, string column, string value, string where)
+        public bool UpdateOneValue(string tableName, string column, string value, string where, string additionalMessage = "")
         {
             try
             {
@@ -65,12 +66,13 @@ namespace SQLiteLibrary.Operations
                 if (result == -2) return false;
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 SLLog.WriteError(new LogData
                 {
                     Source = ToString(),
                     FunctionName = "UpdateOneValue Error!",
+                    AdditionalMessage = additionalMessage,
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("UpdateOneValue Error!", ex);
@@ -78,19 +80,20 @@ namespace SQLiteLibrary.Operations
             }
         }
 
-        public bool UpdateTable(DataTable table, bool setInsertOn = true, bool setModifyOn = true)
+        public bool UpdateTable(DataTable table, bool setInsertOn = true, bool setModifyOn = true, string additionalMessage = "")
         {
             try
             {
                 var tableName = table.TableName;
-                return UpdateTable(table, tableName, setInsertOn, setModifyOn);
+                return UpdateTable(table, tableName, setInsertOn, setModifyOn, additionalMessage);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 SLLog.WriteError(new LogData
                 {
                     Source = ToString(),
                     FunctionName = "UpdateTable Error!",
+                    AdditionalMessage = additionalMessage,
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("UpdateTable Error!", ex);
@@ -98,7 +101,7 @@ namespace SQLiteLibrary.Operations
             }
         }
 
-        public bool UpdateTable(DataTable table, string tableName, bool setInsertOn = true, bool setModifyOn = true)
+        public bool UpdateTable(DataTable table, string tableName, bool setInsertOn = true, bool setModifyOn = true, string additionalMessage = "")
         {
             try
             {
@@ -124,17 +127,19 @@ namespace SQLiteLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "UpdateTable DBConcurrencyError!",
+                    AdditionalMessage = $"Table: {tableName}{Environment.NewLine}AdditionalMessage: {additionalMessage}",
                     Ex = cex,
                 });
                 if (Settings.ThrowExceptions) throw new DBConcurrencyException("UpdateTable Error!", cex);
                 return false;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 SLLog.WriteError(new LogData
                 {
                     Source = ToString(),
                     FunctionName = "UpdateTable Error!",
+                    AdditionalMessage = $"Table: {tableName}{Environment.NewLine}AdditionalMessage: {additionalMessage}",
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("UpdateTable Error!", ex);
@@ -142,25 +147,26 @@ namespace SQLiteLibrary.Operations
             }
         }
 
-        public bool UpdateTables(List<DataTable> tableList, bool setInsertOn = true, bool setModifyOn = true)
+        public bool UpdateTables(List<DataTable> tableList, bool setInsertOn = true, bool setModifyOn = true, string additionalMessage = "")
         {
             try
             {
                 var result = false;
-                foreach(DataTable tbl in tableList)
+                foreach (DataTable tbl in tableList)
                 {
-                    result = UpdateTable(tbl, setInsertOn, setModifyOn);
+                    result = UpdateTable(tbl, setInsertOn, setModifyOn, additionalMessage);
                     if (!result) return result;
                 }
 
                 return result;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 SLLog.WriteError(new LogData
                 {
                     Source = ToString(),
                     FunctionName = "UpdateTables Error!",
+                    AdditionalMessage = additionalMessage,
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("UpdateTables Error!", ex);
