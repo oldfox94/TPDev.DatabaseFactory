@@ -7,6 +7,8 @@
         public static bool OnlyConsoleOutput { get; set; }
         public static int DebugLevel { get; set; }
 
+        public static int MaxLogFileSize { get; set; }
+
         // Do this when you start your application
         public static int mainThreadId;
         // If called in the non main thread, will return false;

@@ -13,13 +13,15 @@ namespace DbLogger
     public class DbLogger
     {
         private List<LogData> m_LogDataList { get; set; }
-        public DbLogger(string logPath, string logFileName, string logId = "NoId", int debugLevel = DebugLevelConstants.Medium, bool onlyConsoleOutput = false)
+        public DbLogger(string logPath, string logFileName, string logId = "NoId", int debugLevel = DebugLevelConstants.Medium,
+                        bool onlyConsoleOutput = false, int maxLogMBSize = 10)
         {
             m_LogDataList = new List<LogData>();
 
             Settings.mainThreadId = Thread.CurrentThread.ManagedThreadId;
             Settings.LogId = logId;
             Settings.DebugLevel = debugLevel;
+            Settings.MaxLogFileSize = maxLogMBSize;
 
             Settings.LogFile = Path.Combine(logPath, logFileName + ".log");
             if(!Directory.Exists(logPath))
@@ -228,6 +230,8 @@ namespace DbLogger
         private void WriteAsync(string path, string line)
         {
             if (Settings.OnlyConsoleOutput) return;
+            CheckAndRenameLog();
+
             Task.Run(() =>
             {
                 try
@@ -258,6 +262,32 @@ namespace DbLogger
                     Console.WriteLine($"Source: {ToString()}{Environment.NewLine}Message: Error writing Log: {ex.Message}");
                 }
             });           
+        }
+
+        private void CheckAndRenameLog()
+        {
+            try
+            {
+                if (Settings.MaxLogFileSize == 0) Settings.MaxLogFileSize = 10; //10MB
+                var fi = new FileInfo(Settings.LogFile);
+                var maxSizeInBytes = Settings.MaxLogFileSize * 1024 * 1024; //Multiple to MB
+                if (fi.Length >= Settings.MaxLogFileSize)
+                {
+                    var dt = DateTime.Now;
+                    var timestamp = $"{dt.Year}{dt.Month}{dt.Day}-{dt.Hour}{dt.Minute}";
+                    File.Move(Settings.LogFile, $"{Settings.LogFile}_{timestamp}");
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Source: {ToString()}{Environment.NewLine}Message: Error CheckAndRenameLog Log: {ex.Message}");
+                WriteError(new LogData
+                {
+                    Source = ToString(),
+                    FunctionName = "CheckAndRenameLog",
+                    Ex = ex,
+                });
+            }
         }
 
         private void WriteEventLog(string message)
