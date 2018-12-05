@@ -271,11 +271,23 @@ namespace DbLogger
                 if (Settings.MaxLogFileSize == 0) Settings.MaxLogFileSize = 10; //10MB
                 var fi = new FileInfo(Settings.LogFile);
                 var maxSizeInBytes = Settings.MaxLogFileSize * 1024 * 1024; //Multiple to MB
-                if (fi.Length >= Settings.MaxLogFileSize)
+                if (fi.Length >= maxSizeInBytes)
                 {
                     var dt = DateTime.Now;
                     var timestamp = $"{dt.Year}{dt.Month}{dt.Day}-{dt.Hour}{dt.Minute}";
-                    File.Move(Settings.LogFile, $"{Settings.LogFile}_{timestamp}");
+                    var destFileName = $"{fi.Name.Replace(fi.Extension, "")}_{timestamp}.log";
+                    if (File.Exists(Path.Combine(fi.Directory.FullName, destFileName)))
+                        File.Delete(Path.Combine(fi.Directory.FullName, destFileName));
+
+                    if (!File.Exists(Path.Combine(fi.Directory.FullName, destFileName)))
+                        File.Move(Settings.LogFile, destFileName);
+                    else
+                        WriteWarnng(new LogData
+                        {
+                            FunctionName = "CheckAndRenameLog",
+                            Source = ToString(),
+                            Message = $"Date '{destFileName}' konnte nicht erstellt werden!",
+                        });
                 }
             }
             catch(Exception ex)
