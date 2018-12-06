@@ -268,6 +268,8 @@ namespace DbLogger
         {
             try
             {
+                if (!File.Exists(Settings.LogFile)) return;
+
                 if (Settings.MaxLogFileSize == 0) Settings.MaxLogFileSize = 10; //10MB
                 var fi = new FileInfo(Settings.LogFile);
                 var maxSizeInBytes = Settings.MaxLogFileSize * 1024 * 1024; //Multiple to MB
