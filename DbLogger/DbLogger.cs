@@ -282,7 +282,7 @@ namespace DbLogger
                         File.Delete(Path.Combine(fi.Directory.FullName, destFileName));
 
                     if (!File.Exists(Path.Combine(fi.Directory.FullName, destFileName)))
-                        File.Move(Settings.LogFile, destFileName);
+                        File.Move(Settings.LogFile, Path.Combine(fi.Directory.FullName, destFileName));
                     else
                         WriteWarnng(new LogData
                         {
