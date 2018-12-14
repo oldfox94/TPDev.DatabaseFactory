@@ -80,6 +80,18 @@ namespace SQLLibrary.Operations
                 var tableName = table.TableName;
                 return UpdateTable(table, tableName, setInsertOn, setModifyOn, additionalMessage);
             }
+            catch (DBConcurrencyException cex)
+            {
+                SLLog.WriteError(new LogData
+                {
+                    Source = ToString(),
+                    FunctionName = "UpdateTable DBConcurrencyError!",
+                    AdditionalMessage = additionalMessage,
+                    Ex = cex.InnerException != null ? cex.InnerException : cex,
+                });
+                if (Settings.ThrowExceptions) throw new DBConcurrencyException("UpdateTable Error!", cex);
+                return false;
+            }
             catch (Exception ex)
             {
                 SLLog.WriteError(new LogData
