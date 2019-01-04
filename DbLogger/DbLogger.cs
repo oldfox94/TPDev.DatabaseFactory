@@ -1,10 +1,9 @@
 ﻿using DbLogger.Events;
 using DbLogger.Models;
 using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,11 +11,11 @@ namespace DbLogger
 {
     public class DbLogger
     {
-        private List<LogData> m_LogDataList { get; set; }
+        private ConcurrentQueue<LogData> m_LogDataList { get; set; }
         public DbLogger(string logPath, string logFileName, string logId = "NoId", int debugLevel = DebugLevelConstants.Medium,
                         bool onlyConsoleOutput = false, int maxLogMBSize = 10)
         {
-            m_LogDataList = new List<LogData>();
+            m_LogDataList = new ConcurrentQueue<LogData>();
 
             Settings.mainThreadId = Thread.CurrentThread.ManagedThreadId;
             Settings.LogId = logId;
@@ -51,7 +50,7 @@ namespace DbLogger
             CreateBallonTipp(data);
             if (!onlyToolTipp)
             {
-                m_LogDataList.Add(data);
+                m_LogDataList.Enqueue(data);
                 LogToFile();
             }
             return data;
@@ -67,7 +66,7 @@ namespace DbLogger
 
             if (onlyReturnLogData) return data;
 
-            m_LogDataList.Add(data);
+            m_LogDataList.Enqueue(data);
             CreateBallonTipp(data);
 
             LogToFile();
@@ -99,7 +98,7 @@ namespace DbLogger
 
             if (onlyReturnLogData) return data;
 
-            m_LogDataList.Add(data);
+            m_LogDataList.Enqueue(data);
             CreateBallonTipp(data);
 
             LogToFile();
@@ -153,15 +152,16 @@ namespace DbLogger
             return string.Empty;
         }
 
-        private DateTime m_LastCleanUp { get; set; }
+        //private DateTime m_LastCleanUp { get; set; }
         private void WriteToFile()
         {
             try
             {
-                var currentList = new List<LogData>();
-                currentList.AddRange(m_LogDataList);
+                //var currentList = new List<LogData>();
+                //currentList.AddRange(m_LogDataList);
 
-                foreach (var logEntry in currentList.Where(x => x.IsInLogFile == false))
+                LogData logEntry;
+                while(m_LogDataList.TryDequeue(out logEntry))
                 {
                     if (logEntry.IsInLogFile) continue; //Sicherheitshalber => Sollten jedoch durch WHERE schon gefiltert werden
 
@@ -194,35 +194,36 @@ namespace DbLogger
                     }
                 }
 
-                try
-                {
-                    if (m_LastCleanUp < DateTime.Now.AddMinutes(-15))
-                    {
-                        m_LastCleanUp = DateTime.Now;
+                //try
+                //{
+                //    if (m_LastCleanUp < DateTime.Now.AddMinutes(-15))
+                //    {
+                //        m_LastCleanUp = DateTime.Now;
 
-                        var removeItemList = new List<LogData>();
-                        foreach (var item in currentList.Where(x => x.IsInLogFile == true))
-                            removeItemList.Add(item);
+                //        var removeItemList = new List<LogData>();
+                //        foreach (var item in currentList.Where(x => x.IsInLogFile == true))
+                //            removeItemList.Add(item);
 
-                        foreach (var item in removeItemList)
-                            m_LogDataList.Remove(item);
+                //        foreach (var item in removeItemList)
+                //            m_LogDataList.Remove(item);
 
-                        GC.Collect();
-                    }
-                }
-                catch(Exception ex)
-                {
-                    WriteError(new LogData
-                    {
-                        Source = ToString(),
-                        FunctionName = "WriteToFile",
-                        Ex = ex,
-                    });
-                }
+                //        GC.Collect();
+                //    }
+                //}
+                //catch(Exception ex)
+                //{
+                //    WriteError(new LogData
+                //    {
+                //        Source = ToString(),
+                //        FunctionName = "WriteToFile",
+                //        Ex = ex,
+                //    });
+                //}
             }
             catch(Exception ex)
             {
-                Console.WriteLine("Error writing Log: " + ex.Message);
+                WriteConsoleLog("Error writing Log: " + ex.Message);
+                WriteEventLog("Error writing Log: " + ex.Message);
             }
         }
 
