@@ -16,7 +16,7 @@ namespace SQLLibrary.Operations
             m_Execute = new SQLExecute();
         }
 
-        public DataSet GetDataSet(List<string> tblSqlDict, string dataSetName)
+        public DataSet GetDataSet(List<string> tblSqlDict, string dataSetName, string additionalMessage = "")
         {
             var currentSql = string.Empty;
             var ds = new DataSet(dataSetName);
@@ -25,7 +25,7 @@ namespace SQLLibrary.Operations
                 foreach (var item in tblSqlDict)
                 {
                     currentSql = item;
-                    var tbl = GetTable(item);
+                    var tbl = GetTable(item, additionalMessage);
                     ds.Tables.Add(tbl);
                 }
             }
@@ -35,7 +35,7 @@ namespace SQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "GetDataSet Error!",
-                    AdditionalMessage = $"SQL: {currentSql}",
+                    AdditionalMessage = $"SQL: {currentSql}{Environment.NewLine}AdditionalMessage: {additionalMessage}",
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("GetDataSet Error!", ex);
@@ -44,11 +44,11 @@ namespace SQLLibrary.Operations
             return ds;
         }
 
-        public DataRow GetRow(string sql)
+        public DataRow GetRow(string sql, string additionalMessage = "")
         {
             try
             {
-                var tbl = GetTable(sql);
+                var tbl = GetTable(sql, additionalMessage);
                 if (tbl.Rows.Count <= 0) return null;
                 return tbl.Rows[0];
             }
@@ -58,7 +58,7 @@ namespace SQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "GetRow Error!",
-                    AdditionalMessage = $"SQL: {sql}",
+                    AdditionalMessage = $"SQL: {sql}{Environment.NewLine}AdditionalMessage: {additionalMessage}",
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("GetRow Error!", ex);
@@ -66,7 +66,7 @@ namespace SQLLibrary.Operations
             }
         }
 
-        public DataRow GetRow(string tableName, string where = null, string orderBy = null)
+        public DataRow GetRow(string tableName, string where, string orderBy = null, string additionalMessage = "")
         {
             var currentSql = string.Empty;
             try
@@ -75,7 +75,7 @@ namespace SQLLibrary.Operations
                 var orderCnd = ConvertionHelper.GetOrderBy(orderBy);
 
                 var sql = currentSql = string.Format(@"SELECT * FROM {0} {1} {2}", tableName, whereCond, orderCnd);
-                return GetRow(sql);
+                return GetRow(sql, additionalMessage);
             }
             catch (Exception ex)
             {
@@ -83,7 +83,7 @@ namespace SQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "GetRow Error!",
-                    AdditionalMessage = $"SQL: {currentSql}",
+                    AdditionalMessage = $"SQL: {currentSql}{Environment.NewLine}AdditionalMessage: {additionalMessage}",
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("GetRow Error!", ex);
@@ -91,13 +91,12 @@ namespace SQLLibrary.Operations
             }
         }
 
-        public DataTable GetTable(string sql)
+        public DataTable GetTable(string sql, string additionalMessage = "")
         {
             var dt = new DataTable();
             try
             {
                 dt = m_Execute.ExecuteReadTable(sql);
-
                 SLLog.WriteInfo("GetTable", "Getting Table successfully!", true);
             }
             catch (Exception ex)
@@ -106,7 +105,7 @@ namespace SQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "GetTable Error!",
-                    AdditionalMessage = $"SQL: {sql}",
+                    AdditionalMessage = $"SQL: {sql}{Environment.NewLine}AdditionalMessage: {additionalMessage}",
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("GetTable Error!", ex);
@@ -115,7 +114,7 @@ namespace SQLLibrary.Operations
             return dt;
         }
 
-        public DataTable GetTable(string tableName, string where = null, string orderBy = null)
+        public DataTable GetTable(string tableName, string where, string orderBy = null, string additionalMessage = "")
         {
             var currentSql = string.Empty;
             var dt = new DataTable(tableName);
@@ -125,7 +124,7 @@ namespace SQLLibrary.Operations
                 var orderCond = ConvertionHelper.GetOrderBy(orderBy);
 
                 var sql = currentSql = string.Format(@"SELECT * FROM {0} {1} {2}", tableName, whereCond, orderCond);
-                dt = GetTable(sql);
+                dt = GetTable(sql, additionalMessage);
             }
             catch (Exception ex)
             {
@@ -133,7 +132,7 @@ namespace SQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "GetTable Error!",
-                    AdditionalMessage = $"SQL: {currentSql}",
+                    AdditionalMessage = $"SQL: {currentSql}{Environment.NewLine}AdditionalMessage: {additionalMessage}",
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("GetTable Error!", ex);
@@ -142,7 +141,7 @@ namespace SQLLibrary.Operations
             return dt;
         }
 
-        public DataTable GetTableSchema(string tableName)
+        public DataTable GetTableSchema(string tableName, string additionalMessage = "")
         {
             var currentSql = string.Empty;
             DataTable schemaTbl = new DataTable();
@@ -159,7 +158,7 @@ namespace SQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "GetTableSchema Error!",
-                    AdditionalMessage = $"SQL: {currentSql}",
+                    AdditionalMessage = $"SQL: {currentSql}{Environment.NewLine}AdditionalMessage: {additionalMessage}",
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("GetTableSchema Error!", ex);
@@ -168,7 +167,7 @@ namespace SQLLibrary.Operations
             return schemaTbl;
         }
 
-        public string GetValueFromColumn(string tableName, string columnName, string where)
+        public string GetValueFromColumn(string tableName, string columnName, string where, string additionalMessage = "")
         {
             var currentSql = string.Empty;
             var resultStr = string.Empty;
@@ -178,7 +177,7 @@ namespace SQLLibrary.Operations
 
                 var sql = currentSql = string.Format(@"SELECT {1} FROM {0} {2}", tableName, columnName, whereCnd);
 
-                var tbl = GetTable(sql);
+                var tbl = GetTable(sql, additionalMessage);
                 if (tbl.Rows.Count <= 0) return resultStr;
 
                 resultStr = tbl.Rows[0][columnName].ToString();
@@ -189,7 +188,7 @@ namespace SQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "GetValueFromColumn Error!",
-                    AdditionalMessage = $"SQL: {currentSql}",
+                    AdditionalMessage = $"SQL: {currentSql}{Environment.NewLine}AdditionalMessage: {additionalMessage}",
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("GetValueFromColumn Error!", ex);
@@ -198,7 +197,7 @@ namespace SQLLibrary.Operations
             return resultStr;
         }
 
-        public string GetTableNameFromColumn(string columnName)
+        public string GetTableNameFromColumn(string columnName, string additionalMessage = "")
         {
             try
             {
@@ -210,6 +209,7 @@ namespace SQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "GetTableNameFromColumn Error!",
+                    AdditionalMessage = $"AdditionalMessage: {additionalMessage}",
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("GetTableNameFromColumn Error!", ex);
@@ -217,7 +217,7 @@ namespace SQLLibrary.Operations
             }
         }
 
-        public string GetLastSortOrder(string tableName, string sortOrderColName, string where = null)
+        public string GetLastSortOrder(string tableName, string sortOrderColName, string where = null, string additionalMessage = "")
         {
             var currentSql = string.Empty;
             var result = "0";
@@ -226,7 +226,7 @@ namespace SQLLibrary.Operations
                 var whereCnd = ConvertionHelper.GetWhere(where);
 
                 var sql = currentSql = string.Format(@"SELECT {0} FROM {1} {2} ORDER BY CAST({0} AS INTEGER) DESC", sortOrderColName, tableName, whereCnd);
-                var tbl = GetTable(sql);
+                var tbl = GetTable(sql, additionalMessage);
 
                 if (tbl.Rows.Count <= 0) return result;
                 result = string.IsNullOrEmpty(tbl.Rows[0][sortOrderColName].ToString()) ? "0" : tbl.Rows[0][sortOrderColName].ToString();
@@ -239,7 +239,7 @@ namespace SQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "GetLastSortOrder Error!",
-                    AdditionalMessage = $"SQL: {currentSql}",
+                    AdditionalMessage = $"SQL: {currentSql}{Environment.NewLine}AdditionalMessage: {additionalMessage}",
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("GetLastSortOrder Error!", ex);
@@ -248,12 +248,12 @@ namespace SQLLibrary.Operations
             return result;
         }
 
-        public string GetNextSortOrder(string tableName, string sortOrderColName, string where = null)
+        public string GetNextSortOrder(string tableName, string sortOrderColName, string where = null, string additionalMessage = "")
         {
             var lstSortOrder = string.Empty;
             try
             {
-                var result = GetLastSortOrder(tableName, sortOrderColName, where);
+                var result = GetLastSortOrder(tableName, sortOrderColName, where, additionalMessage);
                 lstSortOrder = Convert.ToString(Convert.ToInt32(result) + 1);
 
                 SLLog.WriteInfo("GetNextSortOrder", "Getting next sort order successfully! => " + lstSortOrder, true);
@@ -264,6 +264,7 @@ namespace SQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "GetNextSortOrder Error!",
+                    AdditionalMessage = $"AdditionalMessage: {additionalMessage}",
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("GetNextSortOrder Error!", ex);
