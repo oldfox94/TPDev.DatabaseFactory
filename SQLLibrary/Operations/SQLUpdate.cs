@@ -75,6 +75,12 @@ namespace SQLLibrary.Operations
 
         public bool UpdateTable(DataTable table, bool setInsertOn = true, bool setModifyOn = true, string additionalMessage = "")
         {
+            Exception exc;
+            return UpdateTable(table, out exc, setInsertOn, setModifyOn, additionalMessage);
+        }
+        public bool UpdateTable(DataTable table, out Exception exc, bool setInsertOn = true, bool setModifyOn = true, string additionalMessage = "")
+        {
+            exc = null;
             try
             {
                 var tableName = table.TableName;
@@ -94,6 +100,7 @@ namespace SQLLibrary.Operations
             }
             catch (Exception ex)
             {
+                exc = ex;
                 SLLog.WriteError(new LogData
                 {
                     Source = ToString(),
@@ -108,6 +115,12 @@ namespace SQLLibrary.Operations
 
         public bool UpdateTable(DataTable table, string tableName, bool setInsertOn = true, bool setModifyOn = true, string additionalMessage = "")
         {
+            Exception exc;
+            return UpdateTable(table, tableName, out exc, setInsertOn, setModifyOn, additionalMessage);
+        }
+        public bool UpdateTable(DataTable table, string tableName, out Exception exc, bool setInsertOn = true, bool setModifyOn = true, string additionalMessage = "")
+        {
+            exc = null;
             try
             {
                 TableHelper.SetDefaultColumnValues(table, setInsertOn, setModifyOn);
@@ -126,6 +139,7 @@ namespace SQLLibrary.Operations
             }
             catch (DBConcurrencyException cex)
             {
+                exc = cex;
                 SLLog.WriteError(new LogData
                 {
                     Source = ToString(),
@@ -138,6 +152,7 @@ namespace SQLLibrary.Operations
             }
             catch (Exception ex)
             {
+                exc = ex;
                 SLLog.WriteError(new LogData
                 {
                     Source = ToString(),
@@ -152,6 +167,12 @@ namespace SQLLibrary.Operations
 
         public bool UpdateTables(List<DataTable> tableList, bool setInsertOn = true, bool setModifyOn = true, string additionalMessage = "")
         {
+            Exception exc;
+            return UpdateTables(tableList, out exc, setInsertOn, setModifyOn, additionalMessage);
+        }
+        public bool UpdateTables(List<DataTable> tableList, out Exception exc, bool setInsertOn = true, bool setModifyOn = true, string additionalMessage = "")
+        {
+            exc = null;
             try
             {
                 var result = false;
@@ -165,6 +186,7 @@ namespace SQLLibrary.Operations
             }
             catch (Exception ex)
             {
+                exc = ex;
                 SLLog.WriteError(new LogData
                 {
                     Source = ToString(),
