@@ -22,6 +22,7 @@ namespace DbLogger
             Settings.DebugLevel = debugLevel;
             Settings.MaxLogFileSize = maxLogMBSize;
 
+            Settings.LogPath = logPath;
             Settings.LogFile = Path.Combine(logPath, logFileName + ".log");
             if(!Directory.Exists(logPath))
             {
@@ -184,7 +185,8 @@ namespace DbLogger
                                 break;
                         }
 
-                        WriteAsync(Settings.LogFile, line);
+                        var logFile = string.IsNullOrEmpty(logEntry.LogFileName) ? Settings.LogFile : Path.Combine(Settings.LogPath, logEntry.LogFileName + ".log");
+                        WriteAsync(logFile, line);
                         logEntry.IsInLogFile = true;
                     }
                     catch (Exception ex)
@@ -193,32 +195,6 @@ namespace DbLogger
                         logEntry.IsInLogFile = false;
                     }
                 }
-
-                //try
-                //{
-                //    if (m_LastCleanUp < DateTime.Now.AddMinutes(-15))
-                //    {
-                //        m_LastCleanUp = DateTime.Now;
-
-                //        var removeItemList = new List<LogData>();
-                //        foreach (var item in currentList.Where(x => x.IsInLogFile == true))
-                //            removeItemList.Add(item);
-
-                //        foreach (var item in removeItemList)
-                //            m_LogDataList.Remove(item);
-
-                //        GC.Collect();
-                //    }
-                //}
-                //catch(Exception ex)
-                //{
-                //    WriteError(new LogData
-                //    {
-                //        Source = ToString(),
-                //        FunctionName = "WriteToFile",
-                //        Ex = ex,
-                //    });
-                //}
             }
             catch(Exception ex)
             {

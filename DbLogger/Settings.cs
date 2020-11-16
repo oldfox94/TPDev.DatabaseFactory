@@ -2,6 +2,7 @@
 {
     public class Settings
     {
+        public static string LogPath { get; set; }
         public static string LogFile { get; set; }
         public static string LogId { get; set; }
         public static bool OnlyConsoleOutput { get; set; }

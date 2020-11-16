@@ -17,6 +17,7 @@ namespace DbLogger.Models
 
         public Exception Ex { get; set; }
 
+        public string LogFileName { get; set; }
         public bool IsInLogFile { get; set; }
     }
 }

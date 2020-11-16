@@ -7,7 +7,7 @@ namespace DbInterface
     {
         public static DbLogger.DbLogger Logger { get; set; }
 
-        public static LogData WriteInfo(string function, string message, bool onlyBallonTipp = false, int debugLevel = DebugLevelConstants.Unknow, string logId = "", int initialDebugLevel = DebugLevelConstants.Medium, bool onlyConsoleOutput = false, bool onlyReturnLogData = false)
+        public static LogData WriteInfo(string function, string message, bool onlyBallonTipp = false, int debugLevel = DebugLevelConstants.Unknow, string logId = "", int initialDebugLevel = DebugLevelConstants.Medium, bool onlyConsoleOutput = false, bool onlyReturnLogData = false, string logFileName = "")
         {
             if (Logger == null)
                 Logger = new DbLogger.DbLogger(Environment.CurrentDirectory, "DbFactory", logId, initialDebugLevel, onlyConsoleOutput);
@@ -16,12 +16,13 @@ namespace DbInterface
             {
                 FunctionName = function,
                 Message = message,
+                LogFileName = logFileName,
             };
 
             return Logger.WriteInfo(data, onlyBallonTipp, debugLevel, onlyReturnLogData);
         }
 
-        public static LogData WriteWarning(string function, string source, string message, int debugLevel = DebugLevelConstants.Unknow, string logId = "", int initialDebugLevel = DebugLevelConstants.Medium, bool onlyConsoleOutput = false, bool onlyReturnLogData  = false)
+        public static LogData WriteWarning(string function, string source, string message, int debugLevel = DebugLevelConstants.Unknow, string logId = "", int initialDebugLevel = DebugLevelConstants.Medium, bool onlyConsoleOutput = false, bool onlyReturnLogData  = false, string logFileName = "")
         {
             if (Logger == null)
                 Logger = new DbLogger.DbLogger(Environment.CurrentDirectory, "DbFactory", logId, initialDebugLevel, onlyConsoleOutput);
@@ -31,6 +32,7 @@ namespace DbInterface
                 FunctionName = function,
                 Source = source,
                 Message = message,
+                LogFileName = logFileName,
             };
 
             return Logger.WriteWarnng(data, debugLevel, onlyReturnLogData);
