@@ -110,6 +110,12 @@ namespace SQLiteLibrary.Operations
 
         public bool UpdateTable(DataTable table, string tableName, bool setInsertOn = true, bool setModifyOn = true, string additionalMessage = "")
         {
+            Exception exc;
+            return UpdateTable(table, tableName, out exc, setInsertOn, setModifyOn, additionalMessage);
+        }
+        public bool UpdateTable(DataTable table, string tableName, out Exception exc, bool setInsertOn = true, bool setModifyOn = true, string additionalMessage = "")
+        {
+            exc = null;
             try
             {
                 TableHelper.SetDefaultColumnValues(table, setInsertOn, setModifyOn);
@@ -130,6 +136,7 @@ namespace SQLiteLibrary.Operations
             }
             catch (DBConcurrencyException cex)
             {
+                exc = cex;
                 SLLog.WriteError(new LogData
                 {
                     Source = ToString(),
@@ -142,6 +149,7 @@ namespace SQLiteLibrary.Operations
             }
             catch (Exception ex)
             {
+                exc = ex;
                 SLLog.WriteError(new LogData
                 {
                     Source = ToString(),
@@ -156,6 +164,12 @@ namespace SQLiteLibrary.Operations
 
         public bool UpdateTables(List<DataTable> tableList, bool setInsertOn = true, bool setModifyOn = true, string additionalMessage = "")
         {
+            Exception exc;
+            return UpdateTables(tableList, out exc, setInsertOn, setModifyOn, additionalMessage);
+        }
+        public bool UpdateTables(List<DataTable> tableList, out Exception exc, bool setInsertOn = true, bool setModifyOn = true, string additionalMessage = "")
+        {
+            exc = null;
             try
             {
                 var result = false;
@@ -169,6 +183,7 @@ namespace SQLiteLibrary.Operations
             }
             catch (Exception ex)
             {
+                exc = ex;
                 SLLog.WriteError(new LogData
                 {
                     Source = ToString(),

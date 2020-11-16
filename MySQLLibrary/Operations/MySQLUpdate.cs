@@ -74,6 +74,12 @@ namespace MySQLLibrary.Operations
 
         public bool UpdateTable(DataTable table, bool setInsertOn = true, bool setModifyOn = true, string additionalMessage = "")
         {
+            Exception exc;
+            return UpdateTable(table, out exc, setInsertOn, setModifyOn, additionalMessage);
+        }
+        public bool UpdateTable(DataTable table, out Exception exc, bool setInsertOn = true, bool setModifyOn = true, string additionalMessage = "")
+        {
+            exc = null;
             try
             {
                 var tableName = table.TableName;
@@ -81,6 +87,7 @@ namespace MySQLLibrary.Operations
             }
             catch (Exception ex)
             {
+                exc = ex;
                 SLLog.WriteError(new LogData
                 {
                     Source = ToString(),
@@ -93,8 +100,14 @@ namespace MySQLLibrary.Operations
             }
         }
 
-        public bool UpdateTable(DataTable table, string tableName, bool setInsertOn = true, bool setModfyOn = true, string additionalMessage = "")
+        public bool UpdateTable(DataTable table, string tableName, bool setInsertOn = true, bool setModifyOn = true, string additionalMessage = "")
         {
+            Exception exc;
+            return UpdateTable(table, tableName, out exc, setInsertOn, setModifyOn, additionalMessage);
+        }
+        public bool UpdateTable(DataTable table, string tableName, out Exception exc, bool setInsertOn = true, bool setModfyOn = true, string additionalMessage = "")
+        {
+            exc = null;
             try
             {
                 TableHelper.SetDefaultColumnValues(table, setInsertOn, setModfyOn);
@@ -114,6 +127,7 @@ namespace MySQLLibrary.Operations
             }
             catch (DBConcurrencyException cex)
             {
+                exc = cex;
                 SLLog.WriteError(new LogData
                 {
                     Source = ToString(),
@@ -126,6 +140,7 @@ namespace MySQLLibrary.Operations
             }
             catch (Exception ex)
             {
+                exc = ex;
                 SLLog.WriteError(new LogData
                 {
                     Source = ToString(),
@@ -140,6 +155,12 @@ namespace MySQLLibrary.Operations
 
         public bool UpdateTables(List<DataTable> tableList, bool setInsertOn = true, bool setModifyOn = true, string additionalMessage = "")
         {
+            Exception exc;
+            return UpdateTables(tableList, out exc, setInsertOn, setModifyOn, additionalMessage);
+        }
+        public bool UpdateTables(List<DataTable> tableList, out Exception exc, bool setInsertOn = true, bool setModifyOn = true, string additionalMessage = "")
+        {
+            exc = null;
             try
             {
                 var result = false;
@@ -152,6 +173,7 @@ namespace MySQLLibrary.Operations
             }
             catch (Exception ex)
             {
+                exc = ex;
                 SLLog.WriteError(new LogData
                 {
                     Source = ToString(),

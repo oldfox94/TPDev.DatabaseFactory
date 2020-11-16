@@ -47,6 +47,12 @@ namespace OracleLibrary.Operations
 
         public bool UpdateTables(List<DataTable> tableList, bool setInsertOn = true, bool setModifyOn = true, string additionalMessage = "")
         {
+            Exception exc;
+            return UpdateTables(tableList, out exc, setInsertOn, setModifyOn, additionalMessage);
+        }
+        public bool UpdateTables(List<DataTable> tableList, out Exception exc, bool setInsertOn = true, bool setModifyOn = true, string additionalMessage = "")
+        {
+            exc = null;
             try
             {
                 var result = false;
@@ -59,6 +65,7 @@ namespace OracleLibrary.Operations
             }
             catch (Exception ex)
             {
+                exc = ex;
                 SLLog.WriteError(new LogData
                 {
                     Source = ToString(),
@@ -73,6 +80,12 @@ namespace OracleLibrary.Operations
 
         public bool UpdateTable(DataTable table, bool setInsertOn = true, bool setModifyOn = true, string additionalMessage = "")
         {
+            Exception exc;
+            return UpdateTable(table, out exc, setInsertOn, setModifyOn, additionalMessage);
+        }
+        public bool UpdateTable(DataTable table, out Exception exc, bool setInsertOn = true, bool setModifyOn = true, string additionalMessage = "")
+        {
+            exc = null;
             try
             {
                 var tableName = table.TableName;
@@ -80,6 +93,7 @@ namespace OracleLibrary.Operations
             }
             catch (Exception ex)
             {
+                exc = ex;
                 SLLog.WriteError(new LogData
                 {
                     Source = ToString(),
@@ -94,6 +108,12 @@ namespace OracleLibrary.Operations
 
         public bool UpdateTable(DataTable table, string tableName, bool setInsertOn = true, bool setModifyOn = true, string additionalMessage = "")
         {
+            Exception exc;
+            return UpdateTable(table, tableName, out exc, setInsertOn, setModifyOn, additionalMessage);
+        }
+        public bool UpdateTable(DataTable table, string tableName, out Exception exc, bool setInsertOn = true, bool setModifyOn = true, string additionalMessage = "")
+        {
+            exc = null;
             try
             {
                 TableHelper.SetDefaultColumnValues(table, setInsertOn, setModifyOn);
@@ -112,6 +132,7 @@ namespace OracleLibrary.Operations
             }
             catch (DBConcurrencyException cex)
             {
+                exc = cex;
                 SLLog.WriteError(new LogData
                 {
                     Source = ToString(),
@@ -124,6 +145,7 @@ namespace OracleLibrary.Operations
             }
             catch (Exception ex)
             {
+                exc = ex;
                 SLLog.WriteError(new LogData
                 {
                     Source = ToString(),
