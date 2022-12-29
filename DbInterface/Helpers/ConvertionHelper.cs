@@ -176,6 +176,9 @@ namespace DbInterface.Helpers
                 case DbType.SQLite:
                     return string.Format(" substr({0}, 7, 4) || substr({0}, 4, 2) || substr({0}, 1, 2) || substr({0}, 12, 2) || substr({0}, 15, 2) || substr({0}, 18, 2) {1}", colName, orderBy);
 
+                case DbType.SQL:
+                    return $" CAST({colName} AS DATETIME) {orderBy}";
+
                 default:
                     return string.Format(" substring({0}, 7, 4) + substring({0}, 4, 2) + substring({0}, 1, 2) + substring({0}, 12, 2) + substring({0}, 15, 2) + substring({0}, 18, 2) {1}", colName, orderBy);
             }
@@ -248,7 +251,7 @@ namespace DbInterface.Helpers
                     return string.Format(@" strftime('%H:%M:%S', SUM(strftime('%s', {0})) ,'unixepoch')", columnName);
 
                 case DbType.SQL:
-                    return string.Format(@" CONVERT(varchar, SUM(DATEDIFF(MINUTE, '0:00:00', capTotalCallTime)))", columnName);
+                    return string.Format(@" CONVERT(varchar, SUM(DATEDIFF(MINUTE, '0:00:00', {0})))", columnName);
 
                 default:
                     return string.Format(@" CONVERT(varchar, SUM(CONVERT(TIME({0})), 108)", columnName);
