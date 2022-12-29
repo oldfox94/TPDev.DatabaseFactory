@@ -136,6 +136,7 @@ namespace TestApp
             colList.Add(new ColumnData { Name = "Pk", Type = DbDEF.VarchrNotNullPk(50) });
             colList.Add(new ColumnData { Name = "Name", Type = DbDEF.VarchrNull(100) });
             colList.Add(new ColumnData { Name = "Text", Type = DbDEF.TxtNull });
+            colList.Add(new ColumnData { Name = "Date", Type = DbDEF.DateTimeNull });
 
             return colList;
         }
@@ -191,6 +192,7 @@ namespace TestApp
                 dr["Pk"] = Guid.NewGuid().ToString();
                 dr["Name"] = "Created with UpdateDataSet";
                 dr["Text"] = "Create a new row";
+                dr["Date"] = DateTime.Now;
                 tbl.Rows.Add(dr);
             }
             else
@@ -201,6 +203,7 @@ namespace TestApp
                 m_DataSetCounter++;
                 dr["Name"] = "Updatet with UpdateDataSet Count:" + m_DataSetCounter;
                 dr["Text"] = "Updates always the first row";
+                dr["Date"] = DateTime.Now;
             }
 
             m_dbFactory.Update.UpdateDataSet(ds);
@@ -217,6 +220,7 @@ namespace TestApp
                 dr["Pk"] = Guid.NewGuid().ToString();
                 dr["Name"] = "Created with UpdateDataTable";
                 dr["Text"] = "Create a new row";
+                dr["Date"] = DateTime.Now;
                 tbl.Rows.Add(dr);
             }
             else
@@ -227,13 +231,14 @@ namespace TestApp
                 m_DataTableCounter++;
                 dr["Name"] = "Updated with UpdateDataTable Count: " + m_DataTableCounter;
                 dr["Text"] = "Updates always the first row";
+                dr["Date"] = DateTime.Now;
             }
             m_dbFactory.Update.UpdateTable(tbl);
         }
 
         private DataTable GetTable()
         {
-            return m_dbFactory.Get.GetTable("TestTbl", null);
+            return m_dbFactory.Get.GetTable("SELECT * FROM TestTbl", null);
         }
 
         private void OnUpdateWithDataSetClick(object sender, RoutedEventArgs e)
@@ -248,9 +253,19 @@ namespace TestApp
             RefreshDataTbl();
         }
 
+        private int m_UpdateOneValueCounter;
         private void UpdateOneValue()
         {
-            m_dbFactory.Update.UpdateOneValue("TestTbl", "Name", "Update by OneValue", ConvertionHelper.WHERE("Text", "Updates always the first row"));
+            if (Grid.Items.Count <= 0) return;
+
+            var item = Grid.Items[0] as DataRowView;
+            if (item == null) return;
+
+            var pk = item.Row[0].ToString();
+            if (string.IsNullOrEmpty(pk)) return;
+
+            m_UpdateOneValueCounter++;
+            m_dbFactory.Update.UpdateOneValue("TestTbl", "Name", "Update by OneValue Count: " + m_UpdateOneValueCounter, ConvertionHelper.WHERE("Pk", pk));
         }
 
         private void OnUpdateOneValueClick(object sender, RoutedEventArgs e)
