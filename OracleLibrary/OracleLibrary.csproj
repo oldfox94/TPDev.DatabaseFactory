@@ -30,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <NoWarn>MSB3270</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Oracle.DataAccess">
