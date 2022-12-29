@@ -90,7 +90,7 @@ namespace OracleLibrary.Operations
         {
             try
             {
-                ColumnHelper.SetDefaultColumns(columns);
+                ColumnHelper.SetDefaultColumns(columns, DbInterface.Models.DbType.Oracle);
 
                 var sql = ScriptHelper.GetCreateTableSql(tableName, columns);
                 var result = m_Execute.ExecuteNonQuery(sql);

@@ -50,7 +50,7 @@ namespace SQLLibrary.Operations
         {
             try
             {
-                ColumnHelper.SetDefaultColumns(columns);
+                ColumnHelper.SetDefaultColumns(columns, DbInterface.Models.DbType.SQL);
 
                 var sql = ScriptHelper.GetCreateTableSql(tableName, columns);
                 var result = m_Execute.ExecuteNonQuery(sql);

@@ -50,7 +50,7 @@ namespace SQLiteLibrary.Operations
         {
             try
             {
-                ColumnHelper.SetDefaultColumns(columns);
+                ColumnHelper.SetDefaultColumns(columns, DbInterface.Models.DbType.SQLite);
 
                 var sql = ScriptHelper.GetSQLiteCreateTableSql(tableName, columns);
                 var result = m_Execute.ExecuteNonQuery(sql);

@@ -30,6 +30,9 @@
         public const string TxtUniNotNull = "TEXT  UNIQUE NOT NULL";
         public const string TxtUniNotNullPk = "TEXT  UNIQUE NOT NULL PRIMARY KEY";
 
+        public const string DateTimeNull = "DATETIME  NULL";
+        public const string DateTimeNotNull = "DATETIME  NOT NULL";
+
         public const string VarchrNullMax = "VARCHAR(MAX)  NULL";
         public const string VarchrNotNullMax = "VARCHAR(MAX)  NOT NULL";
         public const string VarchrNotNullPkMax = "VARCHAR(MAX)  NOT NULL PRIMARY KEY";

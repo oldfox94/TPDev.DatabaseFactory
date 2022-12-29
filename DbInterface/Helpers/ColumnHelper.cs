@@ -6,16 +6,26 @@ namespace DbInterface.Helpers
 {
     public static class ColumnHelper
     {
-        public static List<ColumnData> SetDefaultColumns(List<ColumnData> columns)
+        public static List<ColumnData> SetDefaultColumns(List<ColumnData> columns, DbType dbType)
         {
+            var dateTimeDefinition = DbDEF.VarchrNull(20);
+            var dateTimeDefaultValue = "01.01.1900";
+            switch (dbType)
+            {
+                case DbType.SQL:
+                    dateTimeDefinition = DbDEF.DateTimeNull;
+                    dateTimeDefaultValue = new DateTime(1900, 1, 1).Date.ToString();
+                    break;
+            }
+
             if (columns.Find(i => i.Name == DbCIC.DsStatus) == null)
                 columns.Add(new ColumnData { Name = DbCIC.DsStatus, Type = DbDEF.VarchrNull(3), DefaultValue = "1" });
 
             if (columns.Find(i => i.Name == DbCIC.InsertOn) == null)
-                columns.Add(new ColumnData { Name = DbCIC.InsertOn, Type = DbDEF.VarchrNull(20), DefaultValue = "01.01.1900" });
+                columns.Add(new ColumnData { Name = DbCIC.InsertOn, Type = dateTimeDefinition, DefaultValue = dateTimeDefaultValue });
 
             if (columns.Find(i => i.Name == DbCIC.ModifyOn) == null)
-                columns.Add(new ColumnData { Name = DbCIC.ModifyOn, Type = DbDEF.VarchrNull(20) });
+                columns.Add(new ColumnData { Name = DbCIC.ModifyOn, Type = dateTimeDefinition });
 
             return columns;
         }

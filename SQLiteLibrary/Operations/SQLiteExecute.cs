@@ -229,7 +229,7 @@ namespace SQLiteLibrary.Operations
                                 DateTime.Now.Day.ToString() + DateTime.Now.Month.ToString() + DateTime.Now.Year.ToString();
 
                 //Standart Felder erstellen
-                ColumnHelper.SetDefaultColumns(columns);
+                ColumnHelper.SetDefaultColumns(columns, DbInterface.Models.DbType.SQLite);
 
                 var oldTblSchema = ExecuteReadTableSchema(string.Format("SELECT * FROM {0}", tableName));
                 foreach (DataRow row in oldTblSchema.Rows)

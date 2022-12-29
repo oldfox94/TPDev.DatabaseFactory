@@ -50,7 +50,7 @@ namespace MySQLLibrary.Operations
         {
             try
             {
-                ColumnHelper.SetDefaultColumns(columns);
+                ColumnHelper.SetDefaultColumns(columns, DbInterface.Models.DbType.MySQL);
 
                 var sql = ScriptHelper.GetMySQLCreateTableSql(tableName, columns);
                 var result = m_Execute.ExecuteNonQuery(sql);
