@@ -1,12 +1,3 @@
-echo Copy files ...
-copy DbNotifyer\bin\Release\Hardcodet.Wpf.TaskbarNotification DbFactory\Bin\Debug
-copy SQLiteLibrary\bin\Release\System.Data.SQLite.dll DbFactory\bin\Debug
-copy SQLiteLibrary\SQLite.Interop.dll DbFactory\bin\Debug
-copy MySQLLibrary\bin\Release\MySql.Data.dll DbFactory\bin\Debug
-copy MySQLLibrary\bin\Release\MySql.Data.Entity.EF5.dll DbFactory\bin\Debug
-copy MySQLLibrary\bin\Release\MySql.Data.Entity.EF6.dll DbFactory\bin\Debug
-copy MySQLLibrary\bin\Release\MySql.Fabric.Plugin.dll DbFactory\bin\Debug
-
 echo Cleanup Binaries folder ...
 del Binaries\*.*  /s /q
 
@@ -18,12 +9,8 @@ echo Cleanup Debug folder ...
 del _Debug\*.*  /s /q
 
 echo Copy new dll files ...
+copy _External\*.dll _Debug
 copy DbFactory\bin\Debug\*.dll Binaries
-
-copy Binaries\Hardcodet.Wpf.TaskbarNotification.dll _Debug
-copy Binaries\System.Data.SQLite.dll _Debug
-copy SQLiteLibrary\SQLite.Interop.dll _Debug
-copy Binaries\MySql.Data.dll _Debug
 
 
 echo Merging Binaries ...

@@ -8,7 +8,7 @@ namespace DbInterface.Helpers
     {
         public static List<ColumnData> SetDefaultColumns(List<ColumnData> columns, DbType dbType)
         {
-            var dateTimeDefinition = DbDEF.VarchrNull(20);
+            var dateTimeDefinition = DbDEF.VarchrNull(25);
             var dateTimeDefaultValue = "01.01.1900";
             switch (dbType)
             {
