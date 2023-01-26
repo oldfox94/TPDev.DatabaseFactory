@@ -125,18 +125,10 @@ namespace SQLLibrary.Operations
 
                 dt.Load(reader);
 
-                if (overwriteTableName)
+                if (string.IsNullOrEmpty(dt.TableName) || overwriteTableName)
                 {
-                    //GetTableName from Schema
-                    var schemaTbl = reader.GetSchemaTable();
-                    if (schemaTbl.Rows.Count <= 0) return dt;
-                    var schemaRow = schemaTbl.Rows[0];
-                    var tableName = schemaRow[DbCIC.BaseTableName].ToString();
-
-                    if (string.IsNullOrEmpty(tableName))
-                        tableName = ExecuteReadTableName(dt.Columns[0].ColumnName);
-
-                    dt.TableName = tableName;
+                    if (dt.Columns.Count > 0)
+                        dt.TableName = ExecuteReadTableName(dt.Columns[0].ColumnName);
                 }
                 reader.Close();
 

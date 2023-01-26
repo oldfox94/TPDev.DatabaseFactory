@@ -114,7 +114,7 @@ namespace MySQLLibrary.Operations
 
                 var con = CONNECTION.OpenCon();
 
-                var adapter = new MySqlDataAdapter(string.Format(@"SELECT * FROM {0}", tableName), con);
+                var adapter = new MySqlDataAdapter(string.Format(@"SELECT * FROM {0} WHERE 1=0", tableName), con);
                 var cmd = new MySqlCommandBuilder(adapter);
 
                 adapter.Update(table);

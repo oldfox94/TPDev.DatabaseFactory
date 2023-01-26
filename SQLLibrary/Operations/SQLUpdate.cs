@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 
 namespace SQLLibrary.Operations
 {
@@ -22,14 +23,32 @@ namespace SQLLibrary.Operations
         {
             try
             {
-                var result = false;
-                foreach (DataTable tbl in dataSet.Tables)
+                var con = CONNECTION.OpenCon();
+                using (SqlTransaction tx = con.BeginTransaction(IsolationLevel.Serializable))
                 {
-                    result = UpdateTable(tbl, setInsertOn, setModifyOn, additionalMessage);
-                    if (!result) return result;
+                    for (int i = 0; i < dataSet.Tables.Count; i++)
+                    {
+                        TableHelper.SetDefaultColumnValues(dataSet.Tables[i], setInsertOn, setModifyOn);
+
+                        var query = String.Format(CultureInfo.InvariantCulture, "SELECT * FROM {0} WHERE 1=0", dataSet.Tables[i].TableName);
+                        var da = new SqlDataAdapter(query, con) { SelectCommand = { Transaction = tx } };
+#pragma warning disable 168
+                        var cb = new SqlCommandBuilder(da);
+                        da.UpdateBatchSize = dataSet.Tables[i].Rows.Count > 50 ? 50 : dataSet.Tables[i].Rows.Count;
+#pragma warning restore 168
+                        Console.WriteLine($"Update in one Transaction => '{dataSet.Tables[i].TableName}'");
+                        da.Update(dataSet, dataSet.Tables[i].TableName);
+
+                        cb.Dispose();
+                        da.Dispose();
+                    }
+
+                    tx.Commit();
                 }
 
-                return result;
+                CONNECTION.CloseCon(con);
+
+                return true;
             }
             catch (Exception ex)
             {
@@ -127,12 +146,19 @@ namespace SQLLibrary.Operations
 
                 var con = CONNECTION.OpenCon();
 
-                var adapter = new SqlDataAdapter(string.Format(@"SELECT * FROM {0}", tableName), con);
-                var cmd = new SqlCommandBuilder(adapter);
-                adapter.Update(table);
+                var query = string.Format(CultureInfo.InvariantCulture, "SELECT * FROM {0} WHERE 1=0", tableName);
+                var command = new SqlCommand(query, con);
+                var da = new SqlDataAdapter(command);
+                var builder = new SqlCommandBuilder(da);
 
-                cmd.Dispose();
-                adapter.Dispose();
+                var cb = new SqlCommandBuilder(da);
+
+                Console.WriteLine($"Update Table => '{tableName}'");
+                da.Update(table);
+
+                command.Dispose();
+                cb.Dispose();
+                da.Dispose();
                 CONNECTION.CloseCon(con);
 
                 return true;

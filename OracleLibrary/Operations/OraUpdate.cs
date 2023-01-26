@@ -120,7 +120,7 @@ namespace OracleLibrary.Operations
 
                 var con = CONNECTION.OpenCon();
 
-                var adapter = new OracleDataAdapter(string.Format(@"SELECT * FROM {0}", tableName), con);
+                var adapter = new OracleDataAdapter(string.Format(@"SELECT * FROM {0} WHERE 1=0", tableName), con);
                 var cmd = new OracleCommandBuilder(adapter);
                 adapter.Update(table);
 
