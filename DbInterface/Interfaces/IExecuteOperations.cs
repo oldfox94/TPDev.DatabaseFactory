@@ -11,7 +11,7 @@ namespace DbInterface.Interfaces
 
         object ExecuteScalar(string sql);
 
-        DataTable ExecuteReadTable(string sql);
+        DataTable ExecuteReadTable(string sql, bool overwriteTableName = false);
         DataTable ExecuteReadTableSchema(string sql);
 
         string ExecuteReadTableName(string columnName);

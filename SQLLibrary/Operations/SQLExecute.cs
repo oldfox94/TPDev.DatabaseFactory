@@ -113,7 +113,7 @@ namespace SQLLibrary.Operations
             return value;
         }
 
-        public DataTable ExecuteReadTable(string sql)
+        public DataTable ExecuteReadTable(string sql, bool overwriteTableName = false)
         {
             var dt = new DataTable();
             try
@@ -123,20 +123,21 @@ namespace SQLLibrary.Operations
                 var cmd = new SqlCommand(sql, con);
                 var reader = cmd.ExecuteReader();
 
-                var schemaTbl = reader.GetSchemaTable();
                 dt.Load(reader);
 
+                if (overwriteTableName)
+                {
+                    //GetTableName from Schema
+                    var schemaTbl = reader.GetSchemaTable();
+                    if (schemaTbl.Rows.Count <= 0) return dt;
+                    var schemaRow = schemaTbl.Rows[0];
+                    var tableName = schemaRow[DbCIC.BaseTableName].ToString();
 
-                //GetTableName
-                if (schemaTbl.Rows.Count <= 0) return dt;
-                var schemaRow = schemaTbl.Rows[0];
-                var tableName = schemaRow[DbCIC.BaseTableName].ToString();
+                    if (string.IsNullOrEmpty(tableName))
+                        tableName = ExecuteReadTableName(dt.Columns[0].ColumnName);
 
-                if (string.IsNullOrEmpty(tableName))
-                    tableName = ExecuteReadTableName(dt.Columns[0].ColumnName);
-
-                dt.TableName = tableName;
-
+                    dt.TableName = tableName;
+                }
                 reader.Close();
 
                 cmd.Dispose();
