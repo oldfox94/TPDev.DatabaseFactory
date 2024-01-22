@@ -9,6 +9,7 @@ namespace SQLLibrary
         public static string ConnectionString { get; set; }
 
         //Addentional Settings
+        public static int Timeout {get; set; }
         public static bool ThrowExceptions { get; set; }
     }
 }

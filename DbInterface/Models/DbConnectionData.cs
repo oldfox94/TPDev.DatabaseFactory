@@ -14,6 +14,7 @@
         public string Password { get; set; }
 
         //Addentional Settings
+        public int Timeout { get; set; }
         public bool ThrowExceptions { get; set; }
     }
 }

@@ -7,12 +7,12 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("TPDev.DatabaseFactory")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("tpDev")]
-[assembly: AssemblyCopyright("Copyright © tpDev 2022")]
+[assembly: AssemblyCopyright("Copyright © tpDev 2024")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 [assembly: ComVisible(false)]
 
-[assembly: AssemblyVersion("1.0.1.1")]
-[assembly: AssemblyFileVersion("1.0.1.1")]
+[assembly: AssemblyVersion("1.0.2.0")]
+[assembly: AssemblyFileVersion("1.0.2.0")]
 [assembly: AssemblyDescription("")] // Testversion, RC1, RC2,  Rev. 1,
