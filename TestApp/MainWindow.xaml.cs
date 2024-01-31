@@ -123,7 +123,7 @@ namespace TestApp
         private void RenewDatabase()
         {
             var tbl1Columns = GetSampleTable1Columns();
-            m_dbFactory.Execute.RenewTbl("TestTbl", tbl1Columns, true);
+            m_dbFactory.Execute.RenewTbl("TestTbl", tbl1Columns, cleanUpAfterRenew: true);
 
             var tbl2Columns = GetSampleTable2Columns();
             m_dbFactory.Execute.RenewTbl("TestTbl2", tbl2Columns);

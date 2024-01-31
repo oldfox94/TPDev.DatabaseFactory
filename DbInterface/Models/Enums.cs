@@ -24,6 +24,10 @@
 
     public static class DbDEF
     {
+        public const string UniqueidentifierNull = "UNIQUEIDENTIFIER  NULL";
+        public const string UniqueidentifierNotNull = "UNIQUEIDENTIFIER  NOT NULL";
+        public const string UniqueidentifierNotNullPk = "UNIQUEIDENTIFIER  NOT NULL PRIMARY KEY";
+
         public const string TxtNull = "TEXT  NULL";
         public const string TxtNotNull = "TEXT  NOT NULL";
         public const string TxtNotNullPk = "TEXT  NOT NULL PRIMARY KEY";

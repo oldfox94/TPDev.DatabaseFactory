@@ -12,5 +12,6 @@ namespace DbInterface.Models
         public bool isNew { get; set; }
 
         public List<FkData> FkList { get; set; }
+        public List<IndizesData> IndizesList { get; set; }
     }
 }

@@ -7,7 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Globalization;
+using System.Threading;
 
 namespace SQLLibrary.Operations
 {
@@ -21,47 +23,65 @@ namespace SQLLibrary.Operations
 
         public bool UpdateDataSet(DataSet dataSet, bool setInsertOn = true, bool setModifyOn = true, string additionalMessage = "")
         {
+            var stpWatch = new Stopwatch();
+            stpWatch.Start();
+
+            var result = false;
+            var con = CONNECTION.OpenCon();
             try
             {
-                var con = CONNECTION.OpenCon();
                 using (SqlTransaction tx = con.BeginTransaction(IsolationLevel.Serializable))
                 {
                     for (int i = 0; i < dataSet.Tables.Count; i++)
                     {
                         TableHelper.SetDefaultColumnValues(dataSet.Tables[i], setInsertOn, setModifyOn);
 
-                        var query = String.Format(CultureInfo.InvariantCulture, "SELECT * FROM {0} WHERE 1=0", dataSet.Tables[i].TableName);
-                        var da = new SqlDataAdapter(query, con) { SelectCommand = { Transaction = tx } };
-#pragma warning disable 168
-                        var cb = new SqlCommandBuilder(da);
-                        da.UpdateBatchSize = dataSet.Tables[i].Rows.Count > 50 ? 50 : dataSet.Tables[i].Rows.Count;
-#pragma warning restore 168
-                        Console.WriteLine($"Update in one Transaction => '{dataSet.Tables[i].TableName}'");
-                        da.Update(dataSet, dataSet.Tables[i].TableName);
+                        var query = string.Format(CultureInfo.InvariantCulture, "SELECT * FROM {0} WHERE 1=0", dataSet.Tables[i].TableName);
+                        using (var da = new SqlDataAdapter(query, con) { SelectCommand = { Transaction = tx } })
+                        {
+                            if (Settings.Timeout > 0)
+                                da.SelectCommand.CommandTimeout = Settings.Timeout;
 
-                        cb.Dispose();
-                        da.Dispose();
+                            using (var cb = new SqlCommandBuilder(da))
+                            {
+                                #pragma warning disable 168
+                                da.UpdateBatchSize = dataSet.Tables[i].Rows.Count > 50 ? 50 : dataSet.Tables[i].Rows.Count;
+                                #pragma warning restore 168
+
+                                Console.WriteLine($"Update in one Transaction => '{dataSet.Tables[i].TableName}'");
+                                da.Update(dataSet, dataSet.Tables[i].TableName);
+
+                            }
+                        }
                     }
 
                     tx.Commit();
                 }
 
-                CONNECTION.CloseCon(con);
+                stpWatch.Stop();
+                SLLog.WriteInfo("UpdateDataSet", $"Update DataSet successfully -> Elapsed time: {stpWatch.Elapsed}", debugLevel: DebugLevelConstants.High);
 
-                return true;
+                result = true;
             }
             catch (Exception ex)
             {
+                stpWatch.Stop();
+
                 SLLog.WriteError(new LogData
                 {
                     Source = ToString(),
                     FunctionName = "UpdateDataSet Error!",
-                    AdditionalMessage = additionalMessage,
+                    AdditionalMessage = $"AdditionalMessage: {additionalMessage} -> Elapsed time: {stpWatch.Elapsed}",
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("UpdateDataSet Error!", ex);
-                return false;
+                result = false;
             }
+            finally
+            {
+                CONNECTION.CloseCon(con);
+            }
+            return result;
         }
 
         public bool UpdateOneValue(string tableName, string column, string value, string where, string additionalMessage = "")
@@ -139,56 +159,69 @@ namespace SQLLibrary.Operations
         }
         public bool UpdateTable(DataTable table, string tableName, out Exception exc, bool setInsertOn = true, bool setModifyOn = true, string additionalMessage = "")
         {
+            var stpWatch = new Stopwatch();
+            stpWatch.Start();
+
             exc = null;
+            var result = false;
+            var con = CONNECTION.OpenCon();
             try
             {
                 TableHelper.SetDefaultColumnValues(table, setInsertOn, setModifyOn);
 
-                var con = CONNECTION.OpenCon();
-
                 var query = string.Format(CultureInfo.InvariantCulture, "SELECT * FROM {0} WHERE 1=0", tableName);
-                var command = new SqlCommand(query, con);
-                var da = new SqlDataAdapter(command);
-                var builder = new SqlCommandBuilder(da);
+                using (var da = new SqlDataAdapter(query, con))
+                {
+                    if (Settings.Timeout > 0)
+                        da.SelectCommand.CommandTimeout = Settings.Timeout;
 
-                var cb = new SqlCommandBuilder(da);
+                    using (var cb = new SqlCommandBuilder(da))
+                    {
+                        Console.WriteLine($"Update Table => '{tableName}'");
+                        da.Update(table);
+                    }
+                }
 
-                Console.WriteLine($"Update Table => '{tableName}'");
-                da.Update(table);
+                stpWatch.Stop();
+                SLLog.WriteInfo("UpdateTable", $"Update Table '{tableName}' successfully -> Elapsed time: {stpWatch.Elapsed}", debugLevel: DebugLevelConstants.High);
 
-                command.Dispose();
-                cb.Dispose();
-                da.Dispose();
-                CONNECTION.CloseCon(con);
-
-                return true;
+                result = true;
             }
             catch (DBConcurrencyException cex)
             {
+                stpWatch.Stop();
+
                 exc = cex;
                 SLLog.WriteError(new LogData
                 {
                     Source = ToString(),
                     FunctionName = "UpdateTable DBConcurrencyError!",
-                    AdditionalMessage = $"Table: {tableName}{Environment.NewLine}AdditionalMessage: {additionalMessage}",
+                    AdditionalMessage = $"Table: {tableName}{Environment.NewLine}AdditionalMessage: {additionalMessage} -> Elapsed time: {stpWatch.Elapsed} in Thread {Thread.CurrentThread.Name}",
                     Ex = cex.InnerException != null ? cex.InnerException : cex,
                 });
                 if (Settings.ThrowExceptions) throw new DBConcurrencyException("UpdateTable Error!", cex);
-                return false;
+                result = false;
             }
             catch (Exception ex)
             {
+                stpWatch.Stop();
+
                 exc = ex;
                 SLLog.WriteError(new LogData
                 {
                     Source = ToString(),
                     FunctionName = "UpdateTable Error!",
-                    AdditionalMessage = $"Table: {tableName}{Environment.NewLine}AdditionalMessage: {additionalMessage}",
+                    AdditionalMessage = $"Table: {tableName}{Environment.NewLine}AdditionalMessage: {additionalMessage} -> Elapsed time: {stpWatch.Elapsed} in Thread {Thread.CurrentThread.Name}",
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("UpdateTable Error!", ex);
-                return false;
+                result = false;
             }
+            finally
+            {
+                CONNECTION.CloseCon(con);
+            }
+            return result;
         }
 
         public bool UpdateTables(List<DataTable> tableList, bool setInsertOn = true, bool setModifyOn = true, string additionalMessage = "")
@@ -198,17 +231,39 @@ namespace SQLLibrary.Operations
         }
         public bool UpdateTables(List<DataTable> tableList, out Exception exc, bool setInsertOn = true, bool setModifyOn = true, string additionalMessage = "")
         {
+            var stpWatch = new Stopwatch();
+            stpWatch.Start();
+
             exc = null;
+            var result = false;
+            var con = CONNECTION.OpenCon();
             try
             {
-                var result = false;
                 foreach (DataTable tbl in tableList)
                 {
-                    result = UpdateTable(tbl, setInsertOn, setModifyOn, additionalMessage);
-                    if (!result) return result;
+                    var tableName = tbl.TableName;
+                    SLLog.WriteInfo("UpdateTables", $"START -> Update Table '{tableName}' successfully -> Elapsed time: {stpWatch.Elapsed}", debugLevel: DebugLevelConstants.High);
+
+                    TableHelper.SetDefaultColumnValues(tbl, setInsertOn, setModifyOn);
+
+                    var query = string.Format(CultureInfo.InvariantCulture, "SELECT * FROM {0} WHERE 1=0", tableName);
+                    using (var da = new SqlDataAdapter(query, con))
+                    {
+                        using (var cb = new SqlCommandBuilder(da))
+                        {
+                            if (Settings.Timeout > 0)
+                                da.SelectCommand.CommandTimeout = Settings.Timeout;
+
+                            Console.WriteLine($"Update Table => '{tableName}'");
+                            da.Update(tbl);
+                        }
+                    }
+
+                    SLLog.WriteInfo("UpdateTables", $"END -> Update Table '{tableName}' successfully -> Elapsed time: {stpWatch.Elapsed}", debugLevel: DebugLevelConstants.High);
                 }
 
-                return result;
+                stpWatch.Stop();
+                result = true;
             }
             catch (Exception ex)
             {
@@ -217,12 +272,17 @@ namespace SQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "UpdateTables Error!",
-                    AdditionalMessage = additionalMessage,
+                    AdditionalMessage = $"TableCnt: {tableList} -> AdditionalMessage: {additionalMessage} -> Elapsed time: {stpWatch.Elapsed} in Thread {Thread.CurrentThread.Name}",
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("UpdateTables Error!", ex);
-                return false;
+                result = false;
             }
+            finally
+            {
+                CONNECTION.CloseCon(con);
+            }
+            return result;
         }
     }
 }

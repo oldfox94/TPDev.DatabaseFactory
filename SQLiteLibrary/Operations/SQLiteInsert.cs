@@ -17,7 +17,7 @@ namespace SQLiteLibrary.Operations
             m_Execute = new SQLiteExecute();
         }
 
-        public bool CreateTable(string tableName, Dictionary<string, string> columns)
+        public bool CreateTable(string tableName, Dictionary<string, string> columns, List<IndizesData> indizes = null)
         {
             try
             {
@@ -31,7 +31,7 @@ namespace SQLiteLibrary.Operations
                     });
                 }
 
-                return CreateTable(tableName, colList);
+                return CreateTable(tableName, colList, indizes);
             }
             catch(Exception ex)
             {
@@ -46,13 +46,18 @@ namespace SQLiteLibrary.Operations
             }
         }
 
-        public bool CreateTable(string tableName, List<ColumnData> columns)
+        public bool CreateTable(string tableName, List<ColumnData> columns, List<IndizesData> indizes = null)
         {
             try
             {
                 ColumnHelper.SetDefaultColumns(columns, DbInterface.Models.DbType.SQLite);
 
-                var sql = ScriptHelper.GetSQLiteCreateTableSql(tableName, columns);
+                var indizesScript = ScriptHelper.GetSQLLiteIndizesScript(tableName, indizes);
+                var sql = ScriptHelper.GetSQLLiteCreateTableSql(tableName, columns);
+
+                if (!string.IsNullOrEmpty(indizesScript))
+                    sql += $";{Environment.NewLine}{indizesScript}";
+
                 var result = m_Execute.ExecuteNonQuery(sql);
 
                 if (result == -2) return false;

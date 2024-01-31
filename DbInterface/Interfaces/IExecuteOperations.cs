@@ -16,7 +16,7 @@ namespace DbInterface.Interfaces
 
         string ExecuteReadTableName(string columnName);
 
-        bool RenewTbl(string tableName, Dictionary<string, string> columns, bool cleanUpAfterRenew = false);
-        bool RenewTbl(string tableName, List<ColumnData> columns, bool cleanUpAfterRenew = false);
+        bool RenewTbl(string tableName, Dictionary<string, string> columns, List<IndizesData> indizes = null, bool cleanUpAfterRenew = false);
+        bool RenewTbl(string tableName, List<ColumnData> columns, List<IndizesData> indizes = null, bool cleanUpAfterRenew = false);
     }
 }

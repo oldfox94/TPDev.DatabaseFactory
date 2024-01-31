@@ -211,7 +211,7 @@ namespace OracleLibrary.Operations
             }
         }
 
-        public bool RenewTbl(string tableName, List<ColumnData> columns, bool cleanUpAfterRenew = false)
+        public bool RenewTbl(string tableName, List<ColumnData> columns, List<IndizesData> indizes = null, bool cleanUpAfterRenew = false)
         {
             try
             {
@@ -264,7 +264,7 @@ namespace OracleLibrary.Operations
             }
         }
 
-        public bool RenewTbl(string tableName, Dictionary<string, string> columns, bool cleanUpAfterRenew = false)
+        public bool RenewTbl(string tableName, Dictionary<string, string> columns, List<IndizesData> indizes = null, bool cleanUpAfterRenew = false)
         {
             try
             {
@@ -283,7 +283,7 @@ namespace OracleLibrary.Operations
                     colList.Add(colData);
                 }
 
-                return RenewTbl(tableName, colList, cleanUpAfterRenew);
+                return RenewTbl(tableName, colList, indizes, cleanUpAfterRenew);
             }
             catch (Exception ex)
             {

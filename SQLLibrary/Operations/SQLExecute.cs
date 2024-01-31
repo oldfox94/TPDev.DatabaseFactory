@@ -49,23 +49,32 @@ namespace SQLLibrary.Operations
         public int ExecuteNonQuery(List<string> sqlList)
         {
             int rowsUpdated = 0;
-            var currentSql = string.Empty;
+            var fullSQL = string.Empty;
+
+            var con = CONNECTION.OpenCon();
             try
             {
-                var con = CONNECTION.OpenCon();
-
                 foreach (var sql in sqlList)
                 {
-                    currentSql = sql;
-                    var cmd = new SqlCommand(sql, con);
-                    var cmdResult = cmd.ExecuteNonQuery();
-                    if (cmdResult == -2) return -2;
-
-                    rowsUpdated += cmdResult;
-                    cmd.Dispose();
+                    fullSQL += sql;
+                    if (!sql.Trim().EndsWith(";"))
+                        fullSQL += $";{Environment.NewLine}";
                 }
 
-                CONNECTION.CloseCon(con);
+                var cmdResult = -99;
+                using (SqlTransaction tx = con.BeginTransaction(IsolationLevel.Serializable))
+                {
+                    using (var cmd = new SqlCommand(fullSQL, con, tx))
+                    {
+                        cmdResult = cmd.ExecuteNonQuery();
+                    }
+                    tx.Commit();
+                }
+
+                if (cmdResult == -2)
+                    return -2;
+
+                rowsUpdated += cmdResult;
             }
             catch (Exception ex)
             {
@@ -73,11 +82,15 @@ namespace SQLLibrary.Operations
                 {
                     Source = ToString(),
                     FunctionName = "ExecuteNonQuery Error!",
-                    AdditionalMessage = $"SQL: {currentSql}",
+                    AdditionalMessage = $"SQL: {fullSQL}",
                     Ex = ex,
                 });
                 if (Settings.ThrowExceptions) throw new Exception("ExecuteNonQuery Error!", ex);
                 return -2;
+            }
+            finally
+            {
+                CONNECTION.CloseCon(con);
             }
 
             rowsUpdated = rowsUpdated == -2 ? 0 : rowsUpdated;
@@ -221,7 +234,7 @@ namespace SQLLibrary.Operations
             }
         }
 
-        public bool RenewTbl(string tableName, List<ColumnData> columns, bool cleanUpAfterRenew = false)
+        public bool RenewTbl(string tableName, List<ColumnData> columns, List<IndizesData> indizes = null, bool cleanUpAfterRenew = false)
         {
             try
             {
@@ -245,15 +258,27 @@ namespace SQLLibrary.Operations
                     oldColumns.Add(oldCol);
                 }
 
+                var fkRefTbl = ExecuteReadTable($"EXEC sp_fkeys @pktable_name = '{tableName}', @pktable_owner = 'dbo'");
+                foreach (DataRow dr in fkRefTbl.Rows)
+                {
+                    var fkTableName = dr["FKTABLE_NAME"].ToString();
+                    var fkName = dr["FK_NAME"].ToString();
+                    if (!string.IsNullOrEmpty(fkTableName) && !string.IsNullOrEmpty(fkName))
+                        scriptList.Add($@"if exists (select * from sysobjects where OBJECTPROPERTY(id,'IsConstraint') = 1 and id = object_id('{fkName}')) ALTER TABLE {fkTableName} DROP CONSTRAINT {fkName};{Environment.NewLine}");
+                }
+
                 scriptList.Add(string.Format("EXEC sp_rename {0}, {0}_OLD{1}", tableName, timeStamp));
 
                 scriptList.Add(ScriptHelper.GetCreateTableSql(tableName, columns));
+
+                scriptList.Add(ScriptHelper.GetSQLIndizesScript(tableName, indizes));
 
                 var insertSQL = string.Format("INSERT INTO {0} ({1}) ", tableName, ColumnHelper.GetColumnString(columns, true));
                 insertSQL += string.Format("SELECT {2} FROM {0}_OLD{1}", tableName, timeStamp, ColumnHelper.GetColumnString(columns));
                 scriptList.Add(insertSQL);
 
-                if (cleanUpAfterRenew) scriptList.Add($"DROP TABLE {tableName}_OLD{timeStamp}");
+                if (cleanUpAfterRenew)
+                    scriptList.Add($"DROP TABLE {tableName}_OLD{timeStamp}");
 
                 var exResult = ExecuteNonQuery(scriptList);
                 if (exResult == -2)
@@ -274,7 +299,7 @@ namespace SQLLibrary.Operations
             }
         }
 
-        public bool RenewTbl(string tableName, Dictionary<string, string> columns, bool cleanUpAfterRenew = false)
+        public bool RenewTbl(string tableName, Dictionary<string, string> columns, List<IndizesData> indizes = null, bool cleanUpAfterRenew = false)
         {
             try
             {
@@ -293,7 +318,7 @@ namespace SQLLibrary.Operations
                     colList.Add(colData);
                 }
 
-                return RenewTbl(tableName, colList, cleanUpAfterRenew);
+                return RenewTbl(tableName, colList, indizes, cleanUpAfterRenew);
             }
             catch (Exception ex)
             {

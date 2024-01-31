@@ -211,7 +211,7 @@ namespace SQLiteLibrary.Operations
             }
         }
 
-        public bool RenewTbl(string tableName, List<ColumnData> columns, bool cleanUpAfterRenew = false)
+        public bool RenewTbl(string tableName, List<ColumnData> columns, List<IndizesData> indizes = null, bool cleanUpAfterRenew = false)
         {
             try
             {
@@ -237,7 +237,9 @@ namespace SQLiteLibrary.Operations
 
                 scriptList.Add(string.Format("ALTER TABLE {0} RENAME TO {0}_OLD{1}", tableName, timeStamp));
 
-                scriptList.Add(ScriptHelper.GetSQLiteCreateTableSql(tableName, columns));
+                scriptList.Add(ScriptHelper.GetSQLLiteCreateTableSql(tableName, columns));
+
+                scriptList.Add(ScriptHelper.GetSQLLiteIndizesScript(tableName, indizes));
 
                 var insertSQL = string.Format("INSERT INTO {0} ({1}) ", tableName, ColumnHelper.GetColumnString(columns, true));
                 insertSQL += string.Format("SELECT {2} FROM {0}_OLD{1}", tableName, timeStamp, ColumnHelper.GetColumnString(columns));
@@ -264,7 +266,7 @@ namespace SQLiteLibrary.Operations
             }
         }
 
-        public bool RenewTbl(string tableName, Dictionary<string, string> columns, bool cleanUpAfterRenew = false)
+        public bool RenewTbl(string tableName, Dictionary<string, string> columns, List<IndizesData> indizes = null, bool cleanUpAfterRenew = false)
         {
             try
             {
@@ -283,7 +285,7 @@ namespace SQLiteLibrary.Operations
                     colList.Add(colData);
                 }
 
-                return RenewTbl(tableName, colList, cleanUpAfterRenew);
+                return RenewTbl(tableName, colList, indizes, cleanUpAfterRenew);
             }
             catch(Exception ex)
             {

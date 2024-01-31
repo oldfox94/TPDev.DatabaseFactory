@@ -19,7 +19,7 @@ namespace DbInterface.Helpers
             }
 
             if (columns.Find(i => i.Name == DbCIC.DsStatus) == null)
-                columns.Add(new ColumnData { Name = DbCIC.DsStatus, Type = DbDEF.VarchrNull(3), DefaultValue = "1" });
+                columns.Add(new ColumnData { Name = DbCIC.DsStatus, Type = DbDEF.VarchrNull(1), DefaultValue = "1" });
 
             if (columns.Find(i => i.Name == DbCIC.InsertOn) == null)
                 columns.Add(new ColumnData { Name = DbCIC.InsertOn, Type = dateTimeDefinition, DefaultValue = dateTimeDefaultValue });

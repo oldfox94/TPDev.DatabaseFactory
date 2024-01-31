@@ -17,7 +17,7 @@ namespace SQLLibrary.Operations
             m_Execute = new SQLExecute();
         }
 
-        public bool CreateTable(string tableName, Dictionary<string, string> columns)
+        public bool CreateTable(string tableName, Dictionary<string, string> columns, List<IndizesData> indizes = null)
         {
             try
             {
@@ -31,7 +31,7 @@ namespace SQLLibrary.Operations
                     });
                 }
 
-                return CreateTable(tableName, colList);
+                return CreateTable(tableName, colList, indizes);
             }
             catch (Exception ex)
             {
@@ -46,13 +46,18 @@ namespace SQLLibrary.Operations
             }
         }
 
-        public bool CreateTable(string tableName, List<ColumnData> columns)
+        public bool CreateTable(string tableName, List<ColumnData> columns, List<IndizesData> indizes = null)
         {
             try
             {
                 ColumnHelper.SetDefaultColumns(columns, DbInterface.Models.DbType.SQL);
 
+                var indizesScript = ScriptHelper.GetSQLIndizesScript(tableName, indizes);
                 var sql = ScriptHelper.GetCreateTableSql(tableName, columns);
+
+                if (!string.IsNullOrEmpty(indizesScript))
+                    sql += $";{Environment.NewLine}{indizesScript}";
+                
                 var result = m_Execute.ExecuteNonQuery(sql);
 
                 if (result == -2) return false;

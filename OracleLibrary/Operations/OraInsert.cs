@@ -86,7 +86,7 @@ namespace OracleLibrary.Operations
             }
         }
 
-        public bool CreateTable(string tableName, List<ColumnData> columns)
+        public bool CreateTable(string tableName, List<ColumnData> columns, List<IndizesData> indizes = null)
         {
             try
             {
@@ -111,7 +111,7 @@ namespace OracleLibrary.Operations
             }
         }
 
-        public bool CreateTable(string tableName, Dictionary<string, string> columns)
+        public bool CreateTable(string tableName, Dictionary<string, string> columns, List<IndizesData> indizes = null)
         {
             try
             {
@@ -125,7 +125,7 @@ namespace OracleLibrary.Operations
                     });
                 }
 
-                return CreateTable(tableName, colList);
+                return CreateTable(tableName, colList, indizes);
             }
             catch (Exception ex)
             {
